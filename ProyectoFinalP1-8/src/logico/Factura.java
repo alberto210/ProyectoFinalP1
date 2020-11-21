@@ -5,22 +5,35 @@ import java.util.ArrayList;
 public class Factura {
 
 	private String codFactura;
-	private boolean verificacion;
-	private String estado;
+	private boolean verificacion; //Pagada o no
+	//private String estado; // Que es estado????
 	private Cliente cliente;
-	private Empleado empleado;
 	private ArrayList<Plan> misPlanes;
+	private boolean primeraFactura;
+	private float monto;
 	
-	public Factura(String codFactura, boolean verificacion, String estado, Cliente cliente, Empleado empleado) {
+	public Factura(boolean verificacion/*, String estado*/, Cliente cliente, float monto) {
 		super();
-		this.codFactura = codFactura;
 		this.verificacion = verificacion;
-		this.estado = estado;
+		//this.estado = estado;
 		this.cliente = new Cliente();
 		this.cliente = cliente;
-		this.empleado = empleado;
 		this.misPlanes = new ArrayList<Plan>();
+		this.monto = monto;
+		comprobarPrimeraFactura();
 	}
+	private void comprobarPrimeraFactura() {
+		if(cliente.getMisFacturas().size() == 0) {
+			this.primeraFactura = true;
+		}else {
+			this.primeraFactura = false;
+		}	
+	}
+	/*
+	 Implementar metodo para reconocer la fecha de agregar plan al cliente y si es la primera factura; listo
+	 Implementar metodo para cobrar los dias consumidos si el tiempo de emision es mayor del dia 15.
+	 Agregar dia de corte cuando se emite la factura si es entre el dia 1 y 15 de un mes, si se emite en una fecha mayor al dia 15, agregar dia de corte predeterminado como el dia primero.
+	 */
 
 	public String getCodFactura() {
 		return codFactura;
@@ -30,7 +43,7 @@ public class Factura {
 		this.codFactura = codFactura;
 	}
 
-	public boolean isVerificacion() {
+	public boolean getVerificacion() {
 		return verificacion;
 	}
 
@@ -38,13 +51,13 @@ public class Factura {
 		this.verificacion = verificacion;
 	}
 
-	public String getEstado() {
+	/*public String getEstado() {
 		return estado;
 	}
 
 	public void setEstado(String estado) {
 		this.estado = estado;
-	}
+	}*/
 
 	public Cliente getCliente() {
 		return cliente;
@@ -54,20 +67,21 @@ public class Factura {
 		this.cliente = cliente;
 	}
 
-	public Empleado getEmpleado() {
-		return empleado;
-	}
-
-	public void setEmpleado(Empleado empleado) {
-		this.empleado = empleado;
-	}
-
 	public ArrayList<Plan> getMisPlanes() {
 		return misPlanes;
 	}
 
 	public void setMisPlanes(ArrayList<Plan> misPlanes) {
 		this.misPlanes = misPlanes;
+	}
+	public boolean getPrimeraFactura() {
+		return primeraFactura;
+	}
+	public float getMonto() {
+		return monto;
+	}
+	public void setMonto(float monto) {
+		this.monto = monto;
 	}
 	
 	

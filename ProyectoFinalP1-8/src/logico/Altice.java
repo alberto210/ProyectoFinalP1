@@ -1,6 +1,7 @@
 package logico;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Altice {
 
@@ -57,4 +58,140 @@ public class Altice {
 		this.misFacturas = misFacturas;
 	}
 	
+	public void agregarPlanACliente(String idPlan, String cedula, String idEmpleado) {
+		Cliente client = buscarCliente(cedula);
+		Plan oferta = buscarPlan(idPlan);
+		Empleado emp = buscarEmpleado(idEmpleado);
+		if (client != null && oferta != null && emp != null) {
+			Date hoy = new Date();
+			oferta.setFechaDeEmision(hoy); //Se agrega fecha en que se agrego el plan al cliente
+			oferta.setEmpleado(emp); // se Agrega el empleado que agrego el plan
+			client.getMisPlanes().add(oferta);
+			
+		}
+		
+		
+	}
+
+	private Plan buscarPlan(String idPlan) {
+		Plan aux = null;
+		boolean encontrado = false;
+		int i = 0;
+		while(!encontrado && i<misPlanes.size()){
+			if(misPlanes.get(i).getId().equalsIgnoreCase(idPlan)) {
+				aux = misPlanes.get(i);
+				encontrado = true;
+			}
+			i++;
+		}
+		return aux;
+	}
+
+	private Cliente buscarCliente(String cedula) {
+		Cliente aux = null;
+		boolean encontrado = false;
+		int i = 0;
+		while(!encontrado && i<misClientes.size()){
+			if(misClientes.get(i).getCedula().equalsIgnoreCase(cedula)) {
+				aux = misClientes.get(i);
+				encontrado = true;
+			}
+			i++;
+		}
+		return aux;
+	}
+	
+	private Empleado buscarEmpleado(String id) {
+		Empleado aux = null;
+		boolean encontrado = false;
+		int i = 0;
+		while(!encontrado && i<misEmpleados.size()){
+			if(misEmpleados.get(i).getId().equalsIgnoreCase(id)) {
+				aux = misEmpleados.get(i);
+				encontrado = true;
+			}
+			i++;
+		}
+		return aux;
+	}
+	
+	private void generarFactura(String cedulaCliente) {
+		Cliente client = buscarCliente(cedulaCliente);
+		if(client != null) {
+			float monto = 0;
+			for(Plan aux: client.getMisPlanes()) { //Considerando si remover este for o no segun la estructura de factura
+				monto += aux.getPrecioTotal(); //Sumo los montos de las facturas
+			}
+			Factura fac = new Factura(false,client,monto); //Comprobar que es estado??
+			client.getMisFacturas().add(fac);
+			misFacturas.add(fac);
+		}
+				
+	}
+	
+	public void generarTodasLasFacturas() {
+		for(Cliente client: misClientes) {
+			generarFactura(client.getCedula());
+		}
+	}
+	
+	//crear plan contemplando que se hara con interfaz visual, toma en cuenta que servicios tiene habilitado
+	public void crearPlan(String nombre, String id,boolean internet,boolean telefono,boolean cable,int cantMinutos,int cantMegas,int cantCanales) {
+		int caso = verificarCaso(internet,telefono,cable);
+		if (caso != -1) {
+			Plan aux = null;
+			switch (caso) {
+				case 1: {
+					aux = new Plan(nombre,id,internet,telefono,cable,0,cantMegas,0);
+				}
+				case 2:{
+					aux = new Plan(nombre,id,internet,telefono,cable,cantMinutos,0,0);
+				}
+				case 3:{
+					aux = new Plan(nombre,id,internet,telefono,cable,0,0,cantCanales);
+				}
+				case 4:{
+					aux = new Plan(nombre,id,internet,telefono,cable,cantMinutos,cantMegas,0);
+				}
+				case 5:{
+					aux = new Plan(nombre,id,internet,telefono,cable,0,cantMegas,cantCanales);
+				}
+				case 6: {
+					aux = new Plan(nombre,id,internet,telefono,cable,cantMinutos,0,cantCanales);
+				}
+				case 7: {
+					aux = new Plan(nombre,id,internet,telefono,cable,cantMinutos,cantMegas,cantCanales);
+				}
+			}
+			if (aux != null) {
+				misPlanes.add(aux);
+			}
+		}
+	}
+
+	private int verificarCaso(boolean internet, boolean telefono, boolean cable) {
+		int caso = -1;
+		if(internet) {
+			caso = 1;
+		}
+		if(telefono) {
+			caso = 2;
+		}
+		if(cable) {
+			caso = 3;
+		}
+		if (internet && telefono) {
+			caso = 4;
+		}
+		if (internet && cable) {
+			caso = 5;
+		}
+		if (telefono && cable) {
+			caso = 6;
+		}
+		if (internet && telefono && cable ) {
+			caso = 7;
+		}
+		return caso;
+	}
 }

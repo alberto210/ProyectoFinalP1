@@ -2,15 +2,26 @@ package logico;
 
 public class Comercial extends Empleado {
 
+	int cantAños;
 	public Comercial(String id, String cedula, String nombre, float sueldoBase, float sueldoUnitario,
-			int horasTrabajadas) {
+			int horasTrabajadas, int cantAños) {
 		super(cedula, cedula, cedula, sueldoBase, sueldoBase, horasTrabajadas);
+		this.cantAños = cantAños;
 	}
 
 	public float sueldoTotal() {
 		float sueldoTotal = 0;
-		//Escribir funcion
+		sueldoTotal = (float) (sueldoBase + sueldoUnitario*horasTrabajadas + 0.20*cantAños*sueldoUnitario);
 		return sueldoTotal;
+		
+	}
+
+	public int getCantAños() {
+		return cantAños;
+	}
+
+	public void setCantAños(int cantAños) {
+		this.cantAños = cantAños;
 	}
 
 
