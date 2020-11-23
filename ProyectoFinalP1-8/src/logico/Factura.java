@@ -29,6 +29,31 @@ public class Factura {
 			this.primeraFactura = false;
 		}	
 	}
+	
+	@SuppressWarnings("deprecation")
+	public float cobrarDiasConsumidosPrimeraFactura() {
+		monto = 0;
+		for (Plan plan : misPlanes) {
+			int date = plan.getFechaDeEmision().getDate();
+			int mes = plan.getFechaDeEmision().getMonth();
+			if(date>15 && primeraFactura == true) {
+				if(mes==0||mes==2||mes==4||mes==6||mes==7||mes==9||mes==11) {
+					monto += (float) ((plan.getPrecioTotal()/31)*(32-date));
+				}
+				if(mes==3||mes==5||mes==8||mes==10) {
+					monto += (float) ((plan.getPrecioTotal()/30)*(31-date));
+				}
+				if(mes==1) {
+					monto += (float) ((plan.getPrecioTotal()/28)*(29-date));
+				}
+			}
+			if(date<15 && primeraFactura == true) {
+				monto += plan.getPrecioTotal();
+			}
+		}
+		return monto;
+	}
+	
 	/*
 	 Implementar metodo para reconocer la fecha de agregar plan al cliente y si es la primera factura; listo
 	 Implementar metodo para cobrar los dias consumidos si el tiempo de emision es mayor del dia 15.
