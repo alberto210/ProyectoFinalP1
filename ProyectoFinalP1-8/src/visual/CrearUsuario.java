@@ -8,7 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import logico.Control;
+import logico.Altice;
 import logico.Usuario;
 
 import javax.swing.JLabel;
@@ -25,13 +25,13 @@ public class CrearUsuario extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtUsuarioN;
 	private JComboBox cmbTipo;
-	private JPasswordField password;
-	private JPasswordField passwordConfirm;
+	private JPasswordField txtPassword;
+	private JPasswordField txtPasswordConfirm;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			CrearUsuario dialog = new CrearUsuario();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -39,7 +39,7 @@ public class CrearUsuario extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * Create the dialog.
@@ -79,13 +79,13 @@ public class CrearUsuario extends JDialog {
 		lblConfirmarPassword.setBounds(189, 88, 167, 14);
 		contentPanel.add(lblConfirmarPassword);
 		
-		password = new JPasswordField();
-		password.setBounds(189, 49, 127, 20);
-		contentPanel.add(password);
+		txtPassword = new JPasswordField();
+		txtPassword.setBounds(189, 49, 127, 20);
+		contentPanel.add(txtPassword);
 		
-		passwordConfirm = new JPasswordField();
-		passwordConfirm.setBounds(189, 113, 127, 20);
-		contentPanel.add(passwordConfirm);
+		txtPasswordConfirm = new JPasswordField();
+		txtPasswordConfirm.setBounds(189, 113, 127, 20);
+		contentPanel.add(txtPasswordConfirm);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -94,26 +94,27 @@ public class CrearUsuario extends JDialog {
 				JButton okButton = new JButton("Crear");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						Usuario user = new Usuario(cmbTipo.getSelectedItem().toString(),txtUsuarioN.getText(),password.getText());
-					   
-						Control.getInstance().regUser(user);
-						JOptionPane.showMessageDialog(null, "Usuario creado correctamente", null, JOptionPane.INFORMATION_MESSAGE, null);
-						clear();
-					    
-					    
-					    
-					}
-
-					private void clear() {
-						// TODO Auto-generated method stub
-						
-						cmbTipo.setSelectedIndex(0);
-						txtUsuarioN.setText("");
-						password.setText("");
-						passwordConfirm.setText("");
-						
-						
-						
+						String tipo = cmbTipo.getSelectedItem().toString();
+						String nombre = txtUsuarioN.getText();
+						String password = txtPassword.getText();
+						String verpass = txtPasswordConfirm.getText();
+						Usuario user = null;
+						if(nombre.equalsIgnoreCase("") || password.equalsIgnoreCase("") || verpass.equalsIgnoreCase("")) {
+							JOptionPane.showMessageDialog(null, "Campos vacíos. Porfavor llene todos los campos", "Información", JOptionPane.WARNING_MESSAGE);
+							
+						}else if(tipo=="<Seleccione>") {
+							JOptionPane.showMessageDialog(null, "Porfavor, seleccione el tipo de usuario", "Información", JOptionPane.WARNING_MESSAGE);
+							
+						}else if(!verpass.equals(password)) {
+							JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden. Porfavor, ingrese de nuevo", null, JOptionPane.ERROR_MESSAGE, null);
+							
+						}
+						else {
+							user = new Usuario(tipo,nombre,password);
+							Altice.getInstance().regUser(user);
+							JOptionPane.showMessageDialog(null, "Usuario creado correctamente", null, JOptionPane.INFORMATION_MESSAGE, null);
+							clear();
+						}
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -132,4 +133,13 @@ public class CrearUsuario extends JDialog {
 			}
 		}
 	}
+	
+	private void clear() {
+		// TODO Auto-generated method stub
+		cmbTipo.setSelectedIndex(0);
+		txtUsuarioN.setText("");
+		txtPassword.setText("");
+		txtPasswordConfirm.setText("");
+	}
+	
 }

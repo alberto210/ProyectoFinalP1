@@ -20,7 +20,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import logico.Control;
+import logico.Altice;
 import logico.Usuario;
 
 public class Principal extends JFrame {
@@ -44,7 +44,7 @@ public class Principal extends JFrame {
 				try {
 					altice2 = new  FileOutputStream("Altice.dat");
 					alticeWrite = new ObjectOutputStream(altice2);
-					alticeWrite.writeObject(Control.getInstance());
+					alticeWrite.writeObject(Altice.getInstance());
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -82,7 +82,7 @@ public class Principal extends JFrame {
 		mnNewMenu.add(mntmCrearUsuario);
 		
 		JMenu mnAdministracin = new JMenu("Administraci\u00F3n");
-		if(!Control.getLoginUser().getTipoDeUsuario().equalsIgnoreCase("Administrador")){
+		if(!Altice.getLoginUser().getTipoDeUsuario().equalsIgnoreCase("Administrador")){
 			mnAdministracin.setEnabled(false);
 		}
 		menuBar.add(mnAdministracin);

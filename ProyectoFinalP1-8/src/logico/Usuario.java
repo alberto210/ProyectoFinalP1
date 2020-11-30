@@ -4,12 +4,7 @@ import java.io.Serializable;
 
 public class Usuario implements Serializable{
     
-	public Usuario(String tipoDeUsuario, String nombreDeUsuario, String contrasena) {
-		super();
-		this.tipoDeUsuario = tipoDeUsuario;
-		this.nombreDeUsuario = nombreDeUsuario;
-		this.contrasena = contrasena;
-	}
+	
 	/**
 	 * 
 	 */
@@ -18,9 +13,12 @@ public class Usuario implements Serializable{
 	private String nombreDeUsuario;
 	private String contrasena;
 	
-	
-	
-	
+	public Usuario(String tipoDeUsuario, String nombreDeUsuario, String contrasena) {
+		super();
+		this.tipoDeUsuario = tipoDeUsuario;
+		this.nombreDeUsuario = nombreDeUsuario;
+		this.contrasena = contrasena;
+	}
 	
 	public String getTipoDeUsuario() {
 		return tipoDeUsuario;

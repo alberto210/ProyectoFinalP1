@@ -1,10 +1,18 @@
 package logico;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Altice {
+public class Altice implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private ArrayList<Usuario> misUsuarios;
+	private static Usuario loginUser;
+	private static boolean firstTime;
 	private ArrayList<Empleado> misEmpleados;
 	private ArrayList<Cliente> misClientes;
 	private ArrayList<Plan> misPlanes;
@@ -24,6 +32,39 @@ public class Altice {
 		this.misClientes = new ArrayList<Cliente>();
 		this.misPlanes = new ArrayList<Plan>();
 		this.misFacturas = new ArrayList<Factura>();
+		misUsuarios = new ArrayList<Usuario>();
+	}
+
+	public ArrayList<Usuario> getMisUsuarios() {
+		return misUsuarios;
+	}
+
+	public void setMisUsuarios(ArrayList<Usuario> misUsuarios) {
+		this.misUsuarios = misUsuarios;
+	}
+
+	public static Usuario getLoginUser() {
+		return loginUser;
+	}
+
+	public static void setLoginUser(Usuario loginUser) {
+		Altice.loginUser = loginUser;
+	}
+
+	public static boolean isFirstTime() {
+		return firstTime;
+	}
+
+	public static void setFirstTime(boolean firstTime) {
+		Altice.firstTime = firstTime;
+	}
+
+	public static Altice getEmpresa() {
+		return empresa;
+	}
+
+	public static void setEmpresa(Altice empresa) {
+		Altice.empresa = empresa;
 	}
 
 	public ArrayList<Empleado> getMisEmpleados() {
@@ -56,6 +97,21 @@ public class Altice {
 
 	public void setMisFacturas(ArrayList<Factura> misFacturas) {
 		this.misFacturas = misFacturas;
+	}
+	
+	public void regUser(Usuario user) {
+		misUsuarios.add(user);
+	}
+	
+	public boolean confirmLogin(String usuario, String contrasena) {
+		boolean login = false;
+		for (Usuario user : misUsuarios) {
+			if(user.getNombreDeUsuario().equals(usuario) && user.getContrasena().equals(contrasena)){
+				loginUser = user;
+				login = true;
+			}
+		}
+		return login;
 	}
 	
 	public void agregarPlanACliente(String idPlan, String cedula, String idEmpleado) {

@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import logico.Control;
+import logico.Altice;
 import logico.Usuario;
 
 import javax.swing.JButton;
@@ -47,8 +47,8 @@ public class Login extends JFrame {
 				try {
 					altice = new FileInputStream ("Altice.dat");
 					alticeRead = new ObjectInputStream(altice);
-					Control temp = (Control)alticeRead.readObject();
-					Control.setControl(temp);
+					Altice temp = (Altice)alticeRead.readObject();
+					Altice.setEmpresa(temp);
 					altice.close();
 					alticeRead.close();
 				} catch (FileNotFoundException e) {
@@ -56,8 +56,8 @@ public class Login extends JFrame {
 						altice2 = new  FileOutputStream("Altice.dat");
 						alticeWrite = new ObjectOutputStream(altice2);
 						Usuario aux = new Usuario("Administrador", "Altice", "Altice");
-						Control.getInstance().regUser(aux);
-						alticeWrite.writeObject(Control.getInstance());
+						Altice.getInstance().regUser(aux);
+						alticeWrite.writeObject(Altice.getInstance());
 						altice2.close();
 						alticeWrite.close();
 					} catch (FileNotFoundException e1) {
@@ -117,17 +117,16 @@ public class Login extends JFrame {
 		JButton btnLogin = new JButton("Iniciar sesi\u00F3n");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Control.getInstance().confirmLogin(txtUsuario.getText(),txtContrasena.getText())){
+				if(Altice.getInstance().confirmLogin(txtUsuario.getText(),txtContrasena.getText()))
+				{
 					Principal frame = new Principal();
 					dispose();
 					frame.setVisible(true);
-					}
-						else{
+				}
+				else{
 											
-							JOptionPane.showMessageDialog(null, "Usuario o contraseña incorecta", null, JOptionPane.ERROR_MESSAGE, null);
-					
-					
-				};
+					JOptionPane.showMessageDialog(null, "Usuario o contraseña incorecta", null, JOptionPane.ERROR_MESSAGE, null);
+				}
 				
 			}
 		});
