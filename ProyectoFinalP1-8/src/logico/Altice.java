@@ -250,4 +250,8 @@ public class Altice implements Serializable{
 		}
 		return caso;
 	}
+	
+	public void Recargo() {
+		
+	}
 }
