@@ -4,9 +4,9 @@ public class Administrativo extends Empleado {
 
 	private String cargo;
 	//Cargos pueden ser: Gerente, Representante Local, Representante Regional, Mesa Administrativa 
-	public Administrativo(String id, String cedula, String nombre, float sueldoBase, float sueldoUnitario,
+	public Administrativo(String cedula, String nombre, float sueldoBase, float sueldoUnitario,
 			int horasTrabajadas, String cargo) {
-		super(id, cedula, nombre, sueldoBase, sueldoUnitario, horasTrabajadas);
+		super(cedula, nombre, sueldoBase, sueldoUnitario, horasTrabajadas);
 		this.cargo = cargo;
 	}
 	

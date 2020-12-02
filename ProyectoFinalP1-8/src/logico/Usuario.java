@@ -19,6 +19,11 @@ public class Usuario implements Serializable{
 		this.nombreDeUsuario = nombreDeUsuario;
 		this.contrasena = contrasena;
 	}
+	public Usuario() {
+		this.tipoDeUsuario = "Administrativo";
+		this.nombreDeUsuario = "admin";
+		this.contrasena = "admin";
+	}
 	
 	public String getTipoDeUsuario() {
 		return tipoDeUsuario;

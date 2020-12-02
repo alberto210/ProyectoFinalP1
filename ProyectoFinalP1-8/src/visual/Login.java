@@ -34,57 +34,7 @@ public class Login extends JFrame {
 	private JTextField txtUsuario;
 	private JPasswordField txtContrasena;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				FileInputStream altice;
-				FileOutputStream altice2;
-				ObjectInputStream alticeRead;
-				ObjectOutputStream alticeWrite;
-				try {
-					altice = new FileInputStream ("Altice.dat");
-					alticeRead = new ObjectInputStream(altice);
-					Altice temp = (Altice)alticeRead.readObject();
-					Altice.setEmpresa(temp);
-					altice.close();
-					alticeRead.close();
-				} catch (FileNotFoundException e) {
-					try {
-						altice2 = new  FileOutputStream("Altice.dat");
-						alticeWrite = new ObjectOutputStream(altice2);
-						Usuario aux = new Usuario("Administrador", "Altice", "Altice");
-						Altice.getInstance().regUser(aux);
-						alticeWrite.writeObject(Altice.getInstance());
-						altice2.close();
-						alticeWrite.close();
-					} catch (FileNotFoundException e1) {
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-					}
-				} catch (IOException e) {
-					
-					
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				try {
-					Login frame = new Login();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Login() {
 		setTitle("Inicio de Sesi\u00F3n");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

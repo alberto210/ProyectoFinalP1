@@ -10,14 +10,16 @@ public class Altice implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ArrayList<Usuario> misUsuarios;
 	private static Usuario loginUser;
+	private static Empleado loginEmpleado;
 	private static boolean firstTime;
 	private ArrayList<Empleado> misEmpleados;
 	private ArrayList<Cliente> misClientes;
 	private ArrayList<Plan> misPlanes;
 	private ArrayList<Factura> misFacturas;
+	private Usuario usuarioDefault;
 	private static Altice empresa = null;
+	public boolean admin = false;
 	
 	public static Altice getInstance() {
 		if(empresa==null) {
@@ -32,15 +34,7 @@ public class Altice implements Serializable{
 		this.misClientes = new ArrayList<Cliente>();
 		this.misPlanes = new ArrayList<Plan>();
 		this.misFacturas = new ArrayList<Factura>();
-		misUsuarios = new ArrayList<Usuario>();
-	}
-
-	public ArrayList<Usuario> getMisUsuarios() {
-		return misUsuarios;
-	}
-
-	public void setMisUsuarios(ArrayList<Usuario> misUsuarios) {
-		this.misUsuarios = misUsuarios;
+		usuarioDefault= new Usuario();
 	}
 
 	public static Usuario getLoginUser() {
@@ -99,16 +93,20 @@ public class Altice implements Serializable{
 		this.misFacturas = misFacturas;
 	}
 	
-	public void regUser(Usuario user) {
-		misUsuarios.add(user);
-	}
 	
 	public boolean confirmLogin(String usuario, String contrasena) {
 		boolean login = false;
-		for (Usuario user : misUsuarios) {
-			if(user.getNombreDeUsuario().equals(usuario) && user.getContrasena().equals(contrasena)){
-				loginUser = user;
+		if(usuarioDefault.getNombreDeUsuario().equals(usuario) && usuarioDefault.getContrasena().equals(contrasena)) {
+			loginUser = usuarioDefault;
+			login = true;
+			admin=true;
+		}
+		for (Empleado user : misEmpleados) {
+			if(user.getUser().getNombreDeUsuario().equals(usuario) && user.getUser().getContrasena().equals(contrasena)){
+				loginUser = user.getUser();
+				loginEmpleado = user;
 				login = true;
+				admin = false;
 			}
 		}
 		return login;
@@ -157,12 +155,12 @@ public class Altice implements Serializable{
 		return aux;
 	}
 	
-	private Empleado buscarEmpleado(String id) {
+	private Empleado buscarEmpleado(String cedula) {
 		Empleado aux = null;
 		boolean encontrado = false;
 		int i = 0;
 		while(!encontrado && i<misEmpleados.size()){
-			if(misEmpleados.get(i).getId().equalsIgnoreCase(id)) {
+			if(misEmpleados.get(i).getCedula().equalsIgnoreCase(cedula)) {
 				aux = misEmpleados.get(i);
 				encontrado = true;
 			}
@@ -253,5 +251,18 @@ public class Altice implements Serializable{
 	
 	public void Recargo() {
 		
+	}
+
+	public void regUserDefault(Usuario aux) {
+		this.usuarioDefault = aux;
+		
+	}
+
+	public static Empleado getLoginEmpleado() {
+		return loginEmpleado;
+	}
+
+	public static void setLoginEmpleado(Empleado loginEmpleado) {
+		Altice.loginEmpleado = loginEmpleado;
 	}
 }

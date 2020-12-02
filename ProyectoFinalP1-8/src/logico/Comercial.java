@@ -3,9 +3,9 @@ package logico;
 public class Comercial extends Empleado {
 
 	int cantAños;
-	public Comercial(String id, String cedula, String nombre, float sueldoBase, float sueldoUnitario,
+	public Comercial(String cedula, String nombre, float sueldoBase, float sueldoUnitario,
 			int horasTrabajadas, int cantAños) {
-		super(cedula, cedula, cedula, sueldoBase, sueldoBase, horasTrabajadas);
+		super(cedula, nombre, sueldoBase, sueldoUnitario, horasTrabajadas);
 		this.cantAños = cantAños;
 	}
 

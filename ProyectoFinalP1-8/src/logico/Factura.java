@@ -1,15 +1,20 @@
 package logico;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class Factura {
+public class Factura implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 178664072442668691L;
 	private String codFactura;
 	private boolean verificacion; //Pagada o no
-	private String estado; // Que es estado????
+	private String estado;
 	private Cliente cliente;
 	private ArrayList<Plan> misPlanes;
 	private boolean primeraFactura;
@@ -150,7 +155,6 @@ public class Factura {
 	}
 	
 	/*
-	Implementar metodo para reconocer la fecha de agregar plan al cliente y si es la primera factura; listo
 	Implementar metodo para cobrar los dias consumidos si el tiempo de emision es mayor del dia 15.
 	Agregar dia de corte cuando se emite la factura si es entre el dia 1 y 15 de un mes, si se emite en una fecha mayor al dia 15, agregar dia de corte predeterminado como el dia primero.
 	*/

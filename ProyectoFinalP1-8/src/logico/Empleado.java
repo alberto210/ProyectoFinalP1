@@ -1,39 +1,34 @@
 package logico;
 
-public abstract class Empleado {
+import java.io.Serializable;
 
-	protected String id;
+public abstract class Empleado implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7540682719052504335L;
 	protected String cedula;
 	protected String nombre;
 	protected float sueldoBase;
 	protected float sueldoUnitario;
 	protected int horasTrabajadas;
+	protected Usuario user;
 	
 	
-	public Empleado(String id, String cedula, String nombre, float sueldoBase, float sueldoUnitario,
+	public Empleado(String cedula, String nombre, float sueldoBase, float sueldoUnitario,
 			int horasTrabajadas) {
 		super();
-		this.id = id;
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.sueldoBase = sueldoBase;
 		this.sueldoUnitario = sueldoUnitario;
 		this.horasTrabajadas = horasTrabajadas;
+		this.user = new Usuario();
 	}
 
 
 	public abstract float sueldoTotal();
-
-
-	public String getId() {
-		return id;
-	}
-
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
 
 	public String getCedula() {
 		return cedula;
@@ -82,6 +77,16 @@ public abstract class Empleado {
 
 	public void setHorasTrabajadas(int horasTrabajadas) {
 		this.horasTrabajadas = horasTrabajadas;
+	}
+
+
+	public Usuario getUser() {
+		return user;
+	}
+
+
+	public void setUser(Usuario user) {
+		this.user = user;
 	}
 	
 }

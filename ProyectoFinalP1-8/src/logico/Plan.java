@@ -1,9 +1,14 @@
 package logico;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Plan {
+public class Plan implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7523075717313531227L;
 	private boolean internet;
 	private boolean telefono;
 	private boolean cable;
