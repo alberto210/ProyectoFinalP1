@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.ColorUIResource;
 
 import logico.Altice;
 import logico.Usuario;
@@ -26,6 +27,7 @@ import javax.swing.JPasswordField;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 public class Login extends JFrame {
 	
@@ -41,7 +43,8 @@ public class Login extends JFrame {
 		setBounds(100, 100, 397, 321);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
-		contentPane.setForeground(Color.BLUE);
+		contentPane.setBackground(Color.cyan);
+		UIManager.put("Frame.activeTitleForeground",new ColorUIResource(Color.black));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);

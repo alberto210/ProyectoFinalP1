@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 import logico.Altice;
 import logico.Usuario;
 import javax.swing.SwingConstants;
+import java.awt.Toolkit;
 
 public class Principal extends JFrame {
 

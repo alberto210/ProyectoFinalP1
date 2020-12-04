@@ -1,6 +1,7 @@
 package visual;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -24,8 +25,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import javax.swing.border.TitledBorder;
+import javax.swing.plaf.ColorUIResource;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.UIManager;
 import javax.swing.JRadioButton;
 
 public class CrearUsuario extends JDialog {
@@ -199,7 +202,7 @@ public class CrearUsuario extends JDialog {
 						
 						if(!verificarNombreDuplicado && !nombre.equalsIgnoreCase("Altice")) {
 						
-							if(nombre.equalsIgnoreCase("") || password.equalsIgnoreCase("") || verpass.equalsIgnoreCase("")|| txtCedula.getText().equalsIgnoreCase("") || txtNombre.getText().equalsIgnoreCase("") || Float.parseFloat(spnSueldoBase.getValue().toString()) == 0 || Float.parseFloat(spnSueldoUnitario.getValue().toString()) == 0) {
+							if(nombre.equalsIgnoreCase("") || password.equalsIgnoreCase("") || verpass.equalsIgnoreCase("")|| txtCedula.getText().equalsIgnoreCase("") || txtNombre.getText().equalsIgnoreCase("") || Float.parseFloat(spnSueldoBase.getValue().toString()) == 0 || Float.parseFloat(spnSueldoUnitario.getValue().toString()) == 0 || (!rdbAdministrador.isSelected() && !rdbComercial.isSelected())) {
 								JOptionPane.showMessageDialog(null, "Campos vacíos. Por favor, llene todos los campos", "Información", JOptionPane.WARNING_MESSAGE);
 							
 							}else{
