@@ -95,4 +95,18 @@ public class Cliente implements Serializable{
 		this.misPlanes = misPlanes;
 	}
 	
+	public Factura findFactura(String id) {
+		Factura aux = null;
+		boolean encontrado = false;
+		int i = 0;
+		while(!encontrado && i<misFacturas.size()){
+			if(misFacturas.get(i).getCodFactura().equalsIgnoreCase(id)) {
+				aux = misFacturas.get(i);
+				encontrado = true;
+			}
+			i++;
+		}
+		return aux;
+	}
+	
 }

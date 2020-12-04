@@ -248,10 +248,6 @@ public class Altice implements Serializable{
 		}
 		return caso;
 	}
-	
-	public void Recargo() {
-		
-	}
 
 	public void regUserDefault(Usuario aux) {
 		this.usuarioDefault = aux;
@@ -265,4 +261,110 @@ public class Altice implements Serializable{
 	public static void setLoginEmpleado(Empleado loginEmpleado) {
 		Altice.loginEmpleado = loginEmpleado;
 	}
+	
+	public void Recargo() {
+		float recargo = 0;
+		for (Cliente cliente : misClientes) {
+			for (Factura factura : cliente.getMisFacturas()) {
+				if(!factura.getEstado().equalsIgnoreCase("Pagada")) {
+					recargo = factura.Recargo();
+					factura.setMonto(factura.getMonto()-recargo);
+				}
+			}
+		}
+	}
+	
+	public void Descuento() {
+		float descuento = 0;
+		int cantPlanes = 0;
+		for (Cliente cliente : misClientes) {
+			cantPlanes = cliente.getMisPlanes().size();
+			for (Factura factura : cliente.getMisFacturas()) {
+				descuento = factura.Descuento(cantPlanes);
+				factura.setMonto(factura.getMonto()-descuento);
+			}
+		}
+	}
+	
+	public int[] CantUsiarosPorPlan() {
+		int[] usuarios = new int[5];
+		String nombrePlan = null;
+		int cantInternet = 0;
+		int cantCable = 0;
+		int cantTelefono = 0;
+		int cantDoblePlay = 0;
+		int cantTriplePlay = 0;
+		for (Cliente usuario : misClientes) {
+			for (Plan plan : usuario.getMisPlanes()) {
+				nombrePlan = plan.getNombre();
+				switch(nombrePlan) {
+				case "Triple Play":
+					cantTriplePlay++;
+					break;
+				case "Doble Play":
+					cantDoblePlay++;
+					break;
+				case "Internet":
+					cantInternet++;
+					break;
+				case "Telefono":
+					cantTelefono++;
+					break;
+				case "Cable":
+					cantCable++;
+					break;
+				}
+			}
+		}
+		usuarios[0] = cantTriplePlay;
+		usuarios[1] = cantDoblePlay;
+		usuarios[2] = cantInternet;
+		usuarios[3] = cantTelefono;
+		usuarios[4] = cantCable;
+		
+		return usuarios;
+	}
+	
+	public boolean pagarFactura(float monto, String id, String cedula) {
+		boolean pagar = false;
+		Cliente cliente = findCliente(cedula);
+		if(cliente != null) {
+			Factura factura = cliente.findFactura(id);
+			if(factura != null) {
+				if(monto>0) {
+					pagar = factura.pagarFactura(monto);
+				}
+			}
+		}
+		return pagar;
+	}
+	
+	public Factura findFactura(String id) {
+		Factura aux = null;
+		boolean encontrado = false;
+		int i = 0;
+		while(!encontrado && i<misFacturas.size()){
+			if(misFacturas.get(i).getCodFactura().equalsIgnoreCase(id)) {
+				aux = misFacturas.get(i);
+				encontrado = true;
+			}
+			i++;
+		}
+		return aux;
+	}
+	
+	public Cliente findCliente(String cedula) {
+		Cliente aux = null;
+		boolean encontrado = false;
+		int i = 0;
+		while(!encontrado && i<misClientes.size()){
+			if(misClientes.get(i).getCedula().equalsIgnoreCase(cedula)) {
+				aux = misClientes.get(i);
+				encontrado = true;
+			}
+			i++;
+		}
+		return aux;
+	}
+	
 }

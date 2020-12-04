@@ -111,6 +111,7 @@ public class Factura implements Serializable{
 		}	
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void DiaCorte() {
 		this.fechaEmision = new Date();
 		int compare = 15 - fechaEmision.getDate();
@@ -174,18 +175,19 @@ public class Factura implements Serializable{
 		
 	}
 	
-	public float Descuento() {
+	public float Descuento(int cantPlanes) {
 		float descuento = 0;
-		int cantPlanes = cliente.getMisPlanes().size();
 		switch(cantPlanes) {
 			case 1:
 				descuento = 0;
 				break;
 			case 2:
 				descuento = (float) (monto*0.1);
+				setEstado("Atrasada");
 				break;
 			case 3:
 				descuento = (float) (monto*0.3);
+				setEstado("Atrasada");
 				break;
 			default:
 				descuento = 0;
@@ -214,6 +216,23 @@ public class Factura implements Serializable{
 			mes = difY*12 + difM;
 		}
 		return mes;
+	}
+	
+	public boolean pagarFactura(float montoCliente) {
+		boolean aux = false;
+		float pago = monto;
+		if(!verificacion) {
+			if(montoCliente<pago) {
+				aux = false;
+			}
+			else {
+				aux = true;
+				pago -= montoCliente;
+				verificacion = true;
+				setEstado("Pagada");
+			}
+		}
+		return aux;
 	}
 	
 }
