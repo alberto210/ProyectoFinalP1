@@ -352,5 +352,26 @@ public class Altice implements Serializable{
 		}
 		return aux;
 	}
+
+	public Cliente findCliente(String cedula) {
+		Cliente aux = null;
+		boolean encontrado = false;
+		int i = 0;
+		while(!encontrado && i<misClientes.size()){
+			if(misClientes.get(i).getCedula().equalsIgnoreCase(cedula)) {
+				aux = misClientes.get(i);
+				encontrado = true;
+			}
+			i++;
+		}
+		return aux;
+	}
 	
+	
+	
+	//REVISAR
+	
+	public void insertarPlan(Plan planes) {
+		misPlanes.add(planes);
+	}
 }
