@@ -378,4 +378,8 @@ public class Altice implements Serializable{
 	public void insertarPlan(Plan planes) {
 		misPlanes.add(planes);
 	}
+
+	public void registrarCliente(Cliente cliente) {
+		misClientes.add(cliente);
+	}
 }
