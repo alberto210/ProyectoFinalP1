@@ -197,31 +197,31 @@ public class Altice implements Serializable{
 	}
 	
 	//crear plan contemplando que se hara con interfaz visual, toma en cuenta que servicios tiene habilitado
-	public void crearPlan(String tipo, int id,boolean internet,boolean telefono,boolean cable,int cantMinutos,int cantMegas,int cantCanales) {
+	public void crearPlan(String tipo,String nombre, int id,boolean internet,boolean telefono,boolean cable,int cantMinutos,int cantMegas,int cantCanales) {
 		int caso = verificarCaso(internet,telefono,cable);
 		if (caso != -1) {
 			Plan aux = null;
 			switch (caso) {
 				case 1: {
-					aux = new Plan("Singleplay",tipo,id,internet,telefono,cable,0,cantMegas,0);
+					aux = new Plan(tipo,nombre,id,internet,telefono,cable,0,cantMegas,0);
 				}
 				case 2:{
-					aux = new Plan("Singleplay",tipo,id,internet,telefono,cable,cantMinutos,0,0);
+					aux = new Plan(tipo,nombre,id,internet,telefono,cable,cantMinutos,0,0);
 				}
 				case 3:{
-					aux = new Plan("Singleplay",tipo,id,internet,telefono,cable,0,0,cantCanales);
+					aux = new Plan(tipo,nombre,id,internet,telefono,cable,0,0,cantCanales);
 				}
 				case 4:{
-					aux = new Plan("Dobleplay",tipo,id,internet,telefono,cable,cantMinutos,cantMegas,0);
+					aux = new Plan(tipo,nombre,id,internet,telefono,cable,cantMinutos,cantMegas,0);
 				}
 				case 5:{
-					aux = new Plan("Dobleplay",tipo,id,internet,telefono,cable,0,cantMegas,cantCanales);
+					aux = new Plan(tipo,nombre,id,internet,telefono,cable,0,cantMegas,cantCanales);
 				}
 				case 6: {
-					aux = new Plan("Dobleplay",tipo,id,internet,telefono,cable,cantMinutos,0,cantCanales);
+					aux = new Plan(tipo,nombre,id,internet,telefono,cable,cantMinutos,0,cantCanales);
 				}
 				case 7: {
-					aux = new Plan("Tripleplay",tipo,id,internet,telefono,cable,cantMinutos,cantMegas,cantCanales);
+					aux = new Plan(tipo,nombre,id,internet,telefono,cable,cantMinutos,cantMegas,cantCanales);
 				}
 			}
 			if (aux != null) {

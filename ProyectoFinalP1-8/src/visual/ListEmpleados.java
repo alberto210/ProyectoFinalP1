@@ -31,12 +31,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class ListEmpleados extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JButton btnElim;
 	private JButton btnMod;
+	private JComboBox cbxFiltro;
 	private JTextField txtNombre;
 	private JTable table;
 	public static DefaultTableModel modelo;
@@ -74,7 +79,7 @@ public class ListEmpleados extends JDialog {
 			contentPanel.add(panel, BorderLayout.CENTER);
 			panel.setLayout(null);
 			{
-				JLabel lblNewLabel = new JLabel("Nombre del Empleado:");
+				JLabel lblNewLabel = new JLabel("Filtrar por:");
 				lblNewLabel.setBounds(10, 11, 162, 14);
 				panel.add(lblNewLabel);
 			}
@@ -87,7 +92,7 @@ public class ListEmpleados extends JDialog {
 					FiltarTabla(nombre);
 				}
 			});
-			txtNombre.setBounds(165, 7, 237, 23);
+			txtNombre.setBounds(398, 7, 237, 23);
 			panel.add(txtNombre);
 			txtNombre.setColumns(10);
 			
@@ -122,6 +127,21 @@ public class ListEmpleados extends JDialog {
 			table.setModel(modelo);
 			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			scrollPane.setViewportView(table);
+			
+			cbxFiltro = new JComboBox();
+			cbxFiltro.addItemListener(new ItemListener() {
+				public void itemStateChanged(ItemEvent e) {
+					String nombre = txtNombre.getText();
+					FiltarTabla(nombre);
+				}
+			});
+			cbxFiltro.setModel(new DefaultComboBoxModel(new String[] {"Nombre", "C\u00E9dula"}));
+			cbxFiltro.setBounds(72, 8, 123, 23);
+			panel.add(cbxFiltro);
+			
+			JLabel lblNewLabel_1 = new JLabel("Filtro:");
+			lblNewLabel_1.setBounds(357, 11, 52, 14);
+			panel.add(lblNewLabel_1);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -177,7 +197,10 @@ public class ListEmpleados extends JDialog {
 	private void FiltarTabla(String nombre) {
 		TableRowSorter<DefaultTableModel> filtro = new TableRowSorter<DefaultTableModel>(modelo);
 		table.setRowSorter(filtro);
-		filtro.setRowFilter(RowFilter.regexFilter(nombre));
+		if(cbxFiltro.getSelectedItem().toString().equalsIgnoreCase("Nombre")) {
+			filtro.setRowFilter(RowFilter.regexFilter("^"+nombre,0));
+		}else {
+			filtro.setRowFilter(RowFilter.regexFilter("^"+nombre,1));
+		}
 	}
-	
 }

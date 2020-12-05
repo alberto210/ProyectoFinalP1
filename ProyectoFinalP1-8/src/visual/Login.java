@@ -10,6 +10,7 @@ import javax.swing.plaf.ColorUIResource;
 import logico.Altice;
 import logico.Usuario;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -25,6 +26,8 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -39,30 +42,38 @@ public class Login extends JFrame {
 
 	public Login() {
 		setTitle("Inicio de Sesi\u00F3n");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 397, 321);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.cyan);
-		UIManager.put("Frame.activeTitleForeground",new ColorUIResource(Color.black));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		JPanel panel = new JPanel();
+		JPanel panel = new JPanel(){
+			public void paintComponent(Graphics g) {
+				ImageIcon img = new ImageIcon(getClass().getResource("Fondo.png"));
+				g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
+			}
+		};
 		panel.setForeground(Color.GRAY);
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
+		lblUsuario.setForeground(Color.WHITE);
 		lblUsuario.setBounds(90, 74, 191, 20);
 		panel.add(lblUsuario);
 		
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a:");
+		lblContrasea.setForeground(Color.WHITE);
 		lblContrasea.setBounds(90, 136, 191, 20);
 		panel.add(lblContrasea);
 		
 		txtUsuario = new JTextField();
+		txtUsuario.setForeground(Color.WHITE);
 		txtUsuario.setBounds(90, 105, 191, 20);
 		panel.add(txtUsuario);
 		txtUsuario.setColumns(10);
@@ -83,16 +94,17 @@ public class Login extends JFrame {
 				
 			}
 		});
-		btnLogin.setBounds(124, 204, 121, 23);
+		btnLogin.setBounds(124, 238, 121, 23);
 		panel.add(btnLogin);
 		
 		txtContrasena = new JPasswordField();
+		txtContrasena.setForeground(Color.WHITE);
 		txtContrasena.setBounds(90, 162, 191, 20);
 		panel.add(txtContrasena);
 		
 		JLabel lblNewLabel = new JLabel("BIENVENIDO A ALTICE");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setForeground(Color.BLACK);
+		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 29));
 		lblNewLabel.setBounds(10, 22, 351, 41);
 		panel.add(lblNewLabel);
