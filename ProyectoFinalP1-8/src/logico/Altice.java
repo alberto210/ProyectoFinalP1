@@ -327,7 +327,7 @@ public class Altice implements Serializable{
 	
 	public boolean pagarFactura(float monto, String id, String cedula) {
 		boolean pagar = false;
-		Cliente cliente = findCliente(cedula);
+		Cliente cliente = buscarCliente(cedula);
 		if(cliente != null) {
 			Factura factura = cliente.findFactura(id);
 			if(factura != null) {
@@ -346,20 +346,6 @@ public class Altice implements Serializable{
 		while(!encontrado && i<misFacturas.size()){
 			if(misFacturas.get(i).getCodFactura().equalsIgnoreCase(id)) {
 				aux = misFacturas.get(i);
-				encontrado = true;
-			}
-			i++;
-		}
-		return aux;
-	}
-	
-	public Cliente findCliente(String cedula) {
-		Cliente aux = null;
-		boolean encontrado = false;
-		int i = 0;
-		while(!encontrado && i<misClientes.size()){
-			if(misClientes.get(i).getCedula().equalsIgnoreCase(cedula)) {
-				aux = misClientes.get(i);
 				encontrado = true;
 			}
 			i++;
