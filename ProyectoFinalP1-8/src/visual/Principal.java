@@ -130,6 +130,17 @@ public class Principal extends JFrame {
 			}
 		});
 		mnAdministracin.add(mntmNewMenuItem_1);
+		
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Listado de Empleados");
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListEmpleados list = new ListEmpleados("Listado de Empleados");
+				list.setResizable(false);
+				list.setModal(true);
+				list.setVisible(true);
+			}
+		});
+		mnAdministracin.add(mntmNewMenuItem_2);
 		mntmCrearNuevoEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CrearUsuario aux = new CrearUsuario();

@@ -148,7 +148,7 @@ public class Altice implements Serializable{
 		return aux;
 	}
 
-	private Cliente buscarCliente(String cedula) {
+	public Cliente buscarCliente(String cedula) {
 		Cliente aux = null;
 		boolean encontrado = false;
 		int i = 0;
@@ -162,7 +162,7 @@ public class Altice implements Serializable{
 		return aux;
 	}
 	
-	private Empleado buscarEmpleado(String cedula) {
+	public Empleado buscarEmpleado(String cedula) {
 		Empleado aux = null;
 		boolean encontrado = false;
 		int i = 0;
@@ -197,31 +197,31 @@ public class Altice implements Serializable{
 	}
 	
 	//crear plan contemplando que se hara con interfaz visual, toma en cuenta que servicios tiene habilitado
-	public void crearPlan(String nombre, int id,boolean internet,boolean telefono,boolean cable,int cantMinutos,int cantMegas,int cantCanales) {
+	public void crearPlan(String tipo, int id,boolean internet,boolean telefono,boolean cable,int cantMinutos,int cantMegas,int cantCanales) {
 		int caso = verificarCaso(internet,telefono,cable);
 		if (caso != -1) {
 			Plan aux = null;
 			switch (caso) {
 				case 1: {
-					aux = new Plan("Singleplay",nombre,id,internet,telefono,cable,0,cantMegas,0);
+					aux = new Plan("Singleplay",tipo,id,internet,telefono,cable,0,cantMegas,0);
 				}
 				case 2:{
-					aux = new Plan("Singleplay",nombre,id,internet,telefono,cable,cantMinutos,0,0);
+					aux = new Plan("Singleplay",tipo,id,internet,telefono,cable,cantMinutos,0,0);
 				}
 				case 3:{
-					aux = new Plan("Singleplay",nombre,id,internet,telefono,cable,0,0,cantCanales);
+					aux = new Plan("Singleplay",tipo,id,internet,telefono,cable,0,0,cantCanales);
 				}
 				case 4:{
-					aux = new Plan("Dobleplay",nombre,id,internet,telefono,cable,cantMinutos,cantMegas,0);
+					aux = new Plan("Dobleplay",tipo,id,internet,telefono,cable,cantMinutos,cantMegas,0);
 				}
 				case 5:{
-					aux = new Plan("Dobleplay",nombre,id,internet,telefono,cable,0,cantMegas,cantCanales);
+					aux = new Plan("Dobleplay",tipo,id,internet,telefono,cable,0,cantMegas,cantCanales);
 				}
 				case 6: {
-					aux = new Plan("Dobleplay",nombre,id,internet,telefono,cable,cantMinutos,0,cantCanales);
+					aux = new Plan("Dobleplay",tipo,id,internet,telefono,cable,cantMinutos,0,cantCanales);
 				}
 				case 7: {
-					aux = new Plan("Tripleplay",nombre,id,internet,telefono,cable,cantMinutos,cantMegas,cantCanales);
+					aux = new Plan("Tripleplay",tipo,id,internet,telefono,cable,cantMinutos,cantMegas,cantCanales);
 				}
 			}
 			if (aux != null) {
@@ -294,33 +294,54 @@ public class Altice implements Serializable{
 	}
 	
 	public int[] CantUsiarosPorPlan() {
-		int[] usuarios = new int[3];
+		int[] usuarios = new int[7];
 		String nombrePlan = null;
-		int cantSinglePlay = 0;
-		int cantDoblePlay = 0;
+		String tipoPlan = null;
+		int cantInternet = 0;
+		int cantVoz = 0;
+		int cantTV = 0;
+		int cantDoblePlay1 = 0;
+		int cantDoblePlay2 = 0;
+		int cantDoblePlay3 = 0;
 		int cantTriplePlay = 0;
 		for (Cliente usuario : misClientes) {
 			for (Plan plan : usuario.getMisPlanes()) {
-				nombrePlan = plan.getTipo();
+				nombrePlan = plan.getNombre();
+				tipoPlan = plan.getTipo();
 				switch(nombrePlan) {
 				case "Tripleplay":
 					cantTriplePlay++;
 					break;
 				case "Dobleplay":
-					cantDoblePlay++;
+					if(tipoPlan.equalsIgnoreCase("Internet + TV")) {
+						cantDoblePlay1++;
+					}
+					else if(tipoPlan.equalsIgnoreCase("Internet + Voz Digital")){
+						cantDoblePlay2++;
+					}
+					else if(tipoPlan.equalsIgnoreCase("TV + Voz Digital")){
+						cantDoblePlay3++;
+					}
 					break;
-				case "Singleplay":
-					cantSinglePlay++;
+				case "Internet":
+					cantInternet++;
 					break;
-
+				case "Altice TV":
+					cantTV++;
+					break;
+				case "Voz Digital":
+					cantVoz++;
+					break;
 				}
 			}
 		}
 		usuarios[0] = cantTriplePlay;
-		usuarios[1] = cantDoblePlay;
-		usuarios[2] = cantSinglePlay;
-
-		
+		usuarios[1] = cantDoblePlay1;
+		usuarios[2] = cantDoblePlay2;
+		usuarios[3] = cantDoblePlay3;
+		usuarios[4] = cantInternet;
+		usuarios[5] = cantTV;
+		usuarios[6] = cantVoz;
 		return usuarios;
 	}
 	
@@ -351,22 +372,6 @@ public class Altice implements Serializable{
 		}
 		return aux;
 	}
-
-	public Cliente findCliente(String cedula) {
-		Cliente aux = null;
-		boolean encontrado = false;
-		int i = 0;
-		while(!encontrado && i<misClientes.size()){
-			if(misClientes.get(i).getCedula().equalsIgnoreCase(cedula)) {
-				aux = misClientes.get(i);
-				encontrado = true;
-			}
-			i++;
-		}
-		return aux;
-	}
-	
-	
 	
 	//REVISAR
 	

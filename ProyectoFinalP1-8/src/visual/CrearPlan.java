@@ -156,6 +156,7 @@ public class CrearPlan extends JDialog {
 			panelDeServicios.add(lblNewLabel);
 
 			txtNombre = new JTextField();
+			txtNombre.setEditable(false);
 			txtNombre.setBounds(10, 105, 180, 23);
 			panelDeServicios.add(txtNombre);
 			txtNombre.setColumns(10);
@@ -171,8 +172,8 @@ public class CrearPlan extends JDialog {
 			rdbtnInternet.setBounds(17, 42, 109, 23);
 			panel.add(rdbtnInternet);
 
-			lbltipo = new JLabel("Tipo del plan: ");
-			lbltipo.setBounds(139, 92, 303, 14);
+			lbltipo = new JLabel("");
+			lbltipo.setBounds(192, 92, 223, 14);
 			panel.add(lbltipo);
 			
 			rdbtnTelefono = new JRadioButton("Tel\u00E9fono");
@@ -182,6 +183,10 @@ public class CrearPlan extends JDialog {
 			rdbtnCable = new JRadioButton("Cable");
 			rdbtnCable.setBounds(333, 42, 109, 23);
 			panel.add(rdbtnCable);
+			
+			JLabel lblNewLabel_2 = new JLabel("Tipo de plan:");
+			lblNewLabel_2.setBounds(112, 92, 80, 14);
+			panel.add(lblNewLabel_2);
 			rdbtnCable.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 
@@ -192,19 +197,8 @@ public class CrearPlan extends JDialog {
 						panelCable.setVisible(false);
 						spnCantidadDeCanales.setVisible(false);
 					}
-					
-					if(rdbtnInternet.isSelected() || rdbtnCable.isSelected() || rdbtnTelefono.isSelected()) {
-						lbltipo.setText("Tipo del plan: Singleplay");
-					}
-					if((rdbtnInternet.isSelected() && rdbtnCable.isSelected()) || (rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) || (rdbtnTelefono.isSelected() && rdbtnInternet.isSelected())) {
-						lbltipo.setText("Tipo del plan: Dobleplay");
-					}
-					if(rdbtnInternet.isSelected() && rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) {
-						lbltipo.setText("Tipo del plan: Tripleplay");
-					}
-					if(!rdbtnInternet.isSelected() && !rdbtnCable.isSelected() && !rdbtnTelefono.isSelected()) {
-						lbltipo.setText("Tipo del plan: ");
-					}
+					actualizarNombre();
+					actualizarTipo();
 				}
 			});
 			rdbtnTelefono.addActionListener(new ActionListener() { 
@@ -216,18 +210,8 @@ public class CrearPlan extends JDialog {
 						panelTelefono.setVisible(false);
 						spnCantidadMinutos.setVisible(false);
 					}
-					if(rdbtnInternet.isSelected() || rdbtnCable.isSelected() || rdbtnTelefono.isSelected()) {
-						lbltipo.setText("Tipo del plan: Singleplay");
-					}
-					if((rdbtnInternet.isSelected() && rdbtnCable.isSelected()) || (rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) || (rdbtnTelefono.isSelected() && rdbtnInternet.isSelected())) {
-						lbltipo.setText("Tipo del plan: Dobleplay");
-					}
-					if(rdbtnInternet.isSelected() && rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) {
-						lbltipo.setText("Tipo del plan: Tripleplay");
-					}
-					if(!rdbtnInternet.isSelected() && !rdbtnCable.isSelected() && !rdbtnTelefono.isSelected()) {
-						lbltipo.setText("Tipo del plan: ");
-					}
+					actualizarNombre();
+					actualizarTipo();
 				}
 			});
 			rdbtnInternet.addActionListener(new ActionListener() {
@@ -240,19 +224,8 @@ public class CrearPlan extends JDialog {
 						panelInternet.setVisible(false);
 						spnMegas.setVisible(false);
 					}
-					
-					if(rdbtnInternet.isSelected() || rdbtnCable.isSelected() || rdbtnTelefono.isSelected()) {
-						lbltipo.setText("Tipo del plan: Singleplay");
-					}
-					if((rdbtnInternet.isSelected() && rdbtnCable.isSelected()) || (rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) || (rdbtnTelefono.isSelected() && rdbtnInternet.isSelected())) {
-						lbltipo.setText("Tipo del plan: Dobleplay");
-					}
-					if(rdbtnInternet.isSelected() && rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) {
-						lbltipo.setText("Tipo del plan: Tripleplay");
-					}
-					if(!rdbtnInternet.isSelected() && !rdbtnCable.isSelected() && !rdbtnTelefono.isSelected()) {
-						lbltipo.setText("Tipo del plan: ");
-					}
+					actualizarNombre();
+					actualizarTipo();
 				}
 			});
 		}
@@ -267,6 +240,7 @@ public class CrearPlan extends JDialog {
 
 						String id = txtID.getText();
 						String nombre = txtNombre.getText();
+						String tipo = lbltipo.getText();
 						int cantMegas = 0;
 						int cantCanales = 0;
 						int cantMinutos = 0;
@@ -292,7 +266,7 @@ public class CrearPlan extends JDialog {
 								cantMinutos = (int) spnCantidadMinutos.getValue();
 							}
 							
-							Altice.getInstance().crearPlan(nombre, Altice.getIdPlan(), rdbtnInternet.isSelected(),
+							Altice.getInstance().crearPlan(tipo, Altice.getIdPlan(), rdbtnInternet.isSelected(),
 									rdbtnTelefono.isSelected(), rdbtnCable.isSelected(), cantMinutos, cantMegas,
 									cantCanales);
 							Altice.aumentarIdPlan();
@@ -303,20 +277,7 @@ public class CrearPlan extends JDialog {
 
 					}
 					
-					private void actualizarTipo() {
-						if(rdbtnInternet.isSelected() || rdbtnCable.isSelected() || rdbtnTelefono.isSelected()) {
-							lbltipo.setText("Tipo del plan: Singleplay");
-						}
-						if((rdbtnInternet.isSelected() && rdbtnCable.isSelected()) || (rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) || (rdbtnTelefono.isSelected() && rdbtnInternet.isSelected())) {
-							lbltipo.setText("Tipo del plan: Dobleplay");
-						}
-						if(rdbtnInternet.isSelected() && rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) {
-							lbltipo.setText("Tipo del plan: Tripleplay");
-						}
-						if(!rdbtnInternet.isSelected() && !rdbtnCable.isSelected() && !rdbtnTelefono.isSelected()) {
-							lbltipo.setText("Tipo del plan: ");
-						}
-					}
+					
 					private void clean() {
 						txtID.setText("P-" + Altice.getIdPlan());
 						txtNombre.setText("");
@@ -329,6 +290,7 @@ public class CrearPlan extends JDialog {
 						panelCable.setVisible(false);
 						panelInternet.setVisible(false);
 						panelTelefono.setVisible(false);
+						actualizarNombre();
 						actualizarTipo();
 
 					}
@@ -347,6 +309,54 @@ public class CrearPlan extends JDialog {
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
+		}
+	}
+	
+	private void actualizarNombre() {
+		if(rdbtnInternet.isSelected()) {
+			txtNombre.setText("Internet");
+		}
+		if(rdbtnCable.isSelected()) {
+			txtNombre.setText("Altice TV");
+		}
+		if(rdbtnTelefono.isSelected()) {
+			txtNombre.setText("Voz Digital");
+		}
+		if((rdbtnInternet.isSelected() && rdbtnCable.isSelected()) || (rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) || (rdbtnTelefono.isSelected() && rdbtnInternet.isSelected())) {
+			txtNombre.setText("Dobleplay");
+		}
+		if(rdbtnInternet.isSelected() && rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) {
+			txtNombre.setText("Tripleplay");
+		}
+		if(!rdbtnInternet.isSelected() && !rdbtnCable.isSelected() && !rdbtnTelefono.isSelected()) {
+			txtNombre.setText("");
+		}
+	}
+	
+	private void actualizarTipo() {
+		if(rdbtnInternet.isSelected()) {
+			lbltipo.setText("Internet");
+		}
+		if(rdbtnCable.isSelected()) {
+			lbltipo.setText("TV");
+		}
+		if(rdbtnTelefono.isSelected()) {
+			lbltipo.setText("Voz");
+		}
+		if(rdbtnInternet.isSelected() && rdbtnCable.isSelected()) {
+			lbltipo.setText("Internet + TV");
+		}
+		if(rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) {
+			lbltipo.setText("TV + Voz Digital");
+		}
+		if(rdbtnTelefono.isSelected() && rdbtnInternet.isSelected()) {
+			lbltipo.setText("Internet + Voz Digital");
+		}
+		if(rdbtnInternet.isSelected() && rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) {
+			lbltipo.setText("TV + Internet + Voz Digital");
+		}
+		if(!rdbtnInternet.isSelected() && !rdbtnCable.isSelected() && !rdbtnTelefono.isSelected()) {
+			lbltipo.setText("");
 		}
 	}
 }
