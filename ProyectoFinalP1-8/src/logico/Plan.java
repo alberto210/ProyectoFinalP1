@@ -16,15 +16,17 @@ public class Plan implements Serializable{
 	private int cantMegas;
 	private int cantCanales;
 	private String nombre;
+	private String tipo; //Single, doble o triple
 	private String id;
 	private float precioTotal;
 	private Date fechaDeEmision;
 	private Empleado emp;
 	
-	public Plan(String nombre, String id,boolean internet,boolean telefono,boolean cable,int cantMinutos,int cantMegas,int cantCanales) {
+	public Plan(String tipo, String nombre, int id,boolean internet,boolean telefono,boolean cable,int cantMinutos,int cantMegas,int cantCanales) {
 		super();
+		this.tipo = tipo;
 		this.nombre = nombre;
-		this.id = id;
+		this.id = ("P-"+id);
 		this.fechaDeEmision = null;
 		this.emp = null;
 		this.internet = internet;
@@ -113,5 +115,13 @@ public class Plan implements Serializable{
 
 	public boolean isCable() {
 		return cable;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 }

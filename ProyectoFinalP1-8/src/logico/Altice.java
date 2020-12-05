@@ -12,6 +12,7 @@ public class Altice implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private static Usuario loginUser;
 	private static Empleado loginEmpleado;
+	private static int idPlan = 1;
 	private static boolean firstTime;
 	private ArrayList<Empleado> misEmpleados;
 	private ArrayList<Cliente> misClientes;
@@ -37,6 +38,12 @@ public class Altice implements Serializable{
 		usuarioDefault= new Usuario();
 	}
 
+	public static void aumentarIdPlan() {
+		idPlan++;
+	}
+	public static int getIdPlan() {
+		return idPlan;
+	}
 	public static Usuario getLoginUser() {
 		return loginUser;
 	}
@@ -190,31 +197,31 @@ public class Altice implements Serializable{
 	}
 	
 	//crear plan contemplando que se hara con interfaz visual, toma en cuenta que servicios tiene habilitado
-	public void crearPlan(String nombre, String id,boolean internet,boolean telefono,boolean cable,int cantMinutos,int cantMegas,int cantCanales) {
+	public void crearPlan(String nombre, int id,boolean internet,boolean telefono,boolean cable,int cantMinutos,int cantMegas,int cantCanales) {
 		int caso = verificarCaso(internet,telefono,cable);
 		if (caso != -1) {
 			Plan aux = null;
 			switch (caso) {
 				case 1: {
-					aux = new Plan(nombre,id,internet,telefono,cable,0,cantMegas,0);
+					aux = new Plan("Singleplay",nombre,id,internet,telefono,cable,0,cantMegas,0);
 				}
 				case 2:{
-					aux = new Plan(nombre,id,internet,telefono,cable,cantMinutos,0,0);
+					aux = new Plan("Singleplay",nombre,id,internet,telefono,cable,cantMinutos,0,0);
 				}
 				case 3:{
-					aux = new Plan(nombre,id,internet,telefono,cable,0,0,cantCanales);
+					aux = new Plan("Singleplay",nombre,id,internet,telefono,cable,0,0,cantCanales);
 				}
 				case 4:{
-					aux = new Plan(nombre,id,internet,telefono,cable,cantMinutos,cantMegas,0);
+					aux = new Plan("Dobleplay",nombre,id,internet,telefono,cable,cantMinutos,cantMegas,0);
 				}
 				case 5:{
-					aux = new Plan(nombre,id,internet,telefono,cable,0,cantMegas,cantCanales);
+					aux = new Plan("Dobleplay",nombre,id,internet,telefono,cable,0,cantMegas,cantCanales);
 				}
 				case 6: {
-					aux = new Plan(nombre,id,internet,telefono,cable,cantMinutos,0,cantCanales);
+					aux = new Plan("Dobleplay",nombre,id,internet,telefono,cable,cantMinutos,0,cantCanales);
 				}
 				case 7: {
-					aux = new Plan(nombre,id,internet,telefono,cable,cantMinutos,cantMegas,cantCanales);
+					aux = new Plan("Tripleplay",nombre,id,internet,telefono,cable,cantMinutos,cantMegas,cantCanales);
 				}
 			}
 			if (aux != null) {
@@ -287,40 +294,32 @@ public class Altice implements Serializable{
 	}
 	
 	public int[] CantUsiarosPorPlan() {
-		int[] usuarios = new int[5];
+		int[] usuarios = new int[3];
 		String nombrePlan = null;
-		int cantInternet = 0;
-		int cantCable = 0;
-		int cantTelefono = 0;
+		int cantSinglePlay = 0;
 		int cantDoblePlay = 0;
 		int cantTriplePlay = 0;
 		for (Cliente usuario : misClientes) {
 			for (Plan plan : usuario.getMisPlanes()) {
-				nombrePlan = plan.getNombre();
+				nombrePlan = plan.getTipo();
 				switch(nombrePlan) {
-				case "Triple Play":
+				case "Tripleplay":
 					cantTriplePlay++;
 					break;
-				case "Doble Play":
+				case "Dobleplay":
 					cantDoblePlay++;
 					break;
-				case "Internet":
-					cantInternet++;
+				case "Singleplay":
+					cantSinglePlay++;
 					break;
-				case "Telefono":
-					cantTelefono++;
-					break;
-				case "Cable":
-					cantCable++;
-					break;
+
 				}
 			}
 		}
 		usuarios[0] = cantTriplePlay;
 		usuarios[1] = cantDoblePlay;
-		usuarios[2] = cantInternet;
-		usuarios[3] = cantTelefono;
-		usuarios[4] = cantCable;
+		usuarios[2] = cantSinglePlay;
+
 		
 		return usuarios;
 	}

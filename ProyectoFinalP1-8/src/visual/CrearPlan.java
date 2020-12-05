@@ -3,16 +3,18 @@ package visual;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
+
 import javax.swing.border.TitledBorder;
 
 import logico.Altice;
-
 import logico.Plan;
 
 import javax.swing.JLabel;
@@ -20,398 +22,239 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.JSpinner;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.UIManager;
 
 public class CrearPlan extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtNombre;
 	private JTextField txtID;
-	private JRadioButton rdbtnNinguno ;
-private JRadioButton rdbtnInternet ;
-private JRadioButton rdbtnTelefono ;
-private JRadioButton rdbtnCable ;
-private JRadioButton rdbtnInternetTelefono;
-private JRadioButton rdbtnInternetCable;
-private JRadioButton rdbtnTelefonoCable ;
-private JRadioButton rdbtnTelefonoCableInternet ;
-private JPanel panelDeServicios;
-private JPanel panelInicial ;
-private JPanel panelInternet;
-private JSpinner spnMegas ;
-private JPanel panelTelefono ;
-private JSpinner spnCantidadMinutos ;
-private JPanel panelCable ;
-private JSpinner spnCantidadDeCanales;
-private JPanel panelNinguno ;
-/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			CrearPlan dialog = new CrearPlan();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private JRadioButton rdbtnInternet;
+	private JRadioButton rdbtnTelefono;
+	private JRadioButton rdbtnCable;
+	private JPanel panelDeServicios;
+	private JPanel panelInicial;
+	private JPanel panelInternet;
+	private JSpinner spnMegas;
+	private JPanel panelTelefono;
+	private JSpinner spnCantidadMinutos;
+	private JPanel panelCable;
+	private JSpinner spnCantidadDeCanales;
+	private JPanel panelNinguno;
+	private JLabel lbltipo;
 
-	/**
-	 * Create the dialog.
-	 */
 	public CrearPlan() {
+		setTitle("Crear Plan");
 		setBounds(100, 100, 786, 498);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.control);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		{
-			 panelInicial = new JPanel();
-			panelInicial.setBorder(new TitledBorder(null, "Informaci\u00F3n para creaci\u00F3n del plan:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			panelInicial = new JPanel();
+			panelInicial.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 			contentPanel.add(panelInicial, BorderLayout.CENTER);
 			panelInicial.setLayout(null);
-			
-			JLabel lblNewLabel = new JLabel("Nombre:");
-			lblNewLabel.setBounds(397, 33, 100, 19);
-			panelInicial.add(lblNewLabel);
-			
-			txtNombre = new JTextField();
-			txtNombre.setBounds(519, 32, 180, 20);
-			panelInicial.add(txtNombre);
-			txtNombre.setColumns(10);
-			
-			JLabel lblNewLabel_1 = new JLabel("ID:");
-			lblNewLabel_1.setBounds(20, 35, 46, 14);
-			panelInicial.add(lblNewLabel_1);
-			
-			txtID = new JTextField();
-			txtID.setColumns(10);
-			txtID.setBounds(76, 32, 180, 20);
-			panelInicial.add(txtID);
-			
-			 panelDeServicios = new JPanel();
-			panelDeServicios.setBorder(new TitledBorder(null, "Elija el servico que desea", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			panelDeServicios.setBounds(10, 66, 740, 196);
-			panelInicial.add(panelDeServicios);
-			panelDeServicios.setLayout(null);
-			
-			rdbtnInternet = new JRadioButton("Internet");
-			rdbtnInternet.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					
-					rdbtnNinguno.setSelected(false);
-					rdbtnInternet.setSelected(true);
-					rdbtnCable.setSelected(false);
-					rdbtnTelefono.setSelected(false);
-					rdbtnInternetCable.setSelected(false);
-					rdbtnInternetTelefono.setSelected(false);
-					rdbtnTelefonoCable.setSelected(false);
-					rdbtnTelefonoCableInternet.setSelected(false);
-					
-					panelNinguno.setVisible(false);	
-					panelInternet.setVisible(true);
-					panelCable.setVisible(false);
-					panelTelefono.setVisible(false);
-					
-					
-					spnCantidadMinutos.setVisible(false);
-					spnMegas.setVisible(true);
-					spnCantidadDeCanales.setVisible(false);
-					
-					
-					
-					
+
+			panelNinguno = new JPanel() {
+				public void paintComponent(Graphics g) {
+					ImageIcon img = new ImageIcon(getClass().getResource("Fondo.png"));
+					g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
 				}
-			});
-			rdbtnInternet.setBounds(182, 58, 109, 23);
-			panelDeServicios.add(rdbtnInternet);
-			
-			 rdbtnTelefono = new JRadioButton("Tel\u00E9fono");
-			 rdbtnTelefono.addActionListener(new ActionListener() {
-			 	public void actionPerformed(ActionEvent e) {
-			 		
-			 		rdbtnNinguno.setSelected(false);
-					rdbtnInternet.setSelected(false);
-					rdbtnCable.setSelected(false);
-					rdbtnTelefono.setSelected(true);
-					rdbtnInternetCable.setSelected(false);
-					rdbtnInternetTelefono.setSelected(false);
-					rdbtnTelefonoCable.setSelected(false);
-					rdbtnTelefonoCableInternet.setSelected(false);
-					
-					panelNinguno.setVisible(false);	
-					panelInternet.setVisible(false);
-					panelCable.setVisible(false);
-					panelTelefono.setVisible(true);
-					
-					
-					spnCantidadMinutos.setVisible(true);
-					spnMegas.setVisible(false);
-					spnCantidadDeCanales.setVisible(false);
-			 		
-			 		
-			 	}
-			 });
-			rdbtnTelefono.setBounds(349, 58, 109, 23);
-			panelDeServicios.add(rdbtnTelefono);
-			
-			 rdbtnCable = new JRadioButton("Cable");
-			 rdbtnCable.addActionListener(new ActionListener() {
-			 	public void actionPerformed(ActionEvent e) {
-			 		
-			 		
-			 		rdbtnNinguno.setSelected(false);
-					rdbtnInternet.setSelected(false);
-					rdbtnCable.setSelected(true);
-					rdbtnTelefono.setSelected(false);
-					rdbtnInternetCable.setSelected(false);
-					rdbtnInternetTelefono.setSelected(false);
-					rdbtnTelefonoCable.setSelected(false);
-					rdbtnTelefonoCableInternet.setSelected(false);
-					
-					panelNinguno.setVisible(false);	
-					panelInternet.setVisible(false);
-					panelCable.setVisible(true);
-					panelTelefono.setVisible(false);
-					
-					
-					spnCantidadMinutos.setVisible(false);
-					spnMegas.setVisible(false);
-					spnCantidadDeCanales.setVisible(true);	
-			 		
-			 		
-			 		
-			 		
-			 		
-			 	}
-			 });
-			rdbtnCable.setBounds(503, 58, 109, 23);
-			panelDeServicios.add(rdbtnCable);
-			
-			JLabel lblNewLabel_2 = new JLabel("Simple:");
-			lblNewLabel_2.setBounds(10, 28, 105, 23);
-			panelDeServicios.add(lblNewLabel_2);
-			
-			JLabel lblNewLabel_3 = new JLabel("Combo:");
-			lblNewLabel_3.setBounds(10, 96, 46, 14);
-			panelDeServicios.add(lblNewLabel_3);
-			
-			 rdbtnInternetTelefono = new JRadioButton("Internet & Tel\u00E9fono");
-			 rdbtnInternetTelefono.addActionListener(new ActionListener() {
-			 	public void actionPerformed(ActionEvent e) {
-			 		
-			 		
-			 		rdbtnNinguno.setSelected(false);
-					rdbtnInternet.setSelected(false);
-					rdbtnCable.setSelected(false);
-					rdbtnTelefono.setSelected(false);
-					rdbtnInternetCable.setSelected(false);
-					rdbtnInternetTelefono.setSelected(true);
-					rdbtnTelefonoCable.setSelected(false);
-					rdbtnTelefonoCableInternet.setSelected(false);
-					
-					panelNinguno.setVisible(false);	
-					panelInternet.setVisible(true);
-					panelCable.setVisible(false);
-					panelTelefono.setVisible(true);
-					
-					
-					spnCantidadMinutos.setVisible(true);
-					spnMegas.setVisible(true);
-					spnCantidadDeCanales.setVisible(false);
-			 		
-			 		
-			 		
-			 	}
-			 });
-			rdbtnInternetTelefono.setBounds(6, 138, 140, 23);
-			panelDeServicios.add(rdbtnInternetTelefono);
-			
-			 rdbtnInternetCable = new JRadioButton("Internet & Cable");
-			 rdbtnInternetCable.addActionListener(new ActionListener() {
-			 	public void actionPerformed(ActionEvent e) {
-			 		
-			 		
-			 		rdbtnNinguno.setSelected(false);
-					rdbtnInternet.setSelected(false);
-					rdbtnCable.setSelected(false);
-					rdbtnTelefono.setSelected(false);
-					rdbtnInternetCable.setSelected(true);
-					rdbtnInternetTelefono.setSelected(false);
-					rdbtnTelefonoCable.setSelected(false);
-					rdbtnTelefonoCableInternet.setSelected(false);
-					
-					panelNinguno.setVisible(false);	
-					panelInternet.setVisible(true);
-					panelCable.setVisible(true);
-					panelTelefono.setVisible(false);
-					
-					
-					spnCantidadMinutos.setVisible(false);
-					spnMegas.setVisible(true);
-					spnCantidadDeCanales.setVisible(true);
-			 		
-			 		
-			 		
-			 		
-			 	}
-			 });
-			rdbtnInternetCable.setBounds(182, 138, 134, 23);
-			panelDeServicios.add(rdbtnInternetCable);
-			
-			 rdbtnTelefonoCable = new JRadioButton("Tel\u00E9fono & Cable");
-			 rdbtnTelefonoCable.addActionListener(new ActionListener() {
-			 	public void actionPerformed(ActionEvent e) {
-			 		
-			 		
-			 		rdbtnNinguno.setSelected(false);
-					rdbtnInternet.setSelected(false);
-					rdbtnCable.setSelected(false);
-					rdbtnTelefono.setSelected(false);
-					rdbtnInternetCable.setSelected(false);
-					rdbtnInternetTelefono.setSelected(false);
-					rdbtnTelefonoCable.setSelected(true);
-					rdbtnTelefonoCableInternet.setSelected(false);
-					
-					panelNinguno.setVisible(false);	
-					panelInternet.setVisible(false);
-					panelCable.setVisible(true);
-					panelTelefono.setVisible(true);
-					
-					
-					spnCantidadMinutos.setVisible(true);
-					spnMegas.setVisible(false);
-					spnCantidadDeCanales.setVisible(true);
-			 		
-			 		
-			 		
-			 		
-			 	}
-			 });
-			rdbtnTelefonoCable.setBounds(349, 138, 152, 23);
-			panelDeServicios.add(rdbtnTelefonoCable);
-			
-			 rdbtnTelefonoCableInternet = new JRadioButton("Tel\u00E9fono, Cable & Internet");
-			 rdbtnTelefonoCableInternet.addActionListener(new ActionListener() {
-			 	public void actionPerformed(ActionEvent e) {
-			 		
-			 		rdbtnNinguno.setSelected(false);
-					rdbtnInternet.setSelected(false);
-					rdbtnCable.setSelected(false);
-					rdbtnTelefono.setSelected(false);
-					rdbtnInternetCable.setSelected(false);
-					rdbtnInternetTelefono.setSelected(false);
-					rdbtnTelefonoCable.setSelected(false);
-					rdbtnTelefonoCableInternet.setSelected(true);
-					
-					panelNinguno.setVisible(false);	
-					panelInternet.setVisible(true);
-					panelCable.setVisible(true);
-					panelTelefono.setVisible(true);
-					
-					
-					spnCantidadMinutos.setVisible(true);
-					spnMegas.setVisible(true);
-					spnCantidadDeCanales.setVisible(true);
-			 		
-			 		
-			 		
-			 		
-			 	}
-			 });
-			rdbtnTelefonoCableInternet.setBounds(503, 138, 198, 23);
-			panelDeServicios.add(rdbtnTelefonoCableInternet);
-			
-			rdbtnNinguno = new JRadioButton("Ninguno");
-			rdbtnNinguno.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					
-					rdbtnNinguno.setSelected(true);
-					rdbtnInternet.setSelected(false);
-					rdbtnCable.setSelected(false);
-					rdbtnTelefono.setSelected(false);
-					rdbtnInternetCable.setSelected(false);
-					rdbtnInternetTelefono.setSelected(false);
-					rdbtnTelefonoCable.setSelected(false);
-					rdbtnTelefonoCableInternet.setSelected(false);
-					
-					panelNinguno.setVisible(true);
-					
-					panelInternet.setVisible(false);
-					panelCable.setVisible(false);
-					panelTelefono.setVisible(false);
-					spnCantidadMinutos.setVisible(false);
-					spnMegas.setVisible(false);
-					spnCantidadDeCanales.setVisible(false);
-					
-					
-					
-				}
-			});
-			rdbtnNinguno.setSelected(true);
-			rdbtnNinguno.setBounds(6, 58, 109, 23);
-			panelDeServicios.add(rdbtnNinguno);
-			
-			 panelNinguno = new JPanel();
-			panelNinguno.setBounds(10, 275, 740, 119);
+			};
+			panelNinguno.setBounds(10, 11, 740, 119);
 			panelInicial.add(panelNinguno);
 			panelNinguno.setLayout(null);
-			
+
 			JLabel lblNewLabel_4 = new JLabel("ALTICE ");
+			lblNewLabel_4.setBounds(202, 24, 326, 68);
+			panelNinguno.add(lblNewLabel_4);
+			lblNewLabel_4.setForeground(Color.WHITE);
 			lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_4.setFont(new Font("Century Schoolbook", Font.BOLD, 51));
-			lblNewLabel_4.setBounds(196, 21, 326, 68);
-			panelNinguno.add(lblNewLabel_4);
-			
-			 panelInternet = new JPanel();
-			panelInternet.setBorder(new TitledBorder(null, "Internet", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			panelInternet.setBounds(10, 275, 224, 119);
+
+			panelInternet = new JPanel();
+			panelInternet
+					.setBorder(new TitledBorder(null, "Internet", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			panelInternet.setBounds(10, 286, 224, 119);
 			panelInicial.add(panelInternet);
 			panelInternet.setLayout(null);
-			
+			panelInternet.setVisible(false);
+
 			JLabel lblNewLabel_5 = new JLabel("Megas:");
 			lblNewLabel_5.setBounds(10, 42, 108, 23);
 			panelInternet.add(lblNewLabel_5);
-			
-			 spnMegas = new JSpinner();
-			 spnMegas.setVisible(false);
+
+			spnMegas = new JSpinner();
+			spnMegas.setVisible(false);
 			spnMegas.setBounds(128, 42, 74, 20);
 			panelInternet.add(spnMegas);
-			
-			 panelTelefono = new JPanel();
-			panelTelefono.setBorder(new TitledBorder(null, "Tel\u00E9fono", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			panelTelefono.setBounds(246, 275, 232, 119);
+
+			panelTelefono = new JPanel();
+			panelTelefono.setBorder(
+					new TitledBorder(null, "Tel\u00E9fono", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			panelTelefono.setBounds(244, 286, 232, 119);
 			panelInicial.add(panelTelefono);
 			panelTelefono.setLayout(null);
-			
+			panelTelefono.setVisible(false);
+
 			JLabel lblNewLabel_6 = new JLabel("Minutos:");
 			lblNewLabel_6.setBounds(10, 42, 108, 23);
 			panelTelefono.add(lblNewLabel_6);
-			
-			 spnCantidadMinutos = new JSpinner();
-			 spnCantidadMinutos.setVisible(false);
+
+			spnCantidadMinutos = new JSpinner();
+			spnCantidadMinutos.setVisible(false);
 			spnCantidadMinutos.setBounds(128, 42, 74, 20);
 			panelTelefono.add(spnCantidadMinutos);
-			
-			 panelCable = new JPanel();
+
+			panelCable = new JPanel();
 			panelCable.setBorder(new TitledBorder(null, "Cable", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			panelCable.setBounds(498, 275, 232, 119);
+			panelCable.setBounds(498, 286, 232, 119);
 			panelInicial.add(panelCable);
 			panelCable.setLayout(null);
-			
+			panelCable.setVisible(false);
+
 			JLabel lblNewLabel_7 = new JLabel("Canales:");
 			lblNewLabel_7.setBounds(10, 42, 108, 23);
 			panelCable.add(lblNewLabel_7);
-			
-			 spnCantidadDeCanales = new JSpinner();
-			 spnCantidadDeCanales.setVisible(false);
+
+			spnCantidadDeCanales = new JSpinner();
+			spnCantidadDeCanales.setVisible(false);
 			spnCantidadDeCanales.setBounds(128, 42, 74, 20);
 			panelCable.add(spnCantidadDeCanales);
+
+			panelDeServicios = new JPanel();
+			panelDeServicios.setBounds(10, 141, 740, 139);
+			panelInicial.add(panelDeServicios);
+			panelDeServicios.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
+					"Informaci\u00F3n para creaci\u00F3n del plan:", TitledBorder.LEADING, TitledBorder.TOP, null,
+					new Color(0, 0, 0)));
+			panelDeServicios.setLayout(null);
+
+			JLabel lblNewLabel_1 = new JLabel("ID:");
+			lblNewLabel_1.setBounds(10, 28, 46, 14);
+			panelDeServicios.add(lblNewLabel_1);
+
+			txtID = new JTextField();
+			txtID.setEditable(false);
+			txtID.setBounds(10, 53, 180, 23);
+			panelDeServicios.add(txtID);
+			txtID.setColumns(10);
+			txtID.setText("P-"+Altice.getIdPlan());
+			JLabel lblNewLabel = new JLabel("Nombre:");
+			lblNewLabel.setBounds(10, 81, 100, 19);
+			panelDeServicios.add(lblNewLabel);
+
+			txtNombre = new JTextField();
+			txtNombre.setBounds(10, 105, 180, 23);
+			panelDeServicios.add(txtNombre);
+			txtNombre.setColumns(10);
+
+			JPanel panel = new JPanel();
+			panel.setBorder(new TitledBorder(null, "Seleccione los servicios del plan:", TitledBorder.LEADING,
+					TitledBorder.TOP, null, null));
+			panel.setBounds(240, 11, 459, 117);
+			panelDeServicios.add(panel);
+			panel.setLayout(null);
+
+			rdbtnInternet = new JRadioButton("Internet");
+			rdbtnInternet.setBounds(17, 42, 109, 23);
+			panel.add(rdbtnInternet);
+
+			lbltipo = new JLabel("Tipo del plan: ");
+			lbltipo.setBounds(139, 92, 303, 14);
+			panel.add(lbltipo);
+			
+			rdbtnTelefono = new JRadioButton("Tel\u00E9fono");
+			rdbtnTelefono.setBounds(172, 42, 109, 23);
+			panel.add(rdbtnTelefono);
+
+			rdbtnCable = new JRadioButton("Cable");
+			rdbtnCable.setBounds(333, 42, 109, 23);
+			panel.add(rdbtnCable);
+			rdbtnCable.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+					if (rdbtnCable.isSelected()) {
+						panelCable.setVisible(true);
+						spnCantidadDeCanales.setVisible(true);
+					} else {
+						panelCable.setVisible(false);
+						spnCantidadDeCanales.setVisible(false);
+					}
+					
+					if(rdbtnInternet.isSelected() || rdbtnCable.isSelected() || rdbtnTelefono.isSelected()) {
+						lbltipo.setText("Tipo del plan: Singleplay");
+					}
+					if((rdbtnInternet.isSelected() && rdbtnCable.isSelected()) || (rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) || (rdbtnTelefono.isSelected() && rdbtnInternet.isSelected())) {
+						lbltipo.setText("Tipo del plan: Dobleplay");
+					}
+					if(rdbtnInternet.isSelected() && rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) {
+						lbltipo.setText("Tipo del plan: Tripleplay");
+					}
+					if(!rdbtnInternet.isSelected() && !rdbtnCable.isSelected() && !rdbtnTelefono.isSelected()) {
+						lbltipo.setText("Tipo del plan: ");
+					}
+				}
+			});
+			rdbtnTelefono.addActionListener(new ActionListener() { 
+				public void actionPerformed(ActionEvent e) {
+					if (rdbtnTelefono.isSelected()) {
+						panelTelefono.setVisible(true);
+						spnCantidadMinutos.setVisible(true);
+					} else {
+						panelTelefono.setVisible(false);
+						spnCantidadMinutos.setVisible(false);
+					}
+					if(rdbtnInternet.isSelected() || rdbtnCable.isSelected() || rdbtnTelefono.isSelected()) {
+						lbltipo.setText("Tipo del plan: Singleplay");
+					}
+					if((rdbtnInternet.isSelected() && rdbtnCable.isSelected()) || (rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) || (rdbtnTelefono.isSelected() && rdbtnInternet.isSelected())) {
+						lbltipo.setText("Tipo del plan: Dobleplay");
+					}
+					if(rdbtnInternet.isSelected() && rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) {
+						lbltipo.setText("Tipo del plan: Tripleplay");
+					}
+					if(!rdbtnInternet.isSelected() && !rdbtnCable.isSelected() && !rdbtnTelefono.isSelected()) {
+						lbltipo.setText("Tipo del plan: ");
+					}
+				}
+			});
+			rdbtnInternet.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+					if (rdbtnInternet.isSelected()) {
+						panelInternet.setVisible(true);
+						spnMegas.setVisible(true);
+					} else {
+						panelInternet.setVisible(false);
+						spnMegas.setVisible(false);
+					}
+					
+					if(rdbtnInternet.isSelected() || rdbtnCable.isSelected() || rdbtnTelefono.isSelected()) {
+						lbltipo.setText("Tipo del plan: Singleplay");
+					}
+					if((rdbtnInternet.isSelected() && rdbtnCable.isSelected()) || (rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) || (rdbtnTelefono.isSelected() && rdbtnInternet.isSelected())) {
+						lbltipo.setText("Tipo del plan: Dobleplay");
+					}
+					if(rdbtnInternet.isSelected() && rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) {
+						lbltipo.setText("Tipo del plan: Tripleplay");
+					}
+					if(!rdbtnInternet.isSelected() && !rdbtnCable.isSelected() && !rdbtnTelefono.isSelected()) {
+						lbltipo.setText("Tipo del plan: ");
+					}
+				}
+			});
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -421,122 +264,74 @@ private JPanel panelNinguno ;
 				JButton okButton = new JButton("Crear Plan");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
-						
 
-						
-						Plan aux = null;
-						
 						String id = txtID.getText();
 						String nombre = txtNombre.getText();
-						
-						
-						
-						if(rdbtnInternet.isSelected()) {
+						int cantMegas = 0;
+						int cantCanales = 0;
+						int cantMinutos = 0;
+						if ((!rdbtnCable.isSelected() && !rdbtnInternet.isSelected() && !rdbtnTelefono.isSelected()) || id.equalsIgnoreCase("") || nombre.equalsIgnoreCase("")) {
+							JOptionPane.showMessageDialog(null, "Campos vacíos. Por favor, llene todos los campos","Información", JOptionPane.WARNING_MESSAGE);
+						} else if(rdbtnCable.isSelected() && Float.parseFloat(spnCantidadDeCanales.getValue().toString()) == 0){
+							JOptionPane.showMessageDialog(null, "Campos vacíos. Por favor, llene todos los campos","Información", JOptionPane.WARNING_MESSAGE);
+						}else if(rdbtnInternet.isSelected() && Float.parseFloat(spnMegas.getValue().toString()) == 0){
+							JOptionPane.showMessageDialog(null, "Campos vacíos. Por favor, llene todos los campos","Información", JOptionPane.WARNING_MESSAGE);
+						}else if(rdbtnTelefono.isSelected() && Float.parseFloat(spnCantidadMinutos.getValue().toString()) == 0){
+							JOptionPane.showMessageDialog(null, "Campos vacíos. Por favor, llene todos los campos","Información", JOptionPane.WARNING_MESSAGE);
+						}
+						else {
+							if (rdbtnInternet.isSelected()) {
+								cantMegas = (int) spnMegas.getValue();
+							}
+
+							if (rdbtnCable.isSelected()) {
+								cantCanales = (int) spnCantidadDeCanales.getValue();
+							}
+
+							if (rdbtnTelefono.isSelected()) {
+								cantMinutos = (int) spnCantidadMinutos.getValue();
+							}
 							
-							int cantMegas = (int) spnMegas.getValue();
-							
-				aux = new Plan(nombre, id, true, false, false, 0, cantMegas, 0);			
-							
-							JOptionPane.showMessageDialog(null,"Plan Creado");
+							Altice.getInstance().crearPlan(nombre, Altice.getIdPlan(), rdbtnInternet.isSelected(),
+									rdbtnTelefono.isSelected(), rdbtnCable.isSelected(), cantMinutos, cantMegas,
+									cantCanales);
+							Altice.aumentarIdPlan();
+							JOptionPane.showMessageDialog(null, "El plan se ha creado de manera exitosa");
 							clean();
 							
 						}
-						
-	if(rdbtnCable.isSelected()) {
-							
-							int cantCanales = (int) spnCantidadDeCanales.getValue();
-							
-				aux = new Plan(nombre, id, false, false, true, 0, 0, cantCanales);			
-							
-							JOptionPane.showMessageDialog(null,"Plan Creado");
-							clean();
-							
+
+					}
+					
+					private void actualizarTipo() {
+						if(rdbtnInternet.isSelected() || rdbtnCable.isSelected() || rdbtnTelefono.isSelected()) {
+							lbltipo.setText("Tipo del plan: Singleplay");
 						}
-	
-	if(rdbtnTelefono.isSelected()) {
-		
-		int cantMinutos = (int) spnCantidadMinutos.getValue();
-		
-aux = new Plan(nombre, id, false, false, true, cantMinutos, 0, 0);			
-		
-		JOptionPane.showMessageDialog(null,"Plan Creado");
-		clean();
-		
-	}
-
-	if(rdbtnInternetTelefono.isSelected()) {
-		
-		int cantInternet = (int) spnMegas.getValue();
-		int cantMinutos = (int) spnCantidadMinutos.getValue();
-		
-aux = new Plan(nombre, id, false, false, true, cantMinutos, cantInternet, 0);			
-		
-		JOptionPane.showMessageDialog(null,"Plan Creado");
-		clean();
-		
-	}
-
-	
-if(rdbtnInternetCable.isSelected()) {
-		
-		int cantInternet = (int) spnMegas.getValue();
-		int cantCanales = (int) spnCantidadDeCanales.getValue();
-		
-aux = new Plan(nombre, id, false, false, true, 0, cantInternet, cantCanales);			
-		
-		JOptionPane.showMessageDialog(null,"Plan Creado");
-		clean();
-		
-	}
-
-
-if(rdbtnTelefonoCable.isSelected()) {
-	
-	int cantMinutos = (int) spnCantidadMinutos.getValue();
-	int cantCanales = (int) spnCantidadDeCanales.getValue();
-	
-aux = new Plan(nombre, id, false, false, true, cantMinutos, 0, cantCanales);			
-	
-	JOptionPane.showMessageDialog(null,"Plan Creado");
-	clean();
-	
-}
-
-if(rdbtnTelefonoCableInternet.isSelected()) {
-	
-	int cantMinutos = (int) spnCantidadMinutos.getValue();
-	int cantCanales = (int) spnCantidadDeCanales.getValue();
-	int cantInternet = (int) spnMegas.getValue();
-	
-aux = new Plan(nombre, id, false, false, true, cantMinutos, cantInternet, cantCanales);			
-	
-	JOptionPane.showMessageDialog(null,"Plan Creado");
-	clean();
-	
-}
-
-Plan plan = null;
-Altice.getInstance().insertarPlan(aux);
-
-			
-						
-						
-						
-
-						
-						
-						
+						if((rdbtnInternet.isSelected() && rdbtnCable.isSelected()) || (rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) || (rdbtnTelefono.isSelected() && rdbtnInternet.isSelected())) {
+							lbltipo.setText("Tipo del plan: Dobleplay");
+						}
+						if(rdbtnInternet.isSelected() && rdbtnCable.isSelected() && rdbtnTelefono.isSelected()) {
+							lbltipo.setText("Tipo del plan: Tripleplay");
+						}
+						if(!rdbtnInternet.isSelected() && !rdbtnCable.isSelected() && !rdbtnTelefono.isSelected()) {
+							lbltipo.setText("Tipo del plan: ");
+						}
 					}
 					private void clean() {
-						txtID.setText("");
+						txtID.setText("P-" + Altice.getIdPlan());
 						txtNombre.setText("");
-						
 						spnMegas.setValue(Integer.valueOf("0"));
 						spnCantidadDeCanales.setValue(Integer.valueOf("0"));
 						spnCantidadMinutos.setValue(Integer.valueOf("0"));
-						
-					}	
+						rdbtnCable.setSelected(false);
+						rdbtnInternet.setSelected(false);
+						rdbtnTelefono.setSelected(false);
+						panelCable.setVisible(false);
+						panelInternet.setVisible(false);
+						panelTelefono.setVisible(false);
+						actualizarTipo();
+
+					}
 				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);

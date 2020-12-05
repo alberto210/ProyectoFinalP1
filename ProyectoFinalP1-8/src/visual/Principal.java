@@ -2,6 +2,8 @@ package visual;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -117,17 +119,23 @@ public class Principal extends JFrame {
 		}
 		menuBar.add(mnAdministracin);
 		
-		JMenu menu = new JMenu("Usuario");
-		mnAdministracin.add(menu);
+		JMenuItem mntmCrearNuevoEmpleado = new JMenuItem("Crear Nuevo Empleado");
+		mnAdministracin.add(mntmCrearNuevoEmpleado);
 		
-		JMenuItem menuItem = new JMenuItem("Crear Nuevo Usuario");
-		menuItem.addActionListener(new ActionListener() {
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Crear Nuevo Plan");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CrearPlan aux = new CrearPlan();
+				aux.setVisible(true);
+			}
+		});
+		mnAdministracin.add(mntmNewMenuItem_1);
+		mntmCrearNuevoEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CrearUsuario aux = new CrearUsuario();
 				aux.setVisible(true);
 			}
 		});
-		menu.add(menuItem);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Cerrar Sesi\u00F3n");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
@@ -153,7 +161,12 @@ public class Principal extends JFrame {
 		});
 		mntmNewMenuItem.setHorizontalAlignment(SwingConstants.LEFT);
 		menuBar.add(mntmNewMenuItem);
-		contentPane = new JPanel();
+		contentPane = new JPanel(){  
+			public void paintComponent(Graphics g){  
+				Image img = Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("Fondo.png"));
+				g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);  
+			}  
+		};
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);

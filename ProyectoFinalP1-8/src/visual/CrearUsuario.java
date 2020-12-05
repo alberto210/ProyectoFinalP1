@@ -206,24 +206,29 @@ public class CrearUsuario extends JDialog {
 								JOptionPane.showMessageDialog(null, "Campos vacíos. Por favor, llene todos los campos", "Información", JOptionPane.WARNING_MESSAGE);
 							
 							}else{
-								if(rdbAdministrador.isSelected()){
-									if(!cbxCargo.getSelectedItem().toString().equalsIgnoreCase("<Seleccione>")) {
-										emp = new Administrativo(txtCedula.getText(),txtNombre.getText(), Float.parseFloat(spnSueldoBase.getValue().toString()), Float.parseFloat(spnSueldoUnitario.getValue().toString()), 0, cbxCargo.getSelectedItem().toString());
-										user = new Usuario("Administrador",nombre,password);
+								if(password.equals(verpass)) {
+									if(rdbAdministrador.isSelected()){
+										if(!cbxCargo.getSelectedItem().toString().equalsIgnoreCase("<Seleccione>")) {
+											emp = new Administrativo(txtCedula.getText(),txtNombre.getText(), Float.parseFloat(spnSueldoBase.getValue().toString()), Float.parseFloat(spnSueldoUnitario.getValue().toString()), 0, cbxCargo.getSelectedItem().toString());
+											user = new Usuario("Administrador",nombre,password);
+										}
 									}
-								}
-								if(rdbComercial.isSelected()) {
-									emp = new Comercial(txtCedula.getText(),txtNombre.getText(), Float.parseFloat(spnSueldoBase.getValue().toString()), Float.parseFloat(spnSueldoUnitario.getValue().toString()), 0,0);
-									user = new Usuario("Comercial",nombre,password);
-								}
-								if(rdbAdministrador.isSelected() && cbxCargo.getSelectedItem().toString().equalsIgnoreCase("<Seleccione>")) {
-									JOptionPane.showMessageDialog(null, "Seleccione un cargo para el personal administrativo.", "Información", JOptionPane.WARNING_MESSAGE);
+									if(rdbComercial.isSelected()) {
+										emp = new Comercial(txtCedula.getText(),txtNombre.getText(), Float.parseFloat(spnSueldoBase.getValue().toString()), Float.parseFloat(spnSueldoUnitario.getValue().toString()), 0,0);
+										user = new Usuario("Comercial",nombre,password);
+									}
+									if(rdbAdministrador.isSelected() && cbxCargo.getSelectedItem().toString().equalsIgnoreCase("<Seleccione>")) {
+										JOptionPane.showMessageDialog(null, "Seleccione un cargo para el personal administrativo.", "Información", JOptionPane.WARNING_MESSAGE);
+									}else {
+										emp.setUser(user);
+										Altice.getInstance().getMisEmpleados().add(emp);
+										JOptionPane.showMessageDialog(null, "Usuario creado correctamente", null, JOptionPane.INFORMATION_MESSAGE, null);
+										clear();
+									}
 								}else {
-									emp.setUser(user);
-									Altice.getInstance().getMisEmpleados().add(emp);
-									JOptionPane.showMessageDialog(null, "Usuario creado correctamente", null, JOptionPane.INFORMATION_MESSAGE, null);
-									clear();
+									JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden, reingrese las contraseñas.", "Información", JOptionPane.WARNING_MESSAGE);
 								}
+									
 							}
 						}else {
 							if(!nombre.equalsIgnoreCase("Altice")) {
