@@ -367,4 +367,13 @@ public class Altice implements Serializable{
 		return aux;
 	}
 	
+	
+	
+	//REVISAR
+	
+	public void insertarPlan(Plan planes) {
+		misPlanes.add(planes);
+	}
+	
+	
 }
