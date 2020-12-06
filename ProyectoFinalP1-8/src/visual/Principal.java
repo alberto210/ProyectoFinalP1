@@ -83,7 +83,7 @@ public class Principal extends JFrame {
 			Altice.getInstance();
 			setTitle("Altice - Usuario: " + Altice.getLoginEmpleado().getNombre());
 		}
-
+		setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {

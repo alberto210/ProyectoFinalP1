@@ -12,7 +12,7 @@ public class Altice implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private static Usuario loginUser;
 	private static Empleado loginEmpleado;
-	private static int idPlan = 1;
+	private int idPlan = 1;
 	private static boolean firstTime;
 	private ArrayList<Empleado> misEmpleados;
 	private ArrayList<Cliente> misClientes;
@@ -38,10 +38,10 @@ public class Altice implements Serializable{
 		usuarioDefault= new Usuario();
 	}
 
-	public static void aumentarIdPlan() {
+	public  void aumentarIdPlan() {
 		idPlan++;
 	}
-	public static int getIdPlan() {
+	public  int getIdPlan() {
 		return idPlan;
 	}
 	public static Usuario getLoginUser() {

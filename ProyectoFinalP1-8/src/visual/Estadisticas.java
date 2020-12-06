@@ -3,8 +3,10 @@ package visual;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -18,14 +20,14 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import logico.Altice;
 
-public class Estadisticas extends JFrame {
+public class Estadisticas extends JDialog {
 
 	private JPanel contentPane;
 
 
 	public Estadisticas() {
 		setTitle("Estadisticas");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
 		setBounds(100, 100, 450, 300);
 		setSize(690,453);
 		setLocationRelativeTo(null);

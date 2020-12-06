@@ -3,6 +3,7 @@ package visual;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -53,24 +54,9 @@ public class ListEmpleados extends JDialog {
 	private String seleccionCbx;
 	private Empleado aux = null;
 
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		try {
-			ListEmpleados dialog = new ListEmpleados();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
-
-	/**
-	 * Create the dialog.
-	 */
 	public ListEmpleados(String title) {
 		setResizable(false);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
 		setTitle(title);
 		setBounds(100, 100, 690, 320);
 		setLocationRelativeTo(null);

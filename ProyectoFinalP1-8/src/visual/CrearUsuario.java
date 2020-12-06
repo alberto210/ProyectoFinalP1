@@ -3,6 +3,7 @@ package visual;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -51,6 +52,7 @@ public class CrearUsuario extends JDialog {
 
 	public CrearUsuario(String title, int mode, Empleado aux) {
 		setResizable(false);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
 		setModal(true);
 		setTitle(title);
 		setBounds(100, 100, 361, 602);

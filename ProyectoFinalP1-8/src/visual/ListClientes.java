@@ -2,6 +2,7 @@ package visual;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -50,6 +51,7 @@ public class ListClientes extends JDialog {
 
 	public ListClientes() {
 			setTitle("Lista de Clientes");
+			setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
 			setBounds(100, 100, 690, 320);
 			setLocationRelativeTo(null);
 			getContentPane().setLayout(new BorderLayout());
@@ -138,6 +140,11 @@ public class ListClientes extends JDialog {
 				}
 				{
 					btnMod = new JButton("Modificar Cliente");
+					btnMod.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							
+						}
+					});
 					btnMod.setEnabled(false);
 					btnMod.setActionCommand("OK");
 					buttonPane.add(btnMod);

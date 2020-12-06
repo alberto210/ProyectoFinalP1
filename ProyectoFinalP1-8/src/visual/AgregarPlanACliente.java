@@ -2,6 +2,7 @@ package visual;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -54,6 +55,7 @@ public class AgregarPlanACliente extends JDialog {
 	private JComboBox cbxNombre;
 	private JTable tablePlanesDisp;
 	private JTable tablePlanesElegidos;
+	private ArrayList<Plan> planesDisponibles = new ArrayList<Plan>();
 	private ArrayList<Plan> planesElegidos = new ArrayList<Plan>();
 	public static DefaultTableModel modeloDisp;
 	public static DefaultTableModel modeloElegido;
@@ -63,7 +65,8 @@ public class AgregarPlanACliente extends JDialog {
 	private int indexElegidos = -1;
 	private String seleccion = "<Todos>";
 	private Cliente cliente = null;
-	private Plan aux = null;
+	private Plan auxDisp = null;
+	private Plan auxElegido = null;
 	
 
 	/**
@@ -75,10 +78,14 @@ public class AgregarPlanACliente extends JDialog {
 	 */
 	public AgregarPlanACliente(String title) {
 		setTitle(title);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
 		setResizable(false);
 		setModal(true);
 		setBounds(100, 100, 805, 545);
 		setLocationRelativeTo(null);
+		for(Plan copiaplan: Altice.getInstance().getMisPlanes()) {
+			planesDisponibles.add(copiaplan);
+		}
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -173,6 +180,8 @@ public class AgregarPlanACliente extends JDialog {
 						txtDireccion.setEditable(false);
 						txtTelefono.setText(cliente.getTelefono());
 						txtTelefono.setEditable(false);
+						txtEmail.setText(cliente.getEmail());
+						txtEmail.setEditable(false);
 						btnRegistrar.setEnabled(false);
 					}
 				}
@@ -210,6 +219,8 @@ public class AgregarPlanACliente extends JDialog {
 						txtDireccion.setEditable(false);
 						txtTelefono.setText(cliente.getTelefono());
 						txtTelefono.setEditable(false);
+						txtEmail.setText(cliente.getEmail());
+						txtEmail.setEditable(false);
 						btnRegistrar.setEnabled(false);
 					}
 					else {
@@ -221,6 +232,8 @@ public class AgregarPlanACliente extends JDialog {
 						txtDireccion.setEditable(true);
 						txtTelefono.setText("");
 						txtTelefono.setEditable(true);
+						txtEmail.setText("");
+						txtEmail.setEditable(true);
 						JOptionPane.showMessageDialog(null, "Cliente no encontrado. Porfavor, registrar al cliente", "Información", JOptionPane.WARNING_MESSAGE);
 						btnRegistrar.setEnabled(true);
 					}
@@ -270,43 +283,19 @@ public class AgregarPlanACliente extends JDialog {
 					indexDisp = tablePlanesDisp.getSelectedRow();
 					if(indexDisp != -1) {
 						btnForward.setEnabled(true);
-						aux = Altice.getInstance().buscarPlan(tablePlanesDisp.getValueAt(indexDisp, 0).toString());
+						auxDisp = Altice.getInstance().buscarPlan(tablePlanesDisp.getValueAt(indexDisp, 0).toString());
 					}
 				}
 			});
+			
+			
+			modeloElegido = new DefaultTableModel();
+			String[] headers2 = {"ID","Nombre","Megas","Canales","Minutos"};
+			modeloElegido.setColumnIdentifiers(headers2);
+			
 			tablePlanesDisp.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tablePlanesDisp.setModel(modeloDisp);
 			scrollPane.setViewportView(tablePlanesDisp);
-			
-			btnForward = new JButton(">>");
-			btnForward.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if(indexDisp != -1) {
-						planesElegidos.add(aux);
-						Altice.getInstance().getMisPlanes().remove(aux);
-						btnForward.setEnabled(false);
-						cargarTablaDisp();
-						cargarTablaElegidos(planesElegidos);
-					}
-				}
-			});
-			btnForward.setBounds(357, 74, 55, 23);
-			panel_Planes.add(btnForward);
-			
-			btnBack = new JButton("<<");
-			btnBack.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if(indexElegidos != -1) {
-						planesElegidos.remove(aux);
-						Altice.getInstance().insertarPlan(aux);;
-						btnBack.setEnabled(false);
-						cargarTablaDisp();
-						cargarTablaElegidos(planesElegidos);
-					}
-				}
-			});
-			btnBack.setBounds(357, 190, 55, 23);
-			panel_Planes.add(btnBack);
 			
 			JPanel panel_PlanesElegidos = new JPanel();
 			panel_PlanesElegidos.setBounds(436, 47, 323, 215);
@@ -317,24 +306,58 @@ public class AgregarPlanACliente extends JDialog {
 			scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			panel_PlanesElegidos.add(scrollPane_1, BorderLayout.CENTER);
 			
-			modeloDisp = new DefaultTableModel();
-			String[] headers2 = {"ID","Nombre","Megas","Canales","Minutos"};
-			modeloDisp.setColumnIdentifiers(headers2);
-			
 			tablePlanesElegidos = new JTable();
 			tablePlanesElegidos.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					indexElegidos = tablePlanesDisp.getSelectedRow();
+					indexElegidos = tablePlanesElegidos.getSelectedRow();
 					if(indexElegidos != -1) {
-						btnForward.setEnabled(true);
-						aux = buscarPlan(tablePlanesElegidos.getValueAt(indexDisp, 0).toString());
+						btnBack.setEnabled(true);
+						auxElegido = buscarPlan(tablePlanesElegidos.getValueAt(indexDisp, 0).toString());
 					}
 				}
 			});
 			tablePlanesElegidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tablePlanesElegidos.setModel(modeloElegido);
 			scrollPane_1.setViewportView(tablePlanesElegidos);
+			
+			btnForward = new JButton(">>");
+			btnForward.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(indexDisp != -1 && auxDisp != null) {
+						int i = indexPlanDisp(auxDisp);
+						if(i != -1 && !buscarPlanElegido()) {
+							planesElegidos.add(auxDisp);
+							planesDisponibles.remove(i);
+							btnForward.setEnabled(false);
+							cargarTablaDisp();
+							cargarTablaElegidos();
+						}
+					}
+				}
+			});
+			btnForward.setBounds(357, 74, 55, 23);
+			panel_Planes.add(btnForward);
+			btnForward.setEnabled(false);
+			
+			btnBack = new JButton("<<");
+			btnBack.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(indexElegidos != -1 && auxElegido != null) {
+						int i = indexPlanElegido(auxElegido);
+						if(i!= -1 && !buscarPlanDisp()) {
+							planesElegidos.remove(i);
+							planesDisponibles.add(auxElegido);;
+							btnBack.setEnabled(false);
+							cargarTablaDisp();
+							cargarTablaElegidos();
+						}
+					}
+				}
+			});
+			btnBack.setBounds(357, 190, 55, 23);
+			panel_Planes.add(btnBack);
+			btnBack.setEnabled(false);
 			
 			JLabel lblNewLabel_7 = new JLabel("Planes Elegidos");
 			lblNewLabel_7.setBounds(436, 22, 141, 14);
@@ -361,7 +384,12 @@ public class AgregarPlanACliente extends JDialog {
 									JOptionPane.showMessageDialog(null, "Planes Agregados Satisfactoriamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 								}
 								planesElegidos.clear();
-								cargarTablaElegidos(planesElegidos);
+								planesDisponibles.clear();
+								for(Plan copiaplan: Altice.getInstance().getMisPlanes()) {
+									planesDisponibles.add(copiaplan);
+								}
+								cargarTablaDisp();
+								cargarTablaElegidos();
 								clean();
 								btnFacturar.setEnabled(true);
 							}
@@ -386,13 +414,6 @@ public class AgregarPlanACliente extends JDialog {
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();
-						for (Plan planes : planesElegidos) {
-							Altice.getInstance().insertarPlan(planes);
-						}
-						planesElegidos.clear();
-						aux = null;
-						cargarTablaDisp();
-						cargarTablaElegidos(planesElegidos);
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
@@ -400,14 +421,14 @@ public class AgregarPlanACliente extends JDialog {
 			}
 		}
 		cargarTablaDisp();
-		cargarTablaElegidos(planesElegidos);
+		cargarTablaElegidos();
 	}
 	
 	private void cargarTablaDisp() {
 		modeloDisp.setRowCount(0);
 		filasDisp = new ArrayList<Object[]>();
 		Object[] plan = null;
-		for (Plan planDisp : Altice.getInstance().getMisPlanes()) {
+		for (Plan planDisp : planesDisponibles) {
 			plan = new Object[] {planDisp.getId(),planDisp.getNombre(),planDisp.getCantMegas(),planDisp.getCantCanales(),planDisp.getCantMinutos()};
 			filasDisp.add(plan);
 		}
@@ -426,7 +447,7 @@ public class AgregarPlanACliente extends JDialog {
 		}
 	}
 	
-	private void cargarTablaElegidos(ArrayList<Plan> planesElegidos) {
+	private void cargarTablaElegidos() {
 		modeloElegido.setRowCount(0);
 		filasElegido = new ArrayList<Object[]>();
 		Object[] plan = null;
@@ -435,7 +456,7 @@ public class AgregarPlanACliente extends JDialog {
 			filasElegido.add(plan);
 		}
 		for (Object[] filas1 : filasElegido) {
-			modeloDisp.addRow(filas1);
+			modeloElegido.addRow(filas1);
 		}
 	}
 	
@@ -453,6 +474,53 @@ public class AgregarPlanACliente extends JDialog {
 		return aux;
 	}
 	
+	public boolean buscarPlanElegido() {
+		boolean encontrado = false;
+		for(Plan temp: planesElegidos) {
+			if(auxDisp.getId().equalsIgnoreCase(temp.getId())) {
+				encontrado = true;
+			}
+		}
+		return encontrado;
+	}
+	
+	public boolean buscarPlanDisp() {
+		boolean encontrado = false;
+		for(Plan temp: planesDisponibles) {
+			if(auxElegido.getId().equalsIgnoreCase(temp.getId())) {
+				encontrado = true;
+			}
+		}
+		return encontrado;
+	}
+	
+	public int indexPlanDisp(Plan aux) {
+		int index = -1;
+		boolean encontrado = false;
+		int i = 0;
+		while(!encontrado && i<planesDisponibles.size()){
+			if(planesDisponibles.get(i).getId().equalsIgnoreCase(aux.getId())) {
+				index = i;
+				encontrado = true;
+			}
+			i++;
+		}
+		return index;
+	}
+	
+	public int indexPlanElegido(Plan aux) {
+		int index = -1;
+		boolean encontrado = false;
+		int i = 0;
+		while(!encontrado && i<planesElegidos.size()){
+			if(planesElegidos.get(i).getId().equalsIgnoreCase(aux.getId())) {
+				index = i;
+				encontrado = true;
+			}
+			i++;
+		}
+		return index;
+	}
 	private void clean() {
 		txtCedulaConfirm.setText("");
 		txtCedula.setText("");

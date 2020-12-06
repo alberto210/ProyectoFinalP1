@@ -52,6 +52,7 @@ public class CrearPlan extends JDialog {
 
 	public CrearPlan() {
 		setTitle("Crear Plan");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
 		setBounds(100, 100, 786, 498);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
@@ -150,7 +151,7 @@ public class CrearPlan extends JDialog {
 			txtID.setBounds(10, 53, 180, 23);
 			panelDeServicios.add(txtID);
 			txtID.setColumns(10);
-			txtID.setText("P-"+Altice.getIdPlan());
+			txtID.setText("P-"+Altice.getInstance().getIdPlan());
 			JLabel lblNewLabel = new JLabel("Nombre:");
 			lblNewLabel.setBounds(10, 81, 100, 19);
 			panelDeServicios.add(lblNewLabel);
@@ -266,10 +267,10 @@ public class CrearPlan extends JDialog {
 								cantMinutos = (int) spnCantidadMinutos.getValue();
 							}
 					
-							Altice.getInstance().crearPlan(tipo,nombre, Altice.getIdPlan(), rdbtnInternet.isSelected(),
+							Altice.getInstance().crearPlan(tipo,nombre, Altice.getInstance().getIdPlan(), rdbtnInternet.isSelected(),
 									rdbtnTelefono.isSelected(), rdbtnCable.isSelected(), cantMinutos, cantMegas,
 									cantCanales);
-							Altice.aumentarIdPlan();
+							Altice.getInstance().aumentarIdPlan();
 							JOptionPane.showMessageDialog(null, "El plan se ha creado de manera exitosa");
 							clean();
 							
@@ -279,7 +280,7 @@ public class CrearPlan extends JDialog {
 					
 					
 					private void clean() {
-						txtID.setText("P-" + Altice.getIdPlan());
+						txtID.setText("P-" + Altice.getInstance().getIdPlan());
 						txtNombre.setText("");
 						spnMegas.setValue(Integer.valueOf("0"));
 						spnCantidadDeCanales.setValue(Integer.valueOf("0"));
