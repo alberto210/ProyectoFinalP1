@@ -11,6 +11,7 @@ public class Plan implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 7523075717313531227L;
+	private String estado; //Cancelado o Activo
 	private boolean internet;
 	private boolean telefono;
 	private boolean cable;
@@ -30,6 +31,7 @@ public class Plan implements Serializable{
 	
 	public Plan(String tipo, String nombre, int id,boolean internet,boolean telefono,boolean cable,int cantMinutos,int cantMegas,int cantCanales) {
 		super();
+		this.estado = "Activo";
 		this.tipo = tipo;
 		this.nombre = nombre;
 		this.id = ("P-"+id);
@@ -176,5 +178,13 @@ public class Plan implements Serializable{
 
 	public void setISC(float iSC) {
 		ISC = iSC;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 }

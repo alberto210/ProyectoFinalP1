@@ -84,7 +84,11 @@ public class AgregarPlanACliente extends JDialog {
 		setBounds(100, 100, 805, 545);
 		setLocationRelativeTo(null);
 		for(Plan copiaplan: Altice.getInstance().getMisPlanes()) {
-			planesDisponibles.add(copiaplan);
+			if(copiaplan.getEstado().equalsIgnoreCase("Activo")) {
+				if(copiaplan.getEstado().equalsIgnoreCase("Activo")) {
+					planesDisponibles.add(copiaplan);
+				}
+			}
 		}
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -386,7 +390,9 @@ public class AgregarPlanACliente extends JDialog {
 								planesElegidos.clear();
 								planesDisponibles.clear();
 								for(Plan copiaplan: Altice.getInstance().getMisPlanes()) {
-									planesDisponibles.add(copiaplan);
+									if(copiaplan.getEstado().equalsIgnoreCase("Activo")) {
+										planesDisponibles.add(copiaplan);
+									}
 								}
 								cargarTablaDisp();
 								cargarTablaElegidos();
