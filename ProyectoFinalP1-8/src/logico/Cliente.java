@@ -109,4 +109,18 @@ public class Cliente implements Serializable{
 		return aux;
 	}
 	
+	public Plan buscarPlan(String idPlan) {
+		Plan aux = null;
+		boolean encontrado = false;
+		int i = 0;
+		while(!encontrado && i<misPlanes.size()){
+			if(misPlanes.get(i).getId().equalsIgnoreCase(idPlan)) {
+				aux = misPlanes.get(i);
+				encontrado = true;
+			}
+			i++;
+		}
+		return aux;
+	}
+	
 }

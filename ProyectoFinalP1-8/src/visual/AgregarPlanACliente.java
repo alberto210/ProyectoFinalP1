@@ -534,6 +534,7 @@ public class AgregarPlanACliente extends JDialog {
 		txtNombre.setText("");
 		txtDireccion.setText("");
 		txtTelefono.setText("");
+		txtEmail.setText("");
 	}
 	
 }

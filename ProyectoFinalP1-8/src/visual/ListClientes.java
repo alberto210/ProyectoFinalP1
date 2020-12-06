@@ -11,6 +11,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -35,6 +36,7 @@ import logico.Altice;
 import logico.Cliente;
 import logico.Comercial;
 import logico.Empleado;
+import logico.Plan;
 
 public class ListClientes extends JDialog {
 
@@ -48,11 +50,17 @@ public class ListClientes extends JDialog {
 	public static Object[] rows;
 	private int seleccion = -1;
 	private Cliente aux = null;
+	private JTable tableConsulta;
+	public static DefaultTableModel modelo2;
+	public static ArrayList<Object[]> rows2;
+	private int index = -1;
+	private Plan plan = null;
+	private JButton btnCancelarPlan;
 
 	public ListClientes() {
 			setTitle("Lista de Clientes");
 			setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
-			setBounds(100, 100, 690, 320);
+			setBounds(100, 100, 690, 479);
 			setLocationRelativeTo(null);
 			getContentPane().setLayout(new BorderLayout());
 			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -107,6 +115,7 @@ public class ListClientes extends JDialog {
 							btnPlan.setEnabled(true);
 							btnMod.setEnabled(true);
 							aux = Altice.getInstance().buscarCliente((String)table.getValueAt(seleccion, 1));
+							cargarTablaConsulta(aux);
 						}
 					}
 				});
@@ -128,11 +137,47 @@ public class ListClientes extends JDialog {
 				JLabel lblNewLabel_1 = new JLabel("Filtro:");
 				lblNewLabel_1.setBounds(357, 11, 52, 14);
 				panel.add(lblNewLabel_1);
+				
+				JSeparator separator_1 = new JSeparator();
+				separator_1.setBounds(10, 238, 644, 2);
+				panel.add(separator_1);
+				
+				JPanel panel_ConsultaPlanes = new JPanel();
+				panel_ConsultaPlanes.setBorder(new TitledBorder(null, "Consulta de planes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				panel_ConsultaPlanes.setBounds(10, 251, 644, 135);
+				panel.add(panel_ConsultaPlanes);
+				panel_ConsultaPlanes.setLayout(new BorderLayout(0, 0));
+				
+				JScrollPane scrollPane_1 = new JScrollPane();
+				scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				panel_ConsultaPlanes.add(scrollPane_1, BorderLayout.CENTER);
+				
+				modelo2 = new DefaultTableModel();
+				String[] headers2 = {"Estado","ID","Nombre","Tipo","Megas","Canales","Minutos","Precio sin Impuestos"};
+				modelo2.setColumnIdentifiers(headers2);
+				
+				tableConsulta = new JTable();
+				tableConsulta.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						index = tableConsulta.getSelectedRow();
+						if(index != -1) {
+							btnCancelarPlan.setEnabled(true);
+							plan = aux.buscarPlan(tableConsulta.getValueAt(index, 1).toString());
+						}
+					}
+				});
+				tableConsulta.setModel(modelo2);
+				scrollPane_1.setViewportView(tableConsulta);
 			}
 			{
 				JPanel buttonPane = new JPanel();
 				buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 				getContentPane().add(buttonPane, BorderLayout.SOUTH);
+				
+				btnCancelarPlan = new JButton("Cancelar Plan");
+				btnCancelarPlan.setEnabled(false);
+				buttonPane.add(btnCancelarPlan);
 				{
 					btnPlan = new JButton("Consultar Planes");
 					btnPlan.setEnabled(false);
@@ -188,5 +233,20 @@ public class ListClientes extends JDialog {
 				filtro.setRowFilter(RowFilter.regexFilter("^"+nombre,1));
 			}
 		}
-
+		
+		private void cargarTablaConsulta(Cliente cliente) {
+			modelo2.setRowCount(0);
+			rows2 = new ArrayList<Object[]>();
+			Object[] consultaPlanes = null;
+			for (Plan planes : cliente.getMisPlanes()) {
+				consultaPlanes = new Object[] {planes.getEstado(),planes.getId(),planes.getNombre(),planes.getTipo(),
+						planes.getCantMegas(),planes.getCantCanales(),planes.getCantMinutos(),
+						String.format("%.1f", planes.getPrecioTotal())};
+				rows2.add(consultaPlanes);
+			}
+			for (Object[] row : rows2) {
+				modelo2.addRow(row);
+			}
+		}
+		
 }
