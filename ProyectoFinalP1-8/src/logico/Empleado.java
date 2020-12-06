@@ -26,6 +26,9 @@ public abstract class Empleado implements Serializable{
 		this.horasTrabajadas = horasTrabajadas;
 		this.user = new Usuario();
 	}
+	public Empleado() {
+		
+	}
 
 
 	public abstract float sueldoTotal();

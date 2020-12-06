@@ -8,7 +8,10 @@ public class Comercial extends Empleado {
 		super(cedula, nombre, sueldoBase, sueldoUnitario, horasTrabajadas);
 		this.cantAños = cantAños;
 	}
-
+	
+	public Comercial() {
+		
+	}
 	public float sueldoTotal() {
 		float sueldoTotal = 0;
 		sueldoTotal = (float) (sueldoBase + sueldoUnitario*horasTrabajadas + 0.20*cantAños*sueldoUnitario);

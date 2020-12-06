@@ -9,6 +9,9 @@ public class Administrativo extends Empleado {
 		super(cedula, nombre, sueldoBase, sueldoUnitario, horasTrabajadas);
 		this.cargo = cargo;
 	}
+	public Administrativo() {
+		
+	}
 	
 	public float sueldoTotal() {
 		float sueldoTotal = 0;

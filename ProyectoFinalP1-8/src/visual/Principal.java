@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -176,7 +177,30 @@ public class Principal extends JFrame {
 				aux.setVisible(true);
 			}
 		});
+		
+		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Listado de Nominas");
+		mntmNewMenuItem_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListNominas aux = new ListNominas();
+				aux.setVisible(true);
+			}
+		});
+		mnAdministracin.add(mntmNewMenuItem_8);
 		mnAdministracin.add(mntmNewMenuItem_4);
+		
+		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Generar Nomina");
+		mntmNewMenuItem_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean aux = Altice.getInstance().crearNominas();
+				if(aux) {
+					JOptionPane.showMessageDialog(null, "No se ha podido emitir las nominas ya que se ha hecho anteriormente", "Información", JOptionPane.INFORMATION_MESSAGE);
+				}else {
+					JOptionPane.showMessageDialog(null, "Nominas emitidas satisfactoriamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
+				}
+				
+			}
+		});
+		mnAdministracin.add(mntmNewMenuItem_7);
 		mntmCrearNuevoEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CrearUsuario aux = new CrearUsuario("Nuevo Usuario",0,null);

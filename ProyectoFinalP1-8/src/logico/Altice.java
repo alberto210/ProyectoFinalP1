@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
+
 public class Altice implements Serializable{
 
 	/**
@@ -13,11 +15,13 @@ public class Altice implements Serializable{
 	private static Usuario loginUser;
 	private static Empleado loginEmpleado;
 	private int idPlan = 1;
+	private int idNomina = 1;
 	private static boolean firstTime;
 	private ArrayList<Empleado> misEmpleados;
 	private ArrayList<Cliente> misClientes;
 	private ArrayList<Plan> misPlanes;
 	private ArrayList<Factura> misFacturas;
+	private ArrayList<Nomina> misNominas;
 	private Usuario usuarioDefault;
 	private static Altice empresa = null;
 	public boolean admin = false;
@@ -35,6 +39,7 @@ public class Altice implements Serializable{
 		this.misClientes = new ArrayList<Cliente>();
 		this.misPlanes = new ArrayList<Plan>();
 		this.misFacturas = new ArrayList<Factura>();
+		this.misNominas = new ArrayList<Nomina>();
 		usuarioDefault= new Usuario();
 	}
 
@@ -43,6 +48,12 @@ public class Altice implements Serializable{
 	}
 	public  int getIdPlan() {
 		return idPlan;
+	}
+	public  void aumentarIdNomina() {
+		idNomina++;
+	}
+	public  int getIdNomina() {
+		return idNomina;
 	}
 	public static Usuario getLoginUser() {
 		return loginUser;
@@ -381,5 +392,46 @@ public class Altice implements Serializable{
 
 	public void registrarCliente(Cliente cliente) {
 		misClientes.add(cliente);
+	}
+	@SuppressWarnings("deprecation")
+	public boolean crearNominas(){
+		Date hoy = new Date();
+		boolean emitir = false;
+		/*for(Nomina temp : misNominas) {
+			if (hoy.getMonth() == temp.getFechaDeEmision().getMonth() && hoy.getDate() > 5) {
+				emitir=true;
+			}
+				
+		}*/
+		if(!emitir) {
+			for(Empleado aux : misEmpleados) {
+				Nomina e= new Nomina(idNomina,aux, hoy, "No Pagada");
+				idNomina++;
+				misNominas.add(e);
+			}
+		}
+		return emitir;
+	}
+
+	public ArrayList<Nomina> getMisNominas() {
+		return misNominas;
+	}
+
+	public void setMisNominas(ArrayList<Nomina> misNominas) {
+		this.misNominas = misNominas;
+	}
+
+	public Nomina buscarNomina(String id) {
+		Nomina aux = null;
+		boolean encontrado = false;
+		int i = 0;
+		while(!encontrado && i<misNominas.size()){
+			if(misNominas.get(i).getId().equalsIgnoreCase(id)) {
+				aux = misNominas.get(i);
+				encontrado = true;
+			}
+			i++;
+		}
+		return aux;
 	}
 }
