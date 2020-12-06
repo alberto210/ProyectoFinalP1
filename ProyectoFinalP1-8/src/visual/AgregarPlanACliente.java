@@ -372,27 +372,41 @@ public class AgregarPlanACliente extends JDialog {
 				btnAgregar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(cliente != null) {
-							int option = JOptionPane.showConfirmDialog(null, "Está seguro que desea agregarle estos planes al cliente "+cliente.getNombre(), "Confirmación", JOptionPane.OK_CANCEL_OPTION);
-							if(option == JOptionPane.OK_OPTION) {
 								int cantPlanes = planesElegidos.size();
-								for (Plan planesEleg : planesElegidos) {
-									cliente.getMisPlanes().add(planesEleg);
+								if(cantPlanes > 0) {
+									int option = JOptionPane.showConfirmDialog(null, "Está seguro que desea agregarle estos planes al cliente "+cliente.getNombre(), "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+									if(option == JOptionPane.OK_OPTION) {
+										for (Plan planesEleg : planesElegidos) {
+											cliente.getMisPlanes().add(planesEleg);
+										}
+										int cantPlanesCliente = cliente.getMisPlanes().size();
+										if(cantPlanesCliente == 0) {
+											if(cantPlanes == 1) {
+												JOptionPane.showMessageDialog(null, "Error al agregar el plan al cliente", "Información", JOptionPane.ERROR_MESSAGE);
+											}else if(cantPlanes > 1) {
+												JOptionPane.showMessageDialog(null, "Error al agregar los planes al cliente", "Información", JOptionPane.ERROR_MESSAGE);
+											}
+											
+										}else {
+											if(cantPlanes == 1) {
+												JOptionPane.showMessageDialog(null, "Plan Agregado Satisfactoriamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+											}else if(cantPlanes > 1) {
+												JOptionPane.showMessageDialog(null, "Planes Agregados Satisfactoriamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+											}
+											planesElegidos.clear();
+											planesDisponibles.clear();
+											for(Plan copiaplan: Altice.getInstance().getMisPlanes()) {
+												planesDisponibles.add(copiaplan);
+											}
+											cargarTablaDisp();
+											cargarTablaElegidos();
+											clean();
+											btnFacturar.setEnabled(true);
+										}
+									}
+								}else {
+									JOptionPane.showMessageDialog(null, "Porfavor elija los planes que desea agregarle al cliente", "Información", JOptionPane.ERROR_MESSAGE);
 								}
-								if(cantPlanes == 1) {
-									JOptionPane.showMessageDialog(null, "Plan Agregado Satisfactoriamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-								}else if(cantPlanes == 1) {
-									JOptionPane.showMessageDialog(null, "Planes Agregados Satisfactoriamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-								}
-								planesElegidos.clear();
-								planesDisponibles.clear();
-								for(Plan copiaplan: Altice.getInstance().getMisPlanes()) {
-									planesDisponibles.add(copiaplan);
-								}
-								cargarTablaDisp();
-								cargarTablaElegidos();
-								clean();
-								btnFacturar.setEnabled(true);
-							}
 						}
 					}
 				});

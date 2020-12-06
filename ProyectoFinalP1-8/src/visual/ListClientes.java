@@ -142,7 +142,10 @@ public class ListClientes extends JDialog {
 					btnMod = new JButton("Modificar Cliente");
 					btnMod.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							
+							ModCliente mod = new ModCliente("Modificar Cliente",1,aux);
+							mod.setVisible(true);
+							seleccion = -1;
+							btnMod.setEnabled(false);
 						}
 					});
 					btnMod.setEnabled(false);
@@ -161,10 +164,10 @@ public class ListClientes extends JDialog {
 					buttonPane.add(cancelButton);
 				}
 			}
-			llenartabla();
+			llenarTabla();
 		}
 		
-		public static void llenartabla() {
+		public static void llenarTabla() {
 			modelo.setRowCount(0);
 			rows = new Object[modelo.getColumnCount()];
 			for (Cliente client : Altice.getInstance().getMisClientes()) {
