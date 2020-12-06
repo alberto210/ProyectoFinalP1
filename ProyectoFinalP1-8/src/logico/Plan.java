@@ -5,6 +5,8 @@ import java.util.Date;
 
 public class Plan implements Serializable{
 
+	
+
 	/**
 	 * 
 	 */
@@ -19,6 +21,10 @@ public class Plan implements Serializable{
 	private String tipo; //Single, doble o triple
 	private String id;
 	private float precioTotal;
+	private float ITBIS;
+	private float CDT;
+	private float ISC;
+	private float precioTotalConImpuestos;
 	private Date fechaDeEmision;
 	private Empleado emp;
 	
@@ -36,7 +42,13 @@ public class Plan implements Serializable{
 		this.cantMegas = cantMegas;
 		this.cantCanales=cantCanales;
 		this.precioTotal = 0;
+		this.precioTotalConImpuestos = 0;
 		generarPrecioTotal();
+		this.ITBIS = 0;
+		this.CDT = 0;
+		this.ISC = 0;
+		
+		
 	}
 
 	private void generarPrecioTotal() {
@@ -44,6 +56,23 @@ public class Plan implements Serializable{
 		precioTotal = (float) (cantMinutos*8 + cantMegas*160 + cantCanales*8.55);
 	}
 
+	
+	private double generarPrecioTotalConImpuestos(float precioTotal) {
+		float precioTotalConImpuestos;
+		
+		ITBIS = (float) (precioTotal * 0.18);
+		CDT = (float) (precioTotal * 0.02);
+		ISC = (float) (precioTotal * 0.10);
+		
+		
+		precioTotalConImpuestos = (float) (precioTotal + ITBIS + CDT + ISC);
+		
+		return precioTotalConImpuestos;
+		
+	}
+	
+	
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -123,5 +152,29 @@ public class Plan implements Serializable{
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+
+	public float getITBIS() {
+		return ITBIS;
+	}
+
+	public void setITBIS(float iTBIS) {
+		ITBIS = iTBIS;
+	}
+
+	public float getCDT() {
+		return CDT;
+	}
+
+	public void setCDT(float cDT) {
+		CDT = cDT;
+	}
+
+	public float getISC() {
+		return ISC;
+	}
+
+	public void setISC(float iSC) {
+		ISC = iSC;
 	}
 }

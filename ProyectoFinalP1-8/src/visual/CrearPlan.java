@@ -265,7 +265,7 @@ public class CrearPlan extends JDialog {
 							if (rdbtnTelefono.isSelected()) {
 								cantMinutos = (int) spnCantidadMinutos.getValue();
 							}
-							
+					
 							Altice.getInstance().crearPlan(tipo,nombre, Altice.getIdPlan(), rdbtnInternet.isSelected(),
 									rdbtnTelefono.isSelected(), rdbtnCable.isSelected(), cantMinutos, cantMegas,
 									cantCanales);
