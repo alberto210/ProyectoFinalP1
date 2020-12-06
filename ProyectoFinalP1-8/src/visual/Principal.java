@@ -113,7 +113,7 @@ public class Principal extends JFrame {
 		JMenu mnClientes = new JMenu("Altice                                                                     ");
 		menuBar.add(mnClientes);
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Listar Clientes / Remover Planes");
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Listado Clientes / Remover Planes");
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListClientes aux = new ListClientes();
@@ -125,8 +125,8 @@ public class Principal extends JFrame {
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Agregar Plan a Cliente");
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AgregarPlanACliente aux = new AgregarPlanACliente();
-				aux.setVisible(true);
+				AgregarPlanACliente agregar = new AgregarPlanACliente("Agregar Plan a Cliente");
+				agregar.setVisible(true);
 			}
 		});
 		mnClientes.add(mntmNewMenuItem_5);
