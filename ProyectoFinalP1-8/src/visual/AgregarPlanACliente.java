@@ -51,7 +51,6 @@ public class AgregarPlanACliente extends JDialog {
 	private JButton btnBuscar;
 	private JButton btnForward;
 	private JButton btnBack;
-	private JButton btnFacturar;
 	private JComboBox cbxNombre;
 	private JTable tablePlanesDisp;
 	private JTable tablePlanesElegidos;
@@ -405,7 +404,6 @@ public class AgregarPlanACliente extends JDialog {
 											cargarTablaDisp();
 											cargarTablaElegidos();
 											clean();
-											btnFacturar.setEnabled(true);
 										}
 									}
 								}else {
@@ -414,15 +412,6 @@ public class AgregarPlanACliente extends JDialog {
 						}
 					}
 				});
-				
-				btnFacturar = new JButton("Facturar");//boton para pasar a ventana facturar cuando los planes se le hayan agregado al cliente
-				btnFacturar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						btnFacturar.setEnabled(false);
-					}
-				});
-				btnFacturar.setEnabled(false);
-				buttonPane.add(btnFacturar);
 				btnAgregar.setActionCommand("OK");
 				buttonPane.add(btnAgregar);
 				getRootPane().setDefaultButton(btnAgregar);

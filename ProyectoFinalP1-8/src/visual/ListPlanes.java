@@ -31,6 +31,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
+import logico.Administrativo;
 import logico.Altice;
 import logico.Cliente;
 import logico.Plan;
@@ -91,10 +92,12 @@ public class ListPlanes extends JDialog {
 					public void mouseClicked(MouseEvent e) {
 						seleccion = table.getSelectedRow();
 						if(seleccion != -1) {
-							btnActivarPlan.setEnabled(true);
-							btnEliminarPlan.setEnabled(true);
-							btnMod.setEnabled(true);
-							aux = Altice.getInstance().buscarPlan((String)table.getValueAt(seleccion, 1));
+							if(Altice.getLoginEmpleado() instanceof Administrativo) {
+								btnActivarPlan.setEnabled(true);
+								btnEliminarPlan.setEnabled(true);
+								btnMod.setEnabled(true);
+								aux = Altice.getInstance().buscarPlan((String)table.getValueAt(seleccion, 1));
+							}
 						}
 					}
 				});
