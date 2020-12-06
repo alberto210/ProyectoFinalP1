@@ -134,7 +134,7 @@ public class Altice implements Serializable{
 		
 	}
 
-	private Plan buscarPlan(String idPlan) {
+	public Plan buscarPlan(String idPlan) {
 		Plan aux = null;
 		boolean encontrado = false;
 		int i = 0;
