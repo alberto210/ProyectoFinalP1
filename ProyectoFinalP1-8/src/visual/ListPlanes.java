@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -30,29 +31,27 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
-import logico.Administrativo;
 import logico.Altice;
 import logico.Cliente;
-import logico.Comercial;
-import logico.Empleado;
+import logico.Plan;
 
-public class ListClientes extends JDialog {
+public class ListPlanes extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JButton btnMod;
-	private JButton btnPlan;
+	private JButton btnEliminarPlan;
+	private JButton btnActivarPlan;
 	private JComboBox cbxFiltro;
-	private JTextField txtNombre;
 	private JTable table;
 	public static DefaultTableModel modelo;
 	public static Object[] rows;
 	private int seleccion = -1;
-	private Cliente aux = null;
+	private Plan aux = null;
 
-	public ListClientes() {
-			setTitle("Lista de Clientes");
+	public ListPlanes() {
+			setTitle("Lista de Planes");
 			setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
-			setBounds(100, 100, 690, 320);
+			setBounds(100, 100, 1004, 320);
 			setLocationRelativeTo(null);
 			getContentPane().setLayout(new BorderLayout());
 			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -64,29 +63,17 @@ public class ListClientes extends JDialog {
 				contentPanel.add(panel, BorderLayout.CENTER);
 				panel.setLayout(null);
 				{
-					JLabel lblNewLabel = new JLabel("Filtrar por:");
+					JLabel lblNewLabel = new JLabel("Filtrar por Nombre:");
 					lblNewLabel.setBounds(10, 11, 162, 14);
 					panel.add(lblNewLabel);
 				}
 				
-				txtNombre = new JTextField();
-				txtNombre.addKeyListener(new KeyAdapter() {
-					@Override
-					public void keyReleased(KeyEvent e) {
-						String nombre = txtNombre.getText();
-						FiltarTabla(nombre);
-					}
-				});
-				txtNombre.setBounds(398, 7, 237, 23);
-				panel.add(txtNombre);
-				txtNombre.setColumns(10);
-				
 				JSeparator separator = new JSeparator();
-				separator.setBounds(10, 41, 644, 2);
+				separator.setBounds(10, 41, 943, 2);
 				panel.add(separator);
 				
 				JPanel panel_Listado = new JPanel();
-				panel_Listado.setBounds(10, 54, 644, 173);
+				panel_Listado.setBounds(10, 54, 943, 173);
 				panel.add(panel_Listado);
 				panel_Listado.setLayout(new BorderLayout(0, 0));
 				
@@ -95,7 +82,7 @@ public class ListClientes extends JDialog {
 				panel_Listado.add(scrollPane, BorderLayout.CENTER);
 				
 				modelo = new DefaultTableModel();
-				String[] headers = {"Nombre","Cédula","Email","Dirección"};
+				String[] headers = {"Estado","ID","Nombre","Tipo","Megas","Canales","Minutos","Precio sin Impuestos"};
 				modelo.setColumnIdentifiers(headers);
 				
 				table = new JTable();
@@ -104,9 +91,10 @@ public class ListClientes extends JDialog {
 					public void mouseClicked(MouseEvent e) {
 						seleccion = table.getSelectedRow();
 						if(seleccion != -1) {
-							btnPlan.setEnabled(true);
+							btnActivarPlan.setEnabled(true);
+							btnEliminarPlan.setEnabled(true);
 							btnMod.setEnabled(true);
-							aux = Altice.getInstance().buscarCliente((String)table.getValueAt(seleccion, 1));
+							aux = Altice.getInstance().buscarPlan((String)table.getValueAt(seleccion, 1));
 						}
 					}
 				});
@@ -117,35 +105,53 @@ public class ListClientes extends JDialog {
 				cbxFiltro = new JComboBox();
 				cbxFiltro.addItemListener(new ItemListener() {
 					public void itemStateChanged(ItemEvent e) {
-						String nombre = txtNombre.getText();
+						String nombre = cbxFiltro.getSelectedItem().toString();
 						FiltarTabla(nombre);
 					}
 				});
-				cbxFiltro.setModel(new DefaultComboBoxModel(new String[] {"Nombre", "C\u00E9dula"}));
-				cbxFiltro.setBounds(72, 8, 123, 23);
+				cbxFiltro.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Internet", "Altice TV", "Voz Digital", "Dobleplay", "Tripleplay"}));
+				cbxFiltro.setBounds(128, 7, 123, 23);
 				panel.add(cbxFiltro);
-				
-				JLabel lblNewLabel_1 = new JLabel("Filtro:");
-				lblNewLabel_1.setBounds(357, 11, 52, 14);
-				panel.add(lblNewLabel_1);
 			}
 			{
 				JPanel buttonPane = new JPanel();
 				buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 				getContentPane().add(buttonPane, BorderLayout.SOUTH);
 				{
-					btnPlan = new JButton("Consultar Planes");
-					btnPlan.setEnabled(false);
-					buttonPane.add(btnPlan);
+					btnEliminarPlan = new JButton("Eliminar Plan");
+					btnEliminarPlan.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							aux.setEstado("Cancelado");
+							llenartabla();
+							btnActivarPlan.setEnabled(false);
+							btnEliminarPlan.setEnabled(false);
+							btnMod.setEnabled(false);
+							JOptionPane.showMessageDialog(null, "El plan seleccionado ha sido cancelado", null, JOptionPane.INFORMATION_MESSAGE, null);
+						}
+					});
+					{
+						btnActivarPlan = new JButton("Activar Plan");
+						btnActivarPlan.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								aux.setEstado("Activo");
+								llenartabla();
+								btnActivarPlan.setEnabled(false);
+								btnEliminarPlan.setEnabled(false);
+								btnMod.setEnabled(false);
+								JOptionPane.showMessageDialog(null, "El plan seleccionado ha sido Activado", null, JOptionPane.INFORMATION_MESSAGE, null);
+							}
+						});
+						btnActivarPlan.setEnabled(false);
+						buttonPane.add(btnActivarPlan);
+					}
+					btnEliminarPlan.setEnabled(false);
+					buttonPane.add(btnEliminarPlan);
 				}
 				{
-					btnMod = new JButton("Modificar Cliente");
+					btnMod = new JButton("Modificar Plan");
 					btnMod.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							ModCliente mod = new ModCliente("Modificar Cliente",1,aux);
-							mod.setVisible(true);
-							seleccion = -1;
-							btnMod.setEnabled(false);
+							
 						}
 					});
 					btnMod.setEnabled(false);
@@ -164,17 +170,21 @@ public class ListClientes extends JDialog {
 					buttonPane.add(cancelButton);
 				}
 			}
-			llenarTabla();
+			llenartabla();
 		}
 		
-		public static void llenarTabla() {
+		public static void llenartabla() {
 			modelo.setRowCount(0);
 			rows = new Object[modelo.getColumnCount()];
-			for (Cliente client : Altice.getInstance().getMisClientes()) {
-					rows[0] = client.getNombre();
-					rows[1] = client.getCedula();
-					rows[2] = client.getEmail();
-					rows[3] = client.getDireccion();
+			for (Plan temp : Altice.getInstance().getMisPlanes()) {
+					rows[0] = temp.getEstado();
+					rows[1] = temp.getId();
+					rows[2] = temp.getNombre();
+					rows[3] = temp.getTipo();
+					rows[4] = temp.getCantMegas();
+					rows[5] = temp.getCantCanales();
+					rows[6] = temp.getCantMinutos();
+					rows[7] = String.format("%.1f", temp.getPrecioTotal());
 				modelo.addRow(rows);
 			}
 		}
@@ -182,11 +192,12 @@ public class ListClientes extends JDialog {
 		private void FiltarTabla(String nombre) {
 			TableRowSorter<DefaultTableModel> filtro = new TableRowSorter<DefaultTableModel>(modelo);
 			table.setRowSorter(filtro);
-			if(cbxFiltro.getSelectedItem().toString().equalsIgnoreCase("Nombre")) {
-				filtro.setRowFilter(RowFilter.regexFilter("^"+nombre,0));
+			if(!nombre.equalsIgnoreCase("<Seleccione>")) {
+				filtro.setRowFilter(RowFilter.regexFilter("^"+nombre,2));
 			}else {
-				filtro.setRowFilter(RowFilter.regexFilter("^"+nombre,1));
+				filtro.setRowFilter(null);
 			}
 		}
+
 
 }
