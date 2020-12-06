@@ -31,6 +31,7 @@ import java.awt.Toolkit;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.JCheckBox;
 
 public class Login extends JFrame {
 	
@@ -73,8 +74,9 @@ public class Login extends JFrame {
 		panel.add(lblContrasea);
 		
 		txtUsuario = new JTextField();
-		txtUsuario.setForeground(Color.WHITE);
-		txtUsuario.setBounds(90, 105, 191, 20);
+		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		txtUsuario.setForeground(Color.BLACK);
+		txtUsuario.setBounds(90, 105, 191, 23);
 		panel.add(txtUsuario);
 		txtUsuario.setColumns(10);
 		
@@ -98,8 +100,9 @@ public class Login extends JFrame {
 		panel.add(btnLogin);
 		
 		txtContrasena = new JPasswordField();
-		txtContrasena.setForeground(Color.WHITE);
-		txtContrasena.setBounds(90, 162, 191, 20);
+		txtContrasena.setHorizontalAlignment(SwingConstants.CENTER);
+		txtContrasena.setForeground(Color.BLACK);
+		txtContrasena.setBounds(90, 162, 191, 23);
 		panel.add(txtContrasena);
 		
 		JLabel lblNewLabel = new JLabel("BIENVENIDO A ALTICE");

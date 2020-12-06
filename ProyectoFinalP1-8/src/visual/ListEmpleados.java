@@ -1,6 +1,7 @@
 package visual;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -35,6 +36,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class ListEmpleados extends JDialog {
 
@@ -47,6 +50,7 @@ public class ListEmpleados extends JDialog {
 	public static DefaultTableModel modelo;
 	public static Object[] rows;
 	private int seleccion = -1;
+	private String seleccionCbx;
 	private Empleado aux = null;
 
 	/**
@@ -66,6 +70,7 @@ public class ListEmpleados extends JDialog {
 	 * Create the dialog.
 	 */
 	public ListEmpleados(String title) {
+		setResizable(false);
 		setTitle(title);
 		setBounds(100, 100, 690, 320);
 		setLocationRelativeTo(null);
@@ -149,6 +154,14 @@ public class ListEmpleados extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnMod = new JButton("Modificar");
+				btnMod.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						CrearUsuario mod = new CrearUsuario("Modificar Empleado", 1, aux);
+						mod.setVisible(true);
+						seleccion = -1;
+						btnMod.setEnabled(false);
+					}
+				});
 				btnMod.setEnabled(false);
 				buttonPane.add(btnMod);
 			}

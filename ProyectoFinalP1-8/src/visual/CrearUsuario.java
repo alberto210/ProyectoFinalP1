@@ -30,6 +30,8 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.JRadioButton;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class CrearUsuario extends JDialog {
 
@@ -45,9 +47,12 @@ public class CrearUsuario extends JDialog {
 	private JRadioButton rdbComercial;
 	private JSpinner spnSueldoBase;
 	private JSpinner spnSueldoUnitario;
+	private JButton btnCrear;
 
-	public CrearUsuario() {
-		setTitle("Nuevo Usuario");
+	public CrearUsuario(String title, int mode, Empleado aux) {
+		setResizable(false);
+		setModal(true);
+		setTitle(title);
 		setBounds(100, 100, 361, 602);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
@@ -60,6 +65,10 @@ public class CrearUsuario extends JDialog {
 		contentPanel.add(lblNombreUsuario);
 		
 		txtUsuarioN = new JTextField();
+		if(mode == 1) {
+			txtUsuarioN.setText(aux.getUser().getNombreDeUsuario());
+			txtUsuarioN.setEditable(false);
+		}
 		txtUsuarioN.setBounds(20, 49, 127, 23);
 		contentPanel.add(txtUsuarioN);
 		txtUsuarioN.setColumns(10);
@@ -69,7 +78,7 @@ public class CrearUsuario extends JDialog {
 		contentPanel.add(lblTipo);
 		
 		JLabel lblPassword = new JLabel("Contrase\u00F1a:");
-		lblPassword.setBounds(20, 79, 97, 14);
+		lblPassword.setBounds(20, 79, 127, 14);
 		contentPanel.add(lblPassword);
 		
 		JLabel lblConfirmarPassword = new JLabel("Confirmar Contrase\u00F1a:");
@@ -77,18 +86,38 @@ public class CrearUsuario extends JDialog {
 		contentPanel.add(lblConfirmarPassword);
 		
 		txtPassword = new JPasswordField();
+		if(mode == 1) {
+			txtPassword.setText(aux.getUser().getContrasena());
+			txtPassword.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent e) {
+					if(!txtPassword.getText().equals(aux.getUser().getContrasena())) {
+						txtPasswordConfirm.setEditable(true);
+					}
+				}
+			});
+		}
 		txtPassword.setBounds(20, 104, 127, 23);
 		contentPanel.add(txtPassword);
 		
 		txtPasswordConfirm = new JPasswordField();
+		if(mode == 1) {
+			txtPasswordConfirm.setEditable(false);
+			txtPasswordConfirm.setText("");
+			
+		}
 		txtPasswordConfirm.setBounds(188, 104, 127, 23);
 		contentPanel.add(txtPasswordConfirm);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(20, 200, 311, 14);
+		separator.setBounds(10, 200, 321, 14);
 		contentPanel.add(separator);
 		
 		txtCedula = new JTextField();
+		if(mode == 1) {
+			txtCedula.setText(aux.getCedula());
+			txtCedula.setEditable(false);
+		}
 		txtCedula.setBounds(20, 275, 240, 23);
 		contentPanel.add(txtCedula);
 		txtCedula.setColumns(10);
@@ -124,33 +153,51 @@ public class CrearUsuario extends JDialog {
 		lblNewLabel_1.setBounds(189, 368, 86, 14);
 		contentPanel.add(lblNewLabel_1);
 		cbxCargo = new JComboBox();
-		cbxCargo.setVisible(false);
-		cbxCargo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>"}));
-		if(Altice.getInstance().admin) {
-			
-			cbxCargo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Gerente", "Representante Local","Representante Regional","Mesa Administrativa"}));
-			
-		}else if(((Administrativo) Altice.getLoginEmpleado()).getCargo().equalsIgnoreCase("Gerente")) {
-			
-			cbxCargo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Gerente"}));
-			
-		}else if(((Administrativo) Altice.getLoginEmpleado()).getCargo().equalsIgnoreCase("Representante Local")) {
-			
-			cbxCargo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Gerente", "Representante Local"}));
-			
-		}else if(((Administrativo) Altice.getLoginEmpleado()).getCargo().equalsIgnoreCase("Representante Regional")) {
-			
-			cbxCargo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Gerente", "Representante Local","Representante Regional"}));
-			
-		}else{
-			
-			cbxCargo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Gerente", "Representante Local","Representante Regional","Mesa Administrativa"}));
+		if(mode == 1) {
+			if(aux instanceof Comercial) {
+				cbxCargo.setVisible(false);
+			}
+			else if(aux instanceof Administrativo) {
+				cbxCargo.setVisible(true);
+				cbxCargo.setModel(new DefaultComboBoxModel(new String[] {((Administrativo) aux).getCargo()}));
+			}
+		}
+		if(mode == 0){
+			cbxCargo.setVisible(false);
+			cbxCargo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>"}));
+			if(Altice.getInstance().admin) {
+				
+				cbxCargo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Gerente", "Representante Local","Representante Regional","Mesa Administrativa"}));
+				
+			}else if(((Administrativo) Altice.getLoginEmpleado()).getCargo().equalsIgnoreCase("Gerente")) {
+				
+				cbxCargo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Gerente"}));
+				
+			}else if(((Administrativo) Altice.getLoginEmpleado()).getCargo().equalsIgnoreCase("Representante Local")) {
+				
+				cbxCargo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Gerente", "Representante Local"}));
+				
+			}else if(((Administrativo) Altice.getLoginEmpleado()).getCargo().equalsIgnoreCase("Representante Regional")) {
+				
+				cbxCargo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Gerente", "Representante Local","Representante Regional"}));
+				
+			}else{
+				
+				cbxCargo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Gerente", "Representante Local","Representante Regional","Mesa Administrativa"}));
+			}
 		}
 		cbxCargo.setBounds(20, 452, 240, 23);
 		contentPanel.add(cbxCargo);
 		
 		lblCargo = new JLabel("Cargo");
-		lblCargo.setVisible(false);
+		if(mode == 1) {
+			if(aux instanceof Comercial) {
+				lblCargo.setVisible(false);
+			}
+			else if(aux instanceof Administrativo) {
+				lblCargo.setVisible(true);
+			}
+		}
 		lblCargo.setBounds(20, 427, 127, 14);
 		contentPanel.add(lblCargo);
 
@@ -159,6 +206,10 @@ public class CrearUsuario extends JDialog {
 		contentPanel.add(lblNewLabel_2);
 		
 		rdbComercial = new JRadioButton("Comercial");
+		if(mode == 1) {
+			rdbComercial.setEnabled(false);
+			rdbComercial.setSelected(false);
+		}
 		rdbComercial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				rdbAdministrador.setSelected(false);
@@ -171,6 +222,10 @@ public class CrearUsuario extends JDialog {
 		contentPanel.add(rdbComercial);
 		
 		rdbAdministrador = new JRadioButton("Administrador");
+		if(mode == 1) {
+			rdbAdministrador.setEnabled(false);
+			rdbAdministrador.setSelected(false);
+		}
 		rdbAdministrador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				rdbComercial.setSelected(false);
@@ -185,63 +240,109 @@ public class CrearUsuario extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("Crear");
-				okButton.addActionListener(new ActionListener() {
+				btnCrear = new JButton("");
+				if(mode == 0) {
+					btnCrear.setText("Crear");
+				}
+				else if(mode == 1) {
+					btnCrear.setText("Modificar");
+				}
+				btnCrear.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						String nombre = txtUsuarioN.getText();
-						String password = txtPassword.getText();
-						String verpass = txtPasswordConfirm.getText();
-						boolean verificarNombreDuplicado = false;
-						Empleado emp = null;
-						Usuario user = null;
-						for(Empleado temp: Altice.getInstance().getMisEmpleados()) {
-							if(temp.getUser().getNombreDeUsuario().equals(nombre)) {
-								verificarNombreDuplicado = true;
-							}
-						}
-						
-						if(!verificarNombreDuplicado && !nombre.equalsIgnoreCase("Altice")) {
-						
-							if(nombre.equalsIgnoreCase("") || password.equalsIgnoreCase("") || verpass.equalsIgnoreCase("")|| txtCedula.getText().equalsIgnoreCase("") || txtNombre.getText().equalsIgnoreCase("") || Float.parseFloat(spnSueldoBase.getValue().toString()) == 0 || Float.parseFloat(spnSueldoUnitario.getValue().toString()) == 0 || (!rdbAdministrador.isSelected() && !rdbComercial.isSelected())) {
-								JOptionPane.showMessageDialog(null, "Campos vacíos. Por favor, llene todos los campos", "Información", JOptionPane.WARNING_MESSAGE);
-							
-							}else{
-								if(password.equals(verpass)) {
-									if(rdbAdministrador.isSelected()){
-										if(!cbxCargo.getSelectedItem().toString().equalsIgnoreCase("<Seleccione>")) {
-											emp = new Administrativo(txtCedula.getText(),txtNombre.getText(), Float.parseFloat(spnSueldoBase.getValue().toString()), Float.parseFloat(spnSueldoUnitario.getValue().toString()), 0, cbxCargo.getSelectedItem().toString());
-											user = new Usuario("Administrador",nombre,password);
-										}
-									}
-									if(rdbComercial.isSelected()) {
-										emp = new Comercial(txtCedula.getText(),txtNombre.getText(), Float.parseFloat(spnSueldoBase.getValue().toString()), Float.parseFloat(spnSueldoUnitario.getValue().toString()), 0,0);
-										user = new Usuario("Comercial",nombre,password);
-									}
-									if(rdbAdministrador.isSelected() && cbxCargo.getSelectedItem().toString().equalsIgnoreCase("<Seleccione>")) {
-										JOptionPane.showMessageDialog(null, "Seleccione un cargo para el personal administrativo.", "Información", JOptionPane.WARNING_MESSAGE);
-									}else {
-										emp.setUser(user);
-										Altice.getInstance().getMisEmpleados().add(emp);
-										JOptionPane.showMessageDialog(null, "Usuario creado correctamente", null, JOptionPane.INFORMATION_MESSAGE, null);
-										clear();
-									}
-								}else {
-									JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden, reingrese las contraseñas.", "Información", JOptionPane.WARNING_MESSAGE);
+						if(mode == 0) {
+							String nombre = txtUsuarioN.getText();
+							String password = txtPassword.getText();
+							String verpass = txtPasswordConfirm.getText();
+							boolean verificarNombreDuplicado = false;
+							Empleado emp = null;
+							Usuario user = null;
+							for(Empleado temp: Altice.getInstance().getMisEmpleados()) {
+								if(temp.getUser().getNombreDeUsuario().equals(nombre)) {
+									verificarNombreDuplicado = true;
 								}
-									
 							}
-						}else {
-							if(!nombre.equalsIgnoreCase("Altice")) {
-								JOptionPane.showMessageDialog(null, "Este Usuario es no valido, ingrese uno nuevo", "Información", JOptionPane.WARNING_MESSAGE);
+							
+							if(!verificarNombreDuplicado && !nombre.equalsIgnoreCase("Altice")) {
+							
+								if(nombre.equalsIgnoreCase("") || password.equalsIgnoreCase("") || verpass.equalsIgnoreCase("")|| txtCedula.getText().equalsIgnoreCase("") || txtNombre.getText().equalsIgnoreCase("") || Float.parseFloat(spnSueldoBase.getValue().toString()) == 0 || Float.parseFloat(spnSueldoUnitario.getValue().toString()) == 0 || (!rdbAdministrador.isSelected() && !rdbComercial.isSelected())) {
+									JOptionPane.showMessageDialog(null, "Campos vacíos. Por favor, llene todos los campos", "Información", JOptionPane.WARNING_MESSAGE);
+								
+								}else{
+									if(password.equals(verpass)) {
+										if(rdbAdministrador.isSelected()){
+											if(!cbxCargo.getSelectedItem().toString().equalsIgnoreCase("<Seleccione>")) {
+												emp = new Administrativo(txtCedula.getText(),txtNombre.getText(), Float.parseFloat(spnSueldoBase.getValue().toString()), Float.parseFloat(spnSueldoUnitario.getValue().toString()), 0, cbxCargo.getSelectedItem().toString());
+												user = new Usuario("Administrador",nombre,password);
+											}
+										}
+										if(rdbComercial.isSelected()) {
+											emp = new Comercial(txtCedula.getText(),txtNombre.getText(), Float.parseFloat(spnSueldoBase.getValue().toString()), Float.parseFloat(spnSueldoUnitario.getValue().toString()), 0,0);
+											user = new Usuario("Comercial",nombre,password);
+										}
+										if(rdbAdministrador.isSelected() && cbxCargo.getSelectedItem().toString().equalsIgnoreCase("<Seleccione>")) {
+											JOptionPane.showMessageDialog(null, "Seleccione un cargo para el personal administrativo.", "Información", JOptionPane.WARNING_MESSAGE);
+										}else {
+											emp.setUser(user);
+											Altice.getInstance().getMisEmpleados().add(emp);
+											JOptionPane.showMessageDialog(null, "Usuario creado correctamente", null, JOptionPane.INFORMATION_MESSAGE, null);
+											clear();
+										}
+									}else {
+										JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden, reingrese las contraseñas.", "Información", JOptionPane.WARNING_MESSAGE);
+									}
+										
+								}
 							}else {
-								JOptionPane.showMessageDialog(null, "Este nombre de usuario ya existe. Ingrese uno diferente.", "Información", JOptionPane.WARNING_MESSAGE);
+								if(!nombre.equalsIgnoreCase("Altice")) {
+									JOptionPane.showMessageDialog(null, "Este Usuario es no valido, ingrese uno nuevo", "Información", JOptionPane.WARNING_MESSAGE);
+								}else {
+									JOptionPane.showMessageDialog(null, "Este nombre de usuario ya existe. Ingrese uno diferente.", "Información", JOptionPane.WARNING_MESSAGE);
+								}
 							}
 						}
+						if(mode == 1) {
+							String nombre = txtNombre.getText();
+							float sueldoBase = new Float(spnSueldoBase.getValue().toString());
+							float sueldoUni = new Float(spnSueldoUnitario.getValue().toString());
+							String password = txtPassword.getText();
+							if(aux != null) {
+								if(nombre.equalsIgnoreCase("") || sueldoBase == 0 || sueldoUni == 0) {
+									JOptionPane.showMessageDialog(null, "Campos vacíos. Por favor, llene todos los campos", "Información", JOptionPane.WARNING_MESSAGE);
+								}
+								else {
+									int option = JOptionPane.showConfirmDialog(null, "Está seguro que desea modificar al cliente "+ aux.getNombre(), "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+									if(option == JOptionPane.OK_OPTION) {
+										aux.setNombre(nombre);;
+										aux.setSueldoBase(sueldoBase);
+										aux.setSueldoUnitario(sueldoUni);
+										if(!password.equals(aux.getUser().getContrasena())) {
+											String verPassword = txtPasswordConfirm.getText();
+											if(password.equals("") || verPassword.equals("")) {
+												JOptionPane.showMessageDialog(null, "Campos vacíos. Por favor, llene todos los campos", "Información", JOptionPane.WARNING_MESSAGE);
+											}
+											else {
+												if(!password.equals(verPassword)) {
+													JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden, reingrese las contraseñas.", "Información", JOptionPane.WARNING_MESSAGE);
+												}
+												else {
+													aux.getUser().setContrasena(password);
+												}
+											}
+										}
+										JOptionPane.showMessageDialog(null, "Usuario creado correctamente", null, JOptionPane.INFORMATION_MESSAGE, null);
+									}
+								}
+							}
+							ListEmpleados.llenartabla();
+							clear();
+							dispose();
+						}
+						
 					}
 				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				btnCrear.setActionCommand("OK");
+				buttonPane.add(btnCrear);
+				getRootPane().setDefaultButton(btnCrear);
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");

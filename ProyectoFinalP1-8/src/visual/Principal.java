@@ -152,7 +152,7 @@ public class Principal extends JFrame {
 		mnAdministracin.add(mntmNewMenuItem_2);
 		mntmCrearNuevoEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CrearUsuario aux = new CrearUsuario();
+				CrearUsuario aux = new CrearUsuario("Nuevo Usuario",0,null);
 				aux.setVisible(true);
 			}
 		});
