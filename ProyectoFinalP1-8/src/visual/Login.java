@@ -74,9 +74,15 @@ public class Login extends JFrame {
 		panel.add(lblContrasea);
 		
 		txtUsuario = new JTextField();
+<<<<<<< HEAD
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtUsuario.setForeground(Color.BLACK);
 		txtUsuario.setBounds(90, 105, 191, 23);
+=======
+		txtUsuario.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		txtUsuario.setForeground(Color.BLACK);
+		txtUsuario.setBounds(90, 105, 191, 20);
+>>>>>>> branch 'master' of https://github.com/alberto210/ProyectoFinalP1.git
 		panel.add(txtUsuario);
 		txtUsuario.setColumns(10);
 		
@@ -100,9 +106,14 @@ public class Login extends JFrame {
 		panel.add(btnLogin);
 		
 		txtContrasena = new JPasswordField();
+<<<<<<< HEAD
 		txtContrasena.setHorizontalAlignment(SwingConstants.CENTER);
 		txtContrasena.setForeground(Color.BLACK);
 		txtContrasena.setBounds(90, 162, 191, 23);
+=======
+		txtContrasena.setForeground(Color.BLACK);
+		txtContrasena.setBounds(90, 162, 191, 20);
+>>>>>>> branch 'master' of https://github.com/alberto210/ProyectoFinalP1.git
 		panel.add(txtContrasena);
 		
 		JLabel lblNewLabel = new JLabel("BIENVENIDO A ALTICE");
