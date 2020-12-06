@@ -122,6 +122,15 @@ public class Principal extends JFrame {
 		});
 		mnClientes.add(mntmNewMenuItem_3);
 		
+		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Agregar Plan a Cliente");
+		mntmNewMenuItem_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AgregarPlanACliente aux = new AgregarPlanACliente();
+				aux.setVisible(true);
+			}
+		});
+		mnClientes.add(mntmNewMenuItem_5);
+		
 		JMenu mnAdministracin = new JMenu("Administraci\u00F3n                                                    ");
 		if(!Altice.getLoginUser().getTipoDeUsuario().equalsIgnoreCase("Administrador")){
 			mnAdministracin.setEnabled(false);

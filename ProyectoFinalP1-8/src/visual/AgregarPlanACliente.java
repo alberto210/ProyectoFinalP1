@@ -46,38 +46,23 @@ public class AgregarPlanACliente extends JDialog {
 	private JTextField txtBuscarC;
 	private JTextField txtEmail;
 	private JScrollPane scrollPanelPlanes ;
-private JScrollPane scrollPanelDeCompra ;
-ArrayList<Plan> misPlanes = new ArrayList<>();
-private JButton btnAgregar ;
-private JButton btnRegresar ;
-private JButton btnBuscar ;
-private  JButton AgregarPlan ;
-private JComboBox cbxTipo ;
-public static DefaultTableModel modelo;
-public static Object[] rows;
-private JTable tablaPlanes;
-private JTable tablePlanesElegidos;
-private JList listaDePlanes;
-private JList listaDePlanesElegidos;
-private DefaultListModel modelPlan;
-private DefaultListModel modelAgregar;
-private int seleccionarTipo=0;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			AgregarPlanACliente dialog = new AgregarPlanACliente();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private JScrollPane scrollPanelDeCompra ;
+	ArrayList<Plan> misPlanes = new ArrayList<>();
+	private JButton btnAgregar ;
+	private JButton btnRegresar ;
+	private JButton btnBuscar ;
+	private  JButton AgregarPlan ;
+	private JComboBox cbxTipo ;
+	public static DefaultTableModel modelo;
+	public static Object[] rows;
+	private JTable tablaPlanes;
+	private JTable tablePlanesElegidos;
+	private JList listaDePlanes;
+	private JList listaDePlanesElegidos;
+	private DefaultListModel modelPlan;
+	private DefaultListModel modelAgregar;
+	private int seleccionarTipo=0;
 
-	/**
-	 * Create the dialog.
-	 */
 	public AgregarPlanACliente() {
 		setBounds(100, 100, 902, 579);
 		getContentPane().setLayout(new BorderLayout());
@@ -390,7 +375,7 @@ private int seleccionarTipo=0;
 						Altice.getInstance().registrarCliente(cliente);
 						
 						
-					   //Falta usar la funcion agregarPlan a cliente. No se de donde sacar el idEmpleado
+						//Altice.getInstance().agregarPlanACliente(idPlan, cedula, idEmpleado);
 						
 			
 						JOptionPane.showMessageDialog(null, "Plan Asignado", null, JOptionPane.ERROR_MESSAGE, null);
@@ -438,7 +423,7 @@ private int seleccionarTipo=0;
 		
 			for (Plan misPlanes : Altice.getInstance().getMisPlanes()) {
 				
-				modelPlan.addElement("Id " + misPlanes.getId() + "Nombre del plan: " + misPlanes.getNombre() + " -- Cantidad de Megas Disponible: "  + misPlanes.getCantMegas() + " -- Cantidad de Minutos Disponible: "  + misPlanes.getCantMinutos()+ " -- Cantidad de Canales Disponible: "  + misPlanes.getCantCanales()     );
+				modelAgregar.addElement("Id " + misPlanes.getId() + "Nombre del plan: " + misPlanes.getNombre() + " -- Cantidad de Megas Disponible: "  + misPlanes.getCantMegas() + " -- Cantidad de Minutos Disponible: "  + misPlanes.getCantMinutos()+ " -- Cantidad de Canales Disponible: "  + misPlanes.getCantCanales()     );
 				listaDePlanesElegidos.setModel(modelAgregar);
 
 			}
