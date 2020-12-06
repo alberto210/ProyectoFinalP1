@@ -150,6 +150,15 @@ public class Principal extends JFrame {
 			}
 		});
 		mnAdministracin.add(mntmNewMenuItem_2);
+		
+		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Estad\u00EDsticas");
+		mntmNewMenuItem_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Estadisticas aux = new Estadisticas();
+				aux.setVisible(true);
+			}
+		});
+		mnAdministracin.add(mntmNewMenuItem_4);
 		mntmCrearNuevoEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CrearUsuario aux = new CrearUsuario();

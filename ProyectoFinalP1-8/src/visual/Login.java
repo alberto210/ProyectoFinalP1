@@ -73,7 +73,8 @@ public class Login extends JFrame {
 		panel.add(lblContrasea);
 		
 		txtUsuario = new JTextField();
-		txtUsuario.setForeground(Color.WHITE);
+		txtUsuario.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		txtUsuario.setForeground(Color.BLACK);
 		txtUsuario.setBounds(90, 105, 191, 20);
 		panel.add(txtUsuario);
 		txtUsuario.setColumns(10);
@@ -98,7 +99,7 @@ public class Login extends JFrame {
 		panel.add(btnLogin);
 		
 		txtContrasena = new JPasswordField();
-		txtContrasena.setForeground(Color.WHITE);
+		txtContrasena.setForeground(Color.BLACK);
 		txtContrasena.setBounds(90, 162, 191, 20);
 		panel.add(txtContrasena);
 		
