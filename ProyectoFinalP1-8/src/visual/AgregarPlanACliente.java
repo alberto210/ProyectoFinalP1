@@ -77,6 +77,7 @@ public class AgregarPlanACliente extends JDialog {
 	 */
 	public AgregarPlanACliente(String title) {
 		setTitle(title);
+		Altice.getInstance().actualizarCantHoras();
 		setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
 		setResizable(false);
 		setModal(true);

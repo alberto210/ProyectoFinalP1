@@ -175,6 +175,12 @@ public class ListClientes extends JDialog {
 				getContentPane().add(buttonPane, BorderLayout.SOUTH);
 				
 				btnCancelarPlan = new JButton("Cancelar Plan");
+				btnCancelarPlan.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						
+					}
+				});
 				btnCancelarPlan.setEnabled(false);
 				buttonPane.add(btnCancelarPlan);
 				{

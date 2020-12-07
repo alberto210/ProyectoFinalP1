@@ -16,6 +16,7 @@ public class Altice implements Serializable{
 	private static Empleado loginEmpleado;
 	private int idPlan = 1;
 	private int idNomina = 1;
+	private int idFactura = 1;
 	private static boolean firstTime;
 	private ArrayList<Empleado> misEmpleados;
 	private ArrayList<Cliente> misClientes;
@@ -190,21 +191,21 @@ public class Altice implements Serializable{
 	private void generarFactura(String cedulaCliente) {
 		Cliente client = buscarCliente(cedulaCliente);
 		if(client != null) {
-			float monto = 0;
-			for(Plan aux: client.getMisPlanes()) { //Considerando si remover este for o no segun la estructura de factura
-				monto += aux.getPrecioTotal(); //Sumo los montos de las facturas
-			}
-			Factura fac = new Factura(false,client,monto); //Comprobar que es estado??
+			Factura fac = new Factura(idFactura,false,client); 
+			idFactura++;
 			client.getMisFacturas().add(fac);
 			misFacturas.add(fac);
 		}
 				
 	}
 	
-	public void generarTodasLasFacturas() {
+	public boolean generarTodasLasFacturas() {
+		boolean generar = false;
 		for(Cliente client: misClientes) {
 			generarFactura(client.getCedula());
 		}
+		generar = true;
+		return generar;
 	}
 	
 	//crear plan contemplando que se hara con interfaz visual, toma en cuenta que servicios tiene habilitado
@@ -236,6 +237,8 @@ public class Altice implements Serializable{
 				}
 			}
 			if (aux != null) {
+				Date hoy = new Date();
+				aux.setFechaDeEmision(hoy);
 				misPlanes.add(aux);
 			}
 		}
@@ -434,4 +437,14 @@ public class Altice implements Serializable{
 		}
 		return aux;
 	}
+	public void actualizarCantHoras() {
+		Date hoy = new Date();
+		for(Empleado emp : misEmpleados) {
+			if(emp.getFechaDeInicio().getDate() != hoy.getDate()) {
+				emp.setHorasTrabajadas(emp.getHorasTrabajadas()+8);
+				emp.setFechaDeInicio(hoy);	
+			}	
+		}
+	}
+	
 }

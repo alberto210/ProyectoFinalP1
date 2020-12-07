@@ -14,7 +14,7 @@ public class Factura implements Serializable{
 	private static final long serialVersionUID = 178664072442668691L;
 	private String codFactura;
 	private boolean verificacion; //Pagada o no
-	private String estado;
+	private String estado; // Pagada, noPagada, Atrasada
 	private Cliente cliente;
 	private ArrayList<Plan> misPlanes;
 	private boolean primeraFactura;
@@ -22,15 +22,21 @@ public class Factura implements Serializable{
 	private Date fechaEmision;
 	private Date corte;
 	
-	public Factura(boolean verificacion, Cliente cliente, float monto) {
+	public Factura(int idFactura,boolean verificacion, Cliente cliente) {
 		super();
+		this.codFactura = ("F-"+idFactura);
 		this.verificacion = verificacion;
 		this.cliente = new Cliente();
 		this.cliente = cliente;
 		this.misPlanes = new ArrayList<Plan>();
-		this.monto = monto;
+		for(Plan plansito : cliente.getMisPlanes()) {
+			misPlanes.add(plansito);
+		}
+		
+		this.estado= "No Pagada";
 		comprobarPrimeraFactura();
 		DiaCorte();
+		monto =0;
 	}
 	
 
@@ -133,23 +139,23 @@ public class Factura implements Serializable{
 	
 	@SuppressWarnings("deprecation")
 	public float cobrarDiasConsumidosPrimeraFactura() {
-		monto = 0;
+		monto =0;
 		for (Plan plan : misPlanes) {
 			int date = plan.getFechaDeEmision().getDate();
 			int mes = plan.getFechaDeEmision().getMonth();
-			if(date>15 && primeraFactura == true) {
+			if(date>15 && primeraFactura) {
 				if(mes==0||mes==2||mes==4||mes==6||mes==7||mes==9||mes==11) {
-					monto += (float) ((plan.getPrecioTotal()/31)*(32-date));
+					monto += (float) ((plan.generarPrecioTotalConImpuestos()/31)*(32-date));
 				}
 				if(mes==3||mes==5||mes==8||mes==10) {
-					monto += (float) ((plan.getPrecioTotal()/30)*(31-date));
+					monto += (float) ((plan.generarPrecioTotalConImpuestos()/30)*(31-date));
 				}
 				if(mes==1) {
-					monto += (float) ((plan.getPrecioTotal()/28)*(29-date));
+					monto += (float) ((plan.generarPrecioTotalConImpuestos()/28)*(29-date));
 				}
 			}
-			if(date<15 && primeraFactura == true) {
-				monto += plan.getPrecioTotal();
+			else {
+				monto += plan.generarPrecioTotalConImpuestos();
 			}
 		}
 		return monto;

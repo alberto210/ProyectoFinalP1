@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -27,10 +28,19 @@ import logico.Altice;
 import logico.Usuario;
 import javax.swing.SwingConstants;
 import java.awt.Toolkit;
+import java.awt.FlowLayout;
+import javax.swing.JLabel;
+import java.awt.Color;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class Principal extends JFrame {
 
 	private JPanel contentPane;
+	private JSpinner spnAno;
+	private JSpinner spnMes;
+	private JSpinner spnDia;
+	private Date hoy = new Date();
 			//Se movio el metodo main a la pestaña principal
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -84,6 +94,7 @@ public class Principal extends JFrame {
 			Altice.getInstance();
 			setTitle("Altice - Usuario: " + Altice.getLoginEmpleado().getNombre());
 		}
+		Altice.getInstance().actualizarCantHoras();
 		setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -139,6 +150,15 @@ public class Principal extends JFrame {
 			}
 		});
 		mnClientes.add(mntmNewMenuItem_6);
+		
+		JMenuItem mntmNewMenuItem_9 = new JMenuItem("Listado de Facturas");
+		mntmNewMenuItem_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListFacturas aux = new ListFacturas();
+				aux.setVisible(true);
+			}
+		});
+		mnClientes.add(mntmNewMenuItem_9);
 		mnClientes.add(mntmNewMenuItem_5);
 		
 		JMenu mnAdministracin = new JMenu("Administraci\u00F3n                                                    ");
@@ -201,6 +221,19 @@ public class Principal extends JFrame {
 			}
 		});
 		mnAdministracin.add(mntmNewMenuItem_7);
+		
+		JMenuItem mntmNewMenuItem_10 = new JMenuItem("Generar Facturas");
+		mntmNewMenuItem_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean generar = Altice.getInstance().generarTodasLasFacturas();
+				if(generar) {
+					JOptionPane.showMessageDialog(null, "Facturas emitidas satisfactoriamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
+				}else {
+					JOptionPane.showMessageDialog(null, "Ha ocurrido un error en la emision de facturas.", "Información", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
+		mnAdministracin.add(mntmNewMenuItem_10);
 		mntmCrearNuevoEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CrearUsuario aux = new CrearUsuario("Nuevo Usuario",0,null);
@@ -239,8 +272,46 @@ public class Principal extends JFrame {
 			}  
 		};
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Fecha del Programa");
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setBounds(415, 25, 126, 14);
+		contentPane.add(lblNewLabel);
+		
+		 spnAno = new JSpinner();
+		spnAno.setModel(new SpinnerNumberModel(new Integer(2020), new Integer(0), null, new Integer(1)));
+		spnAno.setBounds(500, 50, 53, 23);
+		contentPane.add(spnAno);
+		
+		JSpinner spnMes = new JSpinner();
+		spnMes.setModel(new SpinnerNumberModel(0, 0, 12, 1));
+		spnMes.setBounds(437, 50, 53, 23);
+		contentPane.add(spnMes);
+		
+		JSpinner spnDia = new JSpinner();
+		spnDia.setModel(new SpinnerNumberModel(0, 0, 30, 1));
+		spnDia.setBounds(370, 50, 53, 23);
+		contentPane.add(spnDia);
+		
+		JLabel lblAo = new JLabel("A\u00F1o");
+		lblAo.setForeground(Color.WHITE);
+		lblAo.setBounds(500, 84, 53, 14);
+		contentPane.add(lblAo);
+		
+		JLabel lblMes = new JLabel("Mes");
+		lblMes.setForeground(Color.WHITE);
+		lblMes.setBounds(437, 84, 77, 14);
+		contentPane.add(lblMes);
+		
+		JLabel lblDia = new JLabel("Dia");
+		lblDia.setForeground(Color.WHITE);
+		lblDia.setBounds(370, 84, 53, 14);
+		contentPane.add(lblDia);
+		
+		spnAno.setValue(hoy.getYear()+1900);
+		spnMes.setValue(hoy.getMonth()+1);
+		spnDia.setValue(hoy.getDate());
 	}
-
 }
