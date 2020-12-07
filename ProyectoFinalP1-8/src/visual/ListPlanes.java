@@ -154,7 +154,11 @@ public class ListPlanes extends JDialog {
 					btnMod = new JButton("Modificar Plan");
 					btnMod.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							
+							CrearPlan mod = new CrearPlan("Modificar Plan", 1, aux);
+							mod.setModal(true);
+							mod.setResizable(false);
+							mod.setVisible(true);
+							btnMod.setEnabled(false);
 						}
 					});
 					btnMod.setEnabled(false);

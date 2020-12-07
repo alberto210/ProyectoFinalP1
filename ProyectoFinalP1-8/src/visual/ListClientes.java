@@ -115,7 +115,6 @@ public class ListClientes extends JDialog {
 							btnPlan.setEnabled(true);
 							btnMod.setEnabled(true);
 							aux = Altice.getInstance().buscarCliente((String)table.getValueAt(seleccion, 1));
-							cargarTablaConsulta(aux);
 						}
 					}
 				});
@@ -180,6 +179,12 @@ public class ListClientes extends JDialog {
 				buttonPane.add(btnCancelarPlan);
 				{
 					btnPlan = new JButton("Consultar Planes");
+					btnPlan.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							cargarTablaConsulta(aux);
+							btnPlan.setEnabled(false);
+						}
+					});
 					btnPlan.setEnabled(false);
 					buttonPane.add(btnPlan);
 				}

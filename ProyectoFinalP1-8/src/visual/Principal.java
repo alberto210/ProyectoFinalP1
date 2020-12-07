@@ -153,7 +153,7 @@ public class Principal extends JFrame {
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Crear Nuevo Plan");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CrearPlan aux = new CrearPlan();
+				CrearPlan aux = new CrearPlan("Crear Plan", 0, null);
 				aux.setVisible(true);
 			}
 		});
