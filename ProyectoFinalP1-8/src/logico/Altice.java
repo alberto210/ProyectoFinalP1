@@ -191,7 +191,17 @@ public class Altice implements Serializable{
 	private void generarFactura(String cedulaCliente) {
 		Cliente client = buscarCliente(cedulaCliente);
 		if(client != null) {
-			Factura fac = new Factura(idFactura,false,client); 
+			Factura fac = new Factura(idFactura,false,client,null); 
+			idFactura++;
+			client.getMisFacturas().add(fac);
+			misFacturas.add(fac);
+		}
+				
+	}
+	
+	public void generarFacturaParaUnPlan(Cliente client,Plan plan) {
+		if(client != null) {
+			Factura fac = new Factura(idFactura,true,client,plan); 
 			idFactura++;
 			client.getMisFacturas().add(fac);
 			misFacturas.add(fac);

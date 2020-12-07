@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -36,6 +37,7 @@ import logico.Altice;
 import logico.Cliente;
 import logico.Comercial;
 import logico.Empleado;
+import logico.Factura;
 import logico.Plan;
 
 public class ListClientes extends JDialog {
@@ -177,7 +179,20 @@ public class ListClientes extends JDialog {
 				btnCancelarPlan = new JButton("Cancelar Plan");
 				btnCancelarPlan.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
+						Factura fact = null;
+						if(aux != null) {
+							if(plan != null) {
+								Altice.getInstance().generarFacturaParaUnPlan(aux, plan);
+								aux.getMisPlanes().remove(plan);
+							}
+							else {
+								JOptionPane.showMessageDialog(null, "Hubo un error al tratar de eliminar el plan", "Información", JOptionPane.ERROR_MESSAGE);
+							}
+							
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Hubo un error al tratar de eliminar el plan", "Información", JOptionPane.ERROR_MESSAGE);
+						}
 						
 					}
 				});

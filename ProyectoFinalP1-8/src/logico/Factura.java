@@ -23,16 +23,22 @@ public class Factura implements Serializable{
 	private Date fechaEmision;
 	private Date corte;
 	
-	public Factura(int idFactura,boolean verificacion, Cliente cliente) {
+	public Factura(int idFactura,boolean verificacion, Cliente cliente, Plan plan) {
 		super();
 		this.codFactura = ("F-"+idFactura);
 		this.verificacion = verificacion;
 		this.cliente = new Cliente();
 		this.cliente = cliente;
 		this.misPlanes = new ArrayList<Plan>();
-		for(Plan plansito : cliente.getMisPlanes()) {
-			misPlanes.add(plansito);
+		if(verificacion == false && plan == null) {
+			for(Plan plansito : cliente.getMisPlanes()) {
+				misPlanes.add(plansito);
+			}
 		}
+		else if(verificacion == true && plan != null){
+			misPlanes.add(plan);
+		}
+		
 		
 		this.estado= "No Pagada";
 		comprobarPrimeraFactura();

@@ -31,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 import logico.Altice;
+import logico.Cliente;
 import logico.Factura;
 import logico.Nomina;
 
@@ -45,6 +46,8 @@ public class ListFacturas extends JDialog {
 	public static Object[] rows;
 	private int seleccion = -1;
 	private Factura aux = null;
+	private Factura auxClient = null;
+	private Cliente client = null;
 
 	public ListFacturas() {
 			setTitle("Lista de Facturas");
@@ -102,6 +105,8 @@ public class ListFacturas extends JDialog {
 						if(seleccion != -1) {
 							btnMod.setEnabled(true);
 							aux = Altice.getInstance().findFactura((String)table.getValueAt(seleccion, 1));
+							client = Altice.getInstance().buscarCliente((String)table.getValueAt(seleccion, 3));
+							auxClient = client.findFactura((String)table.getValueAt(seleccion, 1));
 						}
 					}
 				});
@@ -132,6 +137,7 @@ public class ListFacturas extends JDialog {
 					btnMod = new JButton("Pagar");
 					btnMod.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
+							auxClient.setEstado("Pagada");
 							aux.setEstado("Pagada");
 							aux.setMontoPagado(aux.cobrarDiasConsumidosPrimeraFactura());
 							llenarTabla();
