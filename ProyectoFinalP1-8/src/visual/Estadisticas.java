@@ -31,16 +31,18 @@ public class Estadisticas extends JDialog {
 
 
 	public Estadisticas() {
+		getContentPane().setForeground(Color.BLUE);
 		setTitle("Estadisticas");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
 		setBounds(100, 100, 450, 300);
-		setSize(689,811);
+		setSize(1417,811);
 		setLocationRelativeTo(null);
 		init();
 		init2();
 	}
 
 	  private void init() {
+	        contentPane.setForeground(Color.CYAN);
 
 	        getContentPane().add(contentPane);
 	        // Fuente de Datos
@@ -66,12 +68,12 @@ public class Estadisticas extends JDialog {
 	        contentPane.setLayout(null);
 	        // Mostrar Grafico
 	        chartPanel1 = new ChartPanel(chart1);
-	        chartPanel1.setBounds(10, 11, 654, 370);
+	        chartPanel1.setBounds(10, 11, 1381, 370);
 	        contentPane.add(chartPanel1);
 	    }
 	  	
 	  private void init2() {
-/*
+
 	        getContentPane().add(contentPane);
 	        // Fuente de Datos
 	        float montoEnero = 0;
@@ -89,21 +91,59 @@ public class Estadisticas extends JDialog {
 	        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 	        for(Factura fac : Altice.getInstance().getMisFacturas()) {
 	        	if(fac.getEstado().equalsIgnoreCase("Pagada") && fac.getFechaEmision().getMonth()==0) {
-	        		montoEnero += fac.cobrarDiasConsumidosPrimeraFactura();
+	        		montoEnero += fac.getMontoPagado();
+	        	}
+	        	if(fac.getEstado().equalsIgnoreCase("Pagada") && fac.getFechaEmision().getMonth()==1) {
+	        		montoFebrero += fac.getMontoPagado();
+	        	}
+	        	if(fac.getEstado().equalsIgnoreCase("Pagada") && fac.getFechaEmision().getMonth()==2) {
+	        		montoMarzo += fac.getMontoPagado();
+	        	}
+	        	if(fac.getEstado().equalsIgnoreCase("Pagada") && fac.getFechaEmision().getMonth()==3) {
+	        		montoAbril += fac.getMontoPagado();
+	        	}
+	        	if(fac.getEstado().equalsIgnoreCase("Pagada") && fac.getFechaEmision().getMonth()==4) {
+	        		montoMayo += fac.getMontoPagado();
+	        	}
+	        	if(fac.getEstado().equalsIgnoreCase("Pagada") && fac.getFechaEmision().getMonth()==5) {
+	        		montoJunio += fac.getMontoPagado();
+	        	}
+	        	if(fac.getEstado().equalsIgnoreCase("Pagada") && fac.getFechaEmision().getMonth()==6) {
+	        		montoJulio += fac.getMontoPagado();
+	        	}
+	        	if(fac.getEstado().equalsIgnoreCase("Pagada") && fac.getFechaEmision().getMonth()==7) {
+	        		montoAgosto += fac.getMontoPagado();
+	        	}
+	        	if(fac.getEstado().equalsIgnoreCase("Pagada") && fac.getFechaEmision().getMonth()==8) {
+	        		montoSeptiembre += fac.getMontoPagado();
+	        	}
+	        	if(fac.getEstado().equalsIgnoreCase("Pagada") && fac.getFechaEmision().getMonth()==9) {
+	        		montoOctubre += fac.getMontoPagado();
+	        	}
+	        	if(fac.getEstado().equalsIgnoreCase("Pagada") && fac.getFechaEmision().getMonth()==10) {
+	        		montoNoviembre += fac.getMontoPagado();
+	        	}
+	        	if(fac.getEstado().equalsIgnoreCase("Pagada") && fac.getFechaEmision().getMonth()==11) {
+	        		montoDiciembre += fac.getMontoPagado();
 	        	}
 	        }
-	        dataset.setValue(usuarios[6], "Voz", "Singleplay");
-	        dataset.setValue(usuarios[5], "Internet", "Singleplay");
-	        dataset.setValue(usuarios[4], "TV", "Singleplay");
-	        dataset.setValue(usuarios[3], "TV + Voz Digital", "Dobleplay");
-	        dataset.setValue(usuarios[2], "Internet + Voz Digital", "Dobleplay");
-	        dataset.setValue(usuarios[1], "Internet + TV", "Dobleplay");
-	        dataset.setValue(usuarios[0], "Internet + TV + Voz Digital", "Tripleplay");
+	        dataset.setValue(montoEnero,"Ganancias","Enero");
+	        dataset.setValue(montoFebrero,"Ganancias","Febrero");
+	        dataset.setValue(montoMarzo,"Ganancias","Marzo");
+	        dataset.setValue(montoAbril,"Ganancias","Abril");
+	        dataset.setValue(montoMayo,"Ganancias","Mayo");
+	        dataset.setValue(montoJunio,"Ganancias","Junio");
+	        dataset.setValue(montoJulio, "Ganancias", "Julio");
+	        dataset.setValue(montoAgosto, "Ganancias", "Agosto");
+	        dataset.setValue(montoSeptiembre, "Ganancias", "Septiembre");
+	        dataset.setValue(montoOctubre, "Ganancias", "Octubre");
+	        dataset.setValue(montoNoviembre, "Ganancias", "Noviembre");
+	        dataset.setValue(montoDiciembre, "Ganancias", "Diciembre");
 	        
 	        // Creando el Grafico
 	        ImageIcon img = new ImageIcon(getClass().getResource("Fondo.png"));
 	        chart2 = ChartFactory.createBarChart3D
-	        ("Cantidad de usuarios por plan","Planes", "Usuarios", 
+	        ("Ventas por Mes","Meses", "Ventas", 
 	        dataset, PlotOrientation.VERTICAL, true,true, false);
 	        chart2.setBackgroundImage(img.getImage());
 	        chart2.getTitle().setPaint(Color.black); 
@@ -112,7 +152,7 @@ public class Estadisticas extends JDialog {
 	        contentPane.setLayout(null);
 	        // Mostrar Grafico
 	        chartPanel2 = new ChartPanel(chart2);
-	        chartPanel2.setBounds(10, 392, 654, 370);
-	        contentPane.add(chartPanel2);*/
+	        chartPanel2.setBounds(10, 392, 1381, 370);
+	        contentPane.add(chartPanel2);
 	    }
 }
