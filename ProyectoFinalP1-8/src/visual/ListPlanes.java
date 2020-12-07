@@ -92,7 +92,7 @@ public class ListPlanes extends JDialog {
 					public void mouseClicked(MouseEvent e) {
 						seleccion = table.getSelectedRow();
 						if(seleccion != -1) {
-							if(Altice.getLoginEmpleado() instanceof Administrativo) {
+							if(Altice.getLoginEmpleado() instanceof Administrativo || Altice.getInstance().admin) {
 								btnActivarPlan.setEnabled(true);
 								btnEliminarPlan.setEnabled(true);
 								btnMod.setEnabled(true);

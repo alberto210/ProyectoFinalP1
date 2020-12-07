@@ -1,6 +1,7 @@
 package logico;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public abstract class Empleado implements Serializable{
 
@@ -14,11 +15,13 @@ public abstract class Empleado implements Serializable{
 	protected float sueldoUnitario;
 	protected int horasTrabajadas;
 	protected Usuario user;
+	protected Date fechaDeInicio;
 	
 	
 	public Empleado(String cedula, String nombre, float sueldoBase, float sueldoUnitario,
 			int horasTrabajadas) {
 		super();
+		this.fechaDeInicio = new Date();
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.sueldoBase = sueldoBase;
@@ -90,6 +93,12 @@ public abstract class Empleado implements Serializable{
 
 	public void setUser(Usuario user) {
 		this.user = user;
+	}
+	public Date getFechaDeInicio() {
+		return fechaDeInicio;
+	}
+	public void setFechaDeInicio(Date fechaDeInicio) {
+		this.fechaDeInicio = fechaDeInicio;
 	}
 	
 }
