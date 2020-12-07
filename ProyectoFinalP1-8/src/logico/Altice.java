@@ -211,10 +211,21 @@ public class Altice implements Serializable{
 	
 	public boolean generarTodasLasFacturas() {
 		boolean generar = false;
-		for(Cliente client: misClientes) {
-			generarFactura(client.getCedula());
+		if(misClientes.size() != 0) {
+			for(Cliente client: misClientes) {
+				if(client.getMisPlanes().size() != 0) {
+					generarFactura(client.getCedula());
+				}
+				else {
+					generar = false;
+				}
+			}
+			generar = true;
 		}
-		generar = true;
+		else {
+			generar = false;
+		}
+		
 		return generar;
 	}
 	
