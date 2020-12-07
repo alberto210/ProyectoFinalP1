@@ -1,3 +1,6 @@
+
+
+
 package visual;
 
 import javax.swing.JLabel;
@@ -99,7 +102,7 @@ public class Login extends JFrame {
 				
 			}
 		});
-		btnLogin.setBounds(124, 238, 121, 23);
+		btnLogin.setBounds(123, 215, 121, 23);
 		panel.add(btnLogin);
 		
 		txtContrasena = new JPasswordField();

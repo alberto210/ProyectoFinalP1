@@ -1,3 +1,5 @@
+
+
 package visual;
 
 import java.awt.BorderLayout;
@@ -52,7 +54,7 @@ public class ListPlanes extends JDialog {
 	public ListPlanes() {
 			setTitle("Lista de Planes");
 			setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
-			setBounds(100, 100, 1004, 320);
+			setBounds(100, 100, 1083, 403);
 			setLocationRelativeTo(null);
 			getContentPane().setLayout(new BorderLayout());
 			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -70,11 +72,11 @@ public class ListPlanes extends JDialog {
 				}
 				
 				JSeparator separator = new JSeparator();
-				separator.setBounds(10, 41, 943, 2);
+				separator.setBounds(10, 41, 1035, 2);
 				panel.add(separator);
 				
 				JPanel panel_Listado = new JPanel();
-				panel_Listado.setBounds(10, 54, 943, 173);
+				panel_Listado.setBounds(10, 54, 1037, 256);
 				panel.add(panel_Listado);
 				panel_Listado.setLayout(new BorderLayout(0, 0));
 				

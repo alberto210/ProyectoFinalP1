@@ -1,3 +1,5 @@
+
+
 package visual;
 
 import java.awt.BorderLayout;
@@ -18,7 +20,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -37,7 +38,6 @@ import logico.Altice;
 import logico.Cliente;
 import logico.Comercial;
 import logico.Empleado;
-import logico.Factura;
 import logico.Plan;
 
 public class ListClientes extends JDialog {
@@ -62,7 +62,7 @@ public class ListClientes extends JDialog {
 	public ListClientes() {
 			setTitle("Lista de Clientes");
 			setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
-			setBounds(100, 100, 690, 479);
+			setBounds(100, 100, 1081, 491);
 			setLocationRelativeTo(null);
 			getContentPane().setLayout(new BorderLayout());
 			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -92,11 +92,11 @@ public class ListClientes extends JDialog {
 				txtNombre.setColumns(10);
 				
 				JSeparator separator = new JSeparator();
-				separator.setBounds(10, 41, 644, 2);
+				separator.setBounds(10, 41, 1035, 2);
 				panel.add(separator);
 				
 				JPanel panel_Listado = new JPanel();
-				panel_Listado.setBounds(10, 54, 644, 173);
+				panel_Listado.setBounds(10, 54, 1035, 173);
 				panel.add(panel_Listado);
 				panel_Listado.setLayout(new BorderLayout(0, 0));
 				
@@ -140,12 +140,12 @@ public class ListClientes extends JDialog {
 				panel.add(lblNewLabel_1);
 				
 				JSeparator separator_1 = new JSeparator();
-				separator_1.setBounds(10, 238, 644, 2);
+				separator_1.setBounds(10, 238, 1035, 2);
 				panel.add(separator_1);
 				
 				JPanel panel_ConsultaPlanes = new JPanel();
 				panel_ConsultaPlanes.setBorder(new TitledBorder(null, "Consulta de planes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-				panel_ConsultaPlanes.setBounds(10, 251, 644, 135);
+				panel_ConsultaPlanes.setBounds(10, 251, 1035, 133);
 				panel.add(panel_ConsultaPlanes);
 				panel_ConsultaPlanes.setLayout(new BorderLayout(0, 0));
 				
@@ -179,20 +179,7 @@ public class ListClientes extends JDialog {
 				btnCancelarPlan = new JButton("Cancelar Plan");
 				btnCancelarPlan.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						Factura fact = null;
-						if(aux != null) {
-							if(plan != null) {
-								Altice.getInstance().generarFacturaParaUnPlan(aux, plan);
-								aux.getMisPlanes().remove(plan);
-							}
-							else {
-								JOptionPane.showMessageDialog(null, "Hubo un error al tratar de eliminar el plan", "Información", JOptionPane.ERROR_MESSAGE);
-							}
-							
-						}
-						else {
-							JOptionPane.showMessageDialog(null, "Hubo un error al tratar de eliminar el plan", "Información", JOptionPane.ERROR_MESSAGE);
-						}
+						
 						
 					}
 				});

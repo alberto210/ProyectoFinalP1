@@ -192,6 +192,7 @@ public class CrearUsuario extends JDialog {
 		contentPanel.add(cbxCargo);
 		
 		lblCargo = new JLabel("Cargo");
+		lblCargo.setVisible(false);
 		if(mode == 1) {
 			if(aux instanceof Comercial) {
 				lblCargo.setVisible(false);
@@ -371,3 +372,4 @@ public class CrearUsuario extends JDialog {
 		spnSueldoUnitario.setValue(Integer.valueOf("0"));
 	}
 }
+
