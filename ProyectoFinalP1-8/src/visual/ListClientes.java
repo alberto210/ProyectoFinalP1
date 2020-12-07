@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -179,8 +180,25 @@ public class ListClientes extends JDialog {
 				btnCancelarPlan = new JButton("Cancelar Plan");
 				btnCancelarPlan.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
-						
+						if(aux != null) {
+							if(plan != null) {
+								int option = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar el plan al cliente ?", "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+								if(option == JOptionPane.OK_OPTION) {
+									Altice.getInstance().generarFacturaParaUnPlan(aux, plan);
+									aux.getMisPlanes().remove(plan);
+									ListFacturas.llenarTabla();
+									btnCancelarPlan.setEnabled(false);
+									plan = null;
+									index = -1;
+								}
+							}
+							else {
+								JOptionPane.showMessageDialog(null, "Hubo un error al tratar de eliminar el plan al cliente", "Información", JOptionPane.ERROR_MESSAGE);
+							}
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Hubo un error al tratar de eliminar el plan al cliente", "Información", JOptionPane.ERROR_MESSAGE);
+						}
 					}
 				});
 				btnCancelarPlan.setEnabled(false);
