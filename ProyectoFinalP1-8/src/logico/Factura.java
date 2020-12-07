@@ -19,6 +19,7 @@ public class Factura implements Serializable{
 	private ArrayList<Plan> misPlanes;
 	private boolean primeraFactura;
 	private float monto;
+	private float montoPagado;
 	private Date fechaEmision;
 	private Date corte;
 	
@@ -37,6 +38,7 @@ public class Factura implements Serializable{
 		comprobarPrimeraFactura();
 		DiaCorte();
 		monto =0;
+		montoPagado =0;
 	}
 	
 
@@ -239,6 +241,16 @@ public class Factura implements Serializable{
 			}
 		}
 		return aux;
+	}
+
+
+	public float getMontoPagado() {
+		return montoPagado;
+	}
+
+
+	public void setMontoPagado(float montoPagado) {
+		this.montoPagado = montoPagado;
 	}
 	
 }

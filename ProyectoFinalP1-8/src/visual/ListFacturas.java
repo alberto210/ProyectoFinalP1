@@ -133,6 +133,7 @@ public class ListFacturas extends JDialog {
 					btnMod.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							aux.setEstado("Pagada");
+							aux.setMontoPagado(aux.cobrarDiasConsumidosPrimeraFactura());
 							llenarTabla();
 						}
 					});
