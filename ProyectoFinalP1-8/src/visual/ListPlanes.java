@@ -85,7 +85,7 @@ public class ListPlanes extends JDialog {
 				panel_Listado.add(scrollPane, BorderLayout.CENTER);
 				
 				modelo = new DefaultTableModel();
-				String[] headers = {"Estado","ID","Nombre","Tipo","Megas","Canales","Minutos","Precio sin Impuestos"};
+				String[] headers = {"Estado","ID","Nombre","Tipo","Megas","Canales","Minutos","Precio con Impuestos"};
 				modelo.setColumnIdentifiers(headers);
 				
 				table = new JTable();
@@ -193,7 +193,7 @@ public class ListPlanes extends JDialog {
 					rows[4] = temp.getCantMegas();
 					rows[5] = temp.getCantCanales();
 					rows[6] = temp.getCantMinutos();
-					rows[7] = String.format("%.1f", temp.getPrecioTotal());
+					rows[7] = String.format("%.1f", temp.generarPrecioTotalConImpuestos());
 				modelo.addRow(rows);
 			}
 		}

@@ -30,6 +30,7 @@ import javax.swing.JSpinner;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
+import javax.swing.SpinnerNumberModel;
 
 public class CrearPlan extends JDialog {
 
@@ -108,6 +109,7 @@ public class CrearPlan extends JDialog {
 			panelInternet.add(lblNewLabel_5);
 
 			spnMegas = new JSpinner();
+			spnMegas.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			if(mode == 0) {
 				spnMegas.setVisible(false);
 			}
@@ -148,6 +150,7 @@ public class CrearPlan extends JDialog {
 			panelTelefono.add(lblNewLabel_6);
 
 			spnCantidadMinutos = new JSpinner();
+			spnCantidadMinutos.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			if(mode == 0) {
 				spnCantidadMinutos.setVisible(false);
 			}
@@ -186,6 +189,7 @@ public class CrearPlan extends JDialog {
 			panelCable.add(lblNewLabel_7);
 
 			spnCantidadDeCanales = new JSpinner();
+			spnCantidadDeCanales.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			if(mode == 0) {
 				spnCantidadDeCanales.setVisible(false);
 			}

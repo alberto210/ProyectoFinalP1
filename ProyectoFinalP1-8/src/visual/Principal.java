@@ -132,7 +132,6 @@ public class Principal extends JFrame {
 				aux.setVisible(true);
 			}
 		});
-		mnClientes.add(mntmNewMenuItem_3);
 		
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Agregar Plan a Cliente");
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
@@ -141,6 +140,8 @@ public class Principal extends JFrame {
 				agregar.setVisible(true);
 			}
 		});
+		mnClientes.add(mntmNewMenuItem_5);
+		mnClientes.add(mntmNewMenuItem_3);
 		
 		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Listado de Planes");
 		mntmNewMenuItem_6.addActionListener(new ActionListener() {
@@ -159,7 +160,6 @@ public class Principal extends JFrame {
 			}
 		});
 		mnClientes.add(mntmNewMenuItem_9);
-		mnClientes.add(mntmNewMenuItem_5);
 		
 		JMenu mnAdministracin = new JMenu("Administraci\u00F3n                                                    ");
 		if(!Altice.getLoginUser().getTipoDeUsuario().equalsIgnoreCase("Administrador")){

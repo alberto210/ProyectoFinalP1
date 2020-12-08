@@ -461,8 +461,8 @@ public class Altice implements Serializable{
 	public void actualizarCantHoras() {
 		Date hoy = new Date();
 		for(Empleado emp : misEmpleados) {
-			if(emp.getFechaDeInicio().getDate() != hoy.getDate()) {
-				emp.setHorasTrabajadas(emp.getHorasTrabajadas()+8);
+			if(emp.getFechaDeInicio().getDate() < hoy.getDate()) {
+				emp.setHorasTrabajadas(emp.getHorasTrabajadas()+(8*(hoy.getDate()-emp.getFechaDeInicio().getDate())));
 				emp.setFechaDeInicio(hoy);	
 			}	
 		}
