@@ -141,11 +141,20 @@ public class ListFacturas extends JDialog {
 							if(auxClient.getEstado().equalsIgnoreCase("Pagada") && aux.getEstado().equalsIgnoreCase("Pagada")) {
 								JOptionPane.showMessageDialog(null, "La factura ya se ha pagado anteriormente.", null, JOptionPane.INFORMATION_MESSAGE, null);
 							}else {
-								JOptionPane.showMessageDialog(null, "Se ha pagado la factura.", null, JOptionPane.INFORMATION_MESSAGE, null);
-								auxClient.setEstado("Pagada");
-								aux.setEstado("Pagada");
-								aux.setMontoPagado(aux.cobrarDiasConsumidosPrimeraFactura());
-								llenarTabla();
+								if(aux.getEstado().equalsIgnoreCase("Cancelada") && auxClient.getEstado().equalsIgnoreCase("Cancelada")) {
+									JOptionPane.showMessageDialog(null, "Se ha pagado la factura, pero se ha removido el plan del cliente", null, JOptionPane.INFORMATION_MESSAGE, null);
+									client.getMisPlanes().remove(auxClient.getMiPlan());
+									aux.setMontoPagado(aux.cobrarDiasConsumidosPrimeraFactura());
+									auxClient.setEstado("Pagada");
+									aux.setEstado("Pagada");
+									llenarTabla();
+								}else {
+									JOptionPane.showMessageDialog(null, "Se ha pagado la factura.", null, JOptionPane.INFORMATION_MESSAGE, null);
+									auxClient.setEstado("Pagada");
+									aux.setEstado("Pagada");
+									aux.setMontoPagado(aux.cobrarDiasConsumidosPrimeraFactura());
+									llenarTabla();
+								}
 							}
 						}
 					});

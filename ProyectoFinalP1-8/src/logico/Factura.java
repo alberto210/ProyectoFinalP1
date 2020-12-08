@@ -161,19 +161,22 @@ public class Factura implements Serializable{
 	public float recargo() {
 		float recargo = 0;
 		int mes = CalcMesDesdeCorte();
-		System.out.println(mes);
-		if(!estado.equalsIgnoreCase("Pagada")){
 			if(mes == 1) {
-				estado="Atrasada-1";
+				if(!estado.equalsIgnoreCase("Pagada")) {
+					estado="Atrasada-1";
+				}
 				recargo = (float) (0.05);
 			}else if(mes==2){
-				estado="Atrasada-2";
+				if(!estado.equalsIgnoreCase("Pagada")) {
+					estado="Atrasada-2";
+				}
 				recargo = (float) (0.1);
 			}else if(mes >= 3) {
-				estado="Cancelada";
+				if(!estado.equalsIgnoreCase("Pagada")) {
+					estado="Cancelada";
+				}
 				recargo = (float) (0.1 + 0.05);
 			}
-		}
 		return recargo;
 		
 	}

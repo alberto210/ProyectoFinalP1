@@ -40,7 +40,6 @@ import javax.swing.SpinnerNumberModel;
 public class Principal extends JFrame {
 
 	private JPanel contentPane;
-	private JSpinner spnAno;
 	private JSpinner spnMes;
 	private JSpinner spnDia;
 	private Date hoy = new Date();
@@ -97,7 +96,7 @@ public class Principal extends JFrame {
 			Altice.getInstance();
 			setTitle("Altice - Usuario: " + Altice.getLoginEmpleado().getNombre());
 		}
-		/*Cliente client = new Cliente("1","Alexis","Una Casa Argentina", "1234567","test@yahoo.com");
+		Cliente client = new Cliente("1","Alexis","Una Casa Argentina", "1234567","test@yahoo.com");
 		Empleado emp = new Comercial("2", "Darwin", 100,100,5,5);
 		Altice.getInstance().getMisEmpleados().add(emp);
 		Altice.getInstance().getMisClientes().add(client);
@@ -114,7 +113,7 @@ public class Principal extends JFrame {
 		Altice.getInstance().getMisClientes().get(0).getMisPlanes().get(1).getFechaDeEmision().setDate(5);
 		Altice.getInstance().getMisClientes().get(0).getMisPlanes().get(2).getFechaDeEmision().setDate(20);
 		Altice.getInstance().getMisClientes().get(0).getMisPlanes().get(3).getFechaDeEmision().setDate(25);
-		Altice.getInstance().generarTodasLasFacturas();*/
+		Altice.getInstance().generarTodasLasFacturas();
 
 		Altice.getInstance().actualizarCantHoras();
 		setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
@@ -296,44 +295,5 @@ public class Principal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("Fecha del Programa");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setBounds(415, 25, 126, 14);
-		contentPane.add(lblNewLabel);
-		
-		 spnAno = new JSpinner();
-		spnAno.setModel(new SpinnerNumberModel(new Integer(2020), new Integer(0), null, new Integer(1)));
-		spnAno.setBounds(500, 50, 53, 23);
-		contentPane.add(spnAno);
-		
-		JSpinner spnMes = new JSpinner();
-		spnMes.setModel(new SpinnerNumberModel(0, 0, 12, 1));
-		spnMes.setBounds(437, 50, 53, 23);
-		contentPane.add(spnMes);
-		
-		JSpinner spnDia = new JSpinner();
-		spnDia.setModel(new SpinnerNumberModel(0, 0, 30, 1));
-		spnDia.setBounds(370, 50, 53, 23);
-		contentPane.add(spnDia);
-		
-		JLabel lblAo = new JLabel("A\u00F1o");
-		lblAo.setForeground(Color.WHITE);
-		lblAo.setBounds(500, 84, 53, 14);
-		contentPane.add(lblAo);
-		
-		JLabel lblMes = new JLabel("Mes");
-		lblMes.setForeground(Color.WHITE);
-		lblMes.setBounds(437, 84, 77, 14);
-		contentPane.add(lblMes);
-		
-		JLabel lblDia = new JLabel("Dia");
-		lblDia.setForeground(Color.WHITE);
-		lblDia.setBounds(370, 84, 53, 14);
-		contentPane.add(lblDia);
-		
-		spnAno.setValue(hoy.getYear()+1900);
-		spnMes.setValue(hoy.getMonth()+1);
-		spnDia.setValue(hoy.getDate());
 	}
 }
