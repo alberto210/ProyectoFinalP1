@@ -8,7 +8,7 @@ public abstract class Empleado implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7540682719052504335L;
+	protected static final long serialVersionUID = -7540682719052504335L;
 	protected String cedula;
 	protected String nombre;
 	protected float sueldoBase;

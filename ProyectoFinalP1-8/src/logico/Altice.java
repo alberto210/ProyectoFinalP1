@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.JOptionPane;
-
 public class Altice implements Serializable{
 
 	/**
@@ -215,9 +213,10 @@ public class Altice implements Serializable{
 			for(Cliente client: misClientes) {
 				for(Plan plansito: client.getMisPlanes()) {
 					generarFacturaParaUnPlan(client, plansito);
-					generar=true;
+					generar=true;	
 				}
 			}
+
 		}else {
 			generar = false;
 		}
@@ -390,7 +389,7 @@ public class Altice implements Serializable{
 	public void registrarCliente(Cliente cliente) {
 		misClientes.add(cliente);
 	}
-	@SuppressWarnings("deprecation")
+	
 	public boolean crearNominas(){
 		Date hoy = new Date();
 		boolean emitir = false;
@@ -431,6 +430,8 @@ public class Altice implements Serializable{
 		}
 		return aux;
 	}
+	
+	@SuppressWarnings("deprecation")
 	public void actualizarCantHoras() {
 		Date hoy = new Date();
 		for(Empleado emp : misEmpleados) {

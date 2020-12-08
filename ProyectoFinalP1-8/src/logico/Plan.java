@@ -60,7 +60,6 @@ public class Plan implements Serializable{
 
 	
 	public double generarPrecioTotalConImpuestos() {
-		float precioTotalConImpuestos;
 		
 		ITBIS = (float) (precioTotal * 0.18);
 		CDT = (float) (precioTotal * 0.02);

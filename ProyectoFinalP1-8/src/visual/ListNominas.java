@@ -88,7 +88,7 @@ public class ListNominas extends JDialog {
 				panel_Listado.setLayout(new BorderLayout(0, 0));
 				
 				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+				scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 				panel_Listado.add(scrollPane, BorderLayout.CENTER);
 				
 				modelo = new DefaultTableModel();
