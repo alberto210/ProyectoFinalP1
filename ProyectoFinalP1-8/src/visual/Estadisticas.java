@@ -2,6 +2,7 @@ package visual;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 
@@ -28,6 +29,7 @@ public class Estadisticas extends JDialog {
 	private  JFreeChart chart2;
 	private ChartPanel chartPanel1;
 	private ChartPanel chartPanel2;
+	private Dimension dim;
 
 
 	public Estadisticas() {
@@ -36,6 +38,8 @@ public class Estadisticas extends JDialog {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
 		setBounds(100, 100, 450, 300);
 		setSize(1417,811);
+		dim = getToolkit().getScreenSize();
+		super.setSize(dim.width, dim.height-50);
 		setLocationRelativeTo(null);
 		init();
 		init2();

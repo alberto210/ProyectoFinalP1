@@ -18,8 +18,7 @@ public abstract class Empleado implements Serializable{
 	protected Date fechaDeInicio;
 	
 	
-	public Empleado(String cedula, String nombre, float sueldoBase, float sueldoUnitario,
-			int horasTrabajadas) {
+	public Empleado(String cedula, String nombre, float sueldoBase, float sueldoUnitario) {
 		super();
 		this.fechaDeInicio = new Date();
 		this.cedula = cedula;

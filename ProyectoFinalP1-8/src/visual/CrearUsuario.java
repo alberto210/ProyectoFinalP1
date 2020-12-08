@@ -276,12 +276,12 @@ public class CrearUsuario extends JDialog {
 									if(password.equals(verpass)) {
 										if(rdbAdministrador.isSelected()){
 											if(!cbxCargo.getSelectedItem().toString().equalsIgnoreCase("<Seleccione>")) {
-												emp = new Administrativo(txtCedula.getText(),txtNombre.getText(), Float.parseFloat(spnSueldoBase.getValue().toString()), Float.parseFloat(spnSueldoUnitario.getValue().toString()), 0, cbxCargo.getSelectedItem().toString());
+												emp = new Administrativo(txtCedula.getText(),txtNombre.getText(), Float.parseFloat(spnSueldoBase.getValue().toString()), Float.parseFloat(spnSueldoUnitario.getValue().toString()), cbxCargo.getSelectedItem().toString());
 												user = new Usuario("Administrador",nombre,password);
 											}
 										}
 										if(rdbComercial.isSelected()) {
-											emp = new Comercial(txtCedula.getText(),txtNombre.getText(), Float.parseFloat(spnSueldoBase.getValue().toString()), Float.parseFloat(spnSueldoUnitario.getValue().toString()), 0,0);
+											emp = new Comercial(txtCedula.getText(),txtNombre.getText(), Float.parseFloat(spnSueldoBase.getValue().toString()), Float.parseFloat(spnSueldoUnitario.getValue().toString()), 0);
 											user = new Usuario("Comercial",nombre,password);
 										}
 										if(rdbAdministrador.isSelected() && cbxCargo.getSelectedItem().toString().equalsIgnoreCase("<Seleccione>")) {
@@ -315,7 +315,7 @@ public class CrearUsuario extends JDialog {
 									JOptionPane.showMessageDialog(null, "Campos vacíos. Por favor, llene todos los campos", "Información", JOptionPane.WARNING_MESSAGE);
 								}
 								else {
-									int option = JOptionPane.showConfirmDialog(null, "Está seguro que desea modificar al cliente "+ aux.getNombre(), "Confirmación", JOptionPane.OK_CANCEL_OPTION);
+									int option = JOptionPane.showConfirmDialog(null, "Está seguro que desea modificar al empleado "+ aux.getNombre(), "Confirmación", JOptionPane.OK_CANCEL_OPTION);
 									if(option == JOptionPane.OK_OPTION) {
 										aux.setNombre(nombre);;
 										aux.setSueldoBase(sueldoBase);

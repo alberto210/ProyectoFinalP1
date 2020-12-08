@@ -5,7 +5,7 @@ public class Main {
 		
 		Altice company = new Altice();
 		Cliente client = new Cliente("1","Alexis","Una Casa Argentina", "1234567","test@yahoo.com");
-		Empleado emp = new Comercial("2", "Darwin", 100,100,5,5);
+		Empleado emp = new Comercial("2", "Darwin", 100,100,5);
 		company.getMisEmpleados().add(emp);
 		company.getMisClientes().add(client);
 		company.crearPlan("TV", "TV", 1, false, false, true, 0, 0, 100);

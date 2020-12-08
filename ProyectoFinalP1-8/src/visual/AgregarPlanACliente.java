@@ -315,7 +315,7 @@ public class AgregarPlanACliente extends JDialog {
 					indexElegidos = tablePlanesElegidos.getSelectedRow();
 					if(indexElegidos != -1) {
 						btnBack.setEnabled(true);
-						auxElegido = buscarPlan(tablePlanesElegidos.getValueAt(indexDisp, 0).toString());
+						auxElegido = buscarPlan(tablePlanesElegidos.getValueAt(indexElegidos, 0).toString());
 					}
 				}
 			});
