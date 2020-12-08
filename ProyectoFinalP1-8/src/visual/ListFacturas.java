@@ -143,8 +143,8 @@ public class ListFacturas extends JDialog {
 							}else {
 								if(aux.getEstado().equalsIgnoreCase("Cancelada") && auxClient.getEstado().equalsIgnoreCase("Cancelada")) {
 									JOptionPane.showMessageDialog(null, "Se ha pagado la factura, pero se ha removido el plan del cliente", null, JOptionPane.INFORMATION_MESSAGE, null);
-									client.getMisPlanes().remove(auxClient.getMiPlan());
 									aux.setMontoPagado(aux.cobrarDiasConsumidosPrimeraFactura());
+									client.getMisPlanes().remove(auxClient.getMiPlan());
 									auxClient.setEstado("Pagada");
 									aux.setEstado("Pagada");
 									llenarTabla();

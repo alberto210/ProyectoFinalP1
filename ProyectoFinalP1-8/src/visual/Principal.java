@@ -34,6 +34,8 @@ import java.awt.Toolkit;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
@@ -43,6 +45,7 @@ public class Principal extends JFrame {
 	private JSpinner spnMes;
 	private JSpinner spnDia;
 	private Date hoy = new Date();
+	private Dimension dim;
 			//Se movio el metodo main a la pestaña principal
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -96,7 +99,28 @@ public class Principal extends JFrame {
 			Altice.getInstance();
 			setTitle("Altice - Usuario: " + Altice.getLoginEmpleado().getNombre());
 		}
-		
+
+		/*Cliente client = new Cliente("1","Alexis","Una Casa Argentina", "1234567","test@yahoo.com");
+		Empleado emp = new Comercial("2", "Darwin", 100,100,5);
+		Altice.getInstance().getMisEmpleados().add(emp);
+		Altice.getInstance().getMisEmpleados().get(0).getFechaDeInicio().setDate(7);
+		Altice.getInstance().getMisClientes().add(client);
+		Altice.getInstance().crearPlan("Altice TV", "TV", 1, false, false, true, 0, 0, 10);
+		Altice.getInstance().crearPlan("Altice TV", "TV", 2, false, false, true, 0, 0, 10);
+		Altice.getInstance().crearPlan("Altice TV", "TV", 3, false, false, true, 0, 0, 10);
+		Altice.getInstance().crearPlan("Altice TV", "TV", 4, false, false, true, 0, 0, 10);
+		Altice.getInstance().agregarPlanACliente("P-1", "1", "2");
+		Altice.getInstance().agregarPlanACliente("P-2", "1", "2");
+		Altice.getInstance().agregarPlanACliente("P-3", "1", "2");
+		Altice.getInstance().agregarPlanACliente("P-4", "1", "2");
+		Altice.getInstance().getMisClientes().get(0).getMisPlanes().get(0).getFechaDeEmision().setDate(5);
+		Altice.getInstance().getMisClientes().get(0).getMisPlanes().get(0).getFechaDeEmision().setMonth(7);
+		Altice.getInstance().getMisClientes().get(0).getMisPlanes().get(1).getFechaDeEmision().setDate(5);
+		Altice.getInstance().getMisClientes().get(0).getMisPlanes().get(2).getFechaDeEmision().setDate(20);
+		Altice.getInstance().getMisClientes().get(0).getMisPlanes().get(3).getFechaDeEmision().setDate(25);
+		Altice.getInstance().generarTodasLasFacturas();*/
+
+		Altice.getInstance().actualizarCantHoras();
 		setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -119,6 +143,8 @@ public class Principal extends JFrame {
 		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 572, 385);
+		dim = getToolkit().getScreenSize();
+		super.setSize(dim.width, dim.height-50);
 		setLocationRelativeTo(null);
 		
 		JMenuBar menuBar = new JMenuBar();
