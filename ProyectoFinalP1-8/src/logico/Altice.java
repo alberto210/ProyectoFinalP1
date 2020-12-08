@@ -215,12 +215,12 @@ public class Altice implements Serializable{
 			for(Cliente client: misClientes) {
 				if(client.getMisPlanes().size() != 0) {
 					generarFactura(client.getCedula());
+					generar = true;
 				}
 				else {
 					generar = false;
 				}
 			}
-			generar = true;
 		}
 		else {
 			generar = false;

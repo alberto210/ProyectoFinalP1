@@ -186,10 +186,12 @@ public class ListClientes extends JDialog {
 								if(option == JOptionPane.OK_OPTION) {
 									Altice.getInstance().generarFacturaParaUnPlan(aux, plan);
 									aux.getMisPlanes().remove(plan);
-									ListFacturas.llenarTabla();
+									cargarTablaConsulta(aux);
 									btnCancelarPlan.setEnabled(false);
 									plan = null;
 									index = -1;
+									JOptionPane.showMessageDialog(null, "Plan cancelado correctamente", null, JOptionPane.INFORMATION_MESSAGE, null);
+									JOptionPane.showMessageDialog(null, "Se generó la respectiva factura del plan cancelado", null, JOptionPane.INFORMATION_MESSAGE, null);
 								}
 							}
 							else {

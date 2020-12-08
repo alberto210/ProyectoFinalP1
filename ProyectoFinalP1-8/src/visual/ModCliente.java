@@ -160,6 +160,7 @@ public class ModCliente extends JDialog {
 									aux.setDireccion(direccion);
 									aux.setTelefono(telefono);
 									aux.setEmail(email);
+									JOptionPane.showMessageDialog(null, "Se ha modificado la información del cliente.", null, JOptionPane.INFORMATION_MESSAGE, null);
 								}
 								
 							}

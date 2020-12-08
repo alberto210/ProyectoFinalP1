@@ -408,8 +408,11 @@ public class AgregarPlanACliente extends JDialog {
 										}
 									}
 								}else {
-									JOptionPane.showMessageDialog(null, "Porfavor elija los planes que desea agregarle al cliente", "Información", JOptionPane.ERROR_MESSAGE);
+									JOptionPane.showMessageDialog(null, "Porfavor elija los planes que desea agregarle al cliente.", "Información", JOptionPane.ERROR_MESSAGE);
 								}
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "No sa ha verificado la información del cliente. Porfavor verifique si el cliente está registrado.", "Información", JOptionPane.WARNING_MESSAGE);
 						}
 					}
 				});

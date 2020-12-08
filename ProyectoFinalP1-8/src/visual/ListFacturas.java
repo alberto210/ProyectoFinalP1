@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -137,10 +138,15 @@ public class ListFacturas extends JDialog {
 					btnMod = new JButton("Pagar");
 					btnMod.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							auxClient.setEstado("Pagada");
-							aux.setEstado("Pagada");
-							aux.setMontoPagado(aux.cobrarDiasConsumidosPrimeraFactura());
-							llenarTabla();
+							if(auxClient.getEstado().equalsIgnoreCase("Pagada") && aux.getEstado().equalsIgnoreCase("Pagada")) {
+								JOptionPane.showMessageDialog(null, "La factura ya se ha pagado anteriormente.", null, JOptionPane.INFORMATION_MESSAGE, null);
+							}else {
+								JOptionPane.showMessageDialog(null, "Se ha pagado la factura.", null, JOptionPane.INFORMATION_MESSAGE, null);
+								auxClient.setEstado("Pagada");
+								aux.setEstado("Pagada");
+								aux.setMontoPagado(aux.cobrarDiasConsumidosPrimeraFactura());
+								llenarTabla();
+							}
 						}
 					});
 					btnMod.setEnabled(false);
