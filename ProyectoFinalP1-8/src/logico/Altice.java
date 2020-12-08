@@ -211,21 +211,17 @@ public class Altice implements Serializable{
 	
 	public boolean generarTodasLasFacturas() {
 		boolean generar = false;
-		if(misClientes.size() != 0) {
+		if(misClientes.size() != 0){
 			for(Cliente client: misClientes) {
-				if(client.getMisPlanes().size() != 0) {
-					generarFactura(client.getCedula());
-				}
-				else {
-					generar = false;
+				for(Plan plansito: client.getMisPlanes()) {
+					generarFacturaParaUnPlan(client, plansito);
+					generar=true;
 				}
 			}
-			generar = true;
-		}
-		else {
+		}else {
 			generar = false;
 		}
-		
+			
 		return generar;
 	}
 	
@@ -304,29 +300,6 @@ public class Altice implements Serializable{
 		Altice.loginEmpleado = loginEmpleado;
 	}
 	
-	public void Recargo() {
-		float recargo = 0;
-		for (Cliente cliente : misClientes) {
-			for (Factura factura : cliente.getMisFacturas()) {
-				if(!factura.getEstado().equalsIgnoreCase("Pagada")) {
-					recargo = factura.Recargo();
-					factura.setMonto(factura.getMonto()-recargo);
-				}
-			}
-		}
-	}
-	
-	public void Descuento() {
-		float descuento = 0;
-		int cantPlanes = 0;
-		for (Cliente cliente : misClientes) {
-			cantPlanes = cliente.getMisPlanes().size();
-			for (Factura factura : cliente.getMisFacturas()) {
-				descuento = factura.Descuento(cantPlanes);
-				factura.setMonto(factura.getMonto()-descuento);
-			}
-		}
-	}
 	
 	public int[] CantUsiarosPorPlan() {
 		int[] usuarios = new int[7];

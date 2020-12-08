@@ -16,7 +16,7 @@ public class Factura implements Serializable{
 	private boolean verificacion; //Pagada o no
 	private String estado; // Pagada, noPagada, Atrasada
 	private Cliente cliente;
-	private ArrayList<Plan> misPlanes;
+	private Plan miPlan;
 	private boolean primeraFactura;
 	private float monto;
 	private float montoPagado;
@@ -29,19 +29,11 @@ public class Factura implements Serializable{
 		this.verificacion = verificacion;
 		this.cliente = new Cliente();
 		this.cliente = cliente;
-		this.misPlanes = new ArrayList<Plan>();
-		if(verificacion == false && plan == null) {
-			for(Plan plansito : cliente.getMisPlanes()) {
-				misPlanes.add(plansito);
-			}
-		}
-		else if(verificacion == true && plan != null){
-			misPlanes.add(plan);
-		}
-		
+		this.miPlan = plan;
 		
 		this.estado= "No Pagada";
-		comprobarPrimeraFactura();
+		this.primeraFactura = true;
+		//comprobarPrimeraFactura();
 		DiaCorte();
 		monto =0;
 		montoPagado =0;
@@ -80,13 +72,6 @@ public class Factura implements Serializable{
 		this.cliente = cliente;
 	}
 
-	public ArrayList<Plan> getMisPlanes() {
-		return misPlanes;
-	}
-
-	public void setMisPlanes(ArrayList<Plan> misPlanes) {
-		this.misPlanes = misPlanes;
-	}
 	public boolean getPrimeraFactura() {
 		return primeraFactura;
 	}
@@ -117,29 +102,26 @@ public class Factura implements Serializable{
 	}
 
 
-	private void comprobarPrimeraFactura() {
+	/*private void comprobarPrimeraFactura() {
 		if(cliente.getMisFacturas().size() == 0) {
 			this.primeraFactura = true;
 		}else {
 			this.primeraFactura = false;
 		}	
-	}
+	}*/
 	
 	@SuppressWarnings("deprecation")
 	private void DiaCorte() {
 		this.fechaEmision = new Date();
-		int compare = 15 - fechaEmision.getDate();
+		int compare = 15 - miPlan.getFechaDeEmision().getDate();
 		Calendar fecha = new GregorianCalendar();
-		fecha.setTime(fechaEmision);
-		if(compare < 0 && primeraFactura == true) {
+		fecha.setTime(miPlan.getFechaDeEmision());
+		if(compare < 0) {
 			fecha.set(Calendar.DAY_OF_MONTH, 1);
 			fecha.add(Calendar.MONTH, 1);
 			this.corte = fecha.getTime(); 
 		}
-		else if(Calendar.DATE < 15 && primeraFactura == true) {
-			fecha.add(Calendar.MONTH, 1);
-			this.corte = fecha.getTime();
-		}else {
+		else {
 			fecha.add(Calendar.MONTH, 1);
 			this.corte = fecha.getTime();
 		}
@@ -147,25 +129,24 @@ public class Factura implements Serializable{
 	
 	@SuppressWarnings("deprecation")
 	public float cobrarDiasConsumidosPrimeraFactura() {
-		monto =0;
-		for (Plan plan : misPlanes) {
-			int date = plan.getFechaDeEmision().getDate();
-			int mes = plan.getFechaDeEmision().getMonth();
+			monto =0;
+			int date = miPlan.getFechaDeEmision().getDate();
+			int mes = miPlan.getFechaDeEmision().getMonth();
 			if(date>15 && primeraFactura) {
 				if(mes==0||mes==2||mes==4||mes==6||mes==7||mes==9||mes==11) {
-					monto += (float) ((plan.generarPrecioTotalConImpuestos()/31)*(32-date));
+					monto += (float) ((miPlan.generarPrecioTotalConImpuestos()/31)*(33-date)) - miPlan.generarPrecioTotalConImpuestos()*descuento();
 				}
 				if(mes==3||mes==5||mes==8||mes==10) {
-					monto += (float) ((plan.generarPrecioTotalConImpuestos()/30)*(31-date));
+					monto += (float) ((miPlan.generarPrecioTotalConImpuestos()/30)*(32-date)) - miPlan.generarPrecioTotalConImpuestos()*descuento();
 				}
 				if(mes==1) {
-					monto += (float) ((plan.generarPrecioTotalConImpuestos()/28)*(29-date));
+					monto += (float) ((miPlan.generarPrecioTotalConImpuestos()/28)*(30-date)) - miPlan.generarPrecioTotalConImpuestos()*descuento();
 				}
 			}
 			else {
-				monto += plan.generarPrecioTotalConImpuestos();
+				monto += miPlan.generarPrecioTotalConImpuestos() - miPlan.generarPrecioTotalConImpuestos()*descuento() + miPlan.generarPrecioTotalConImpuestos()*recargo();
+				primeraFactura=false;
 			}
-		}
 		return monto;
 	}
 	
@@ -177,59 +158,51 @@ public class Factura implements Serializable{
 	/*
 	 Metodo para el recargo.Hay que ver que pasa a las 2 meses
 	 */
-	public float Recargo() {
+	public float recargo() {
 		float recargo = 0;
 		int mes = CalcMesDesdeCorte();
-		if(mes == 1) {
-			recargo = (float) (monto*0.05);
-		}else if(mes == 3) {
-			recargo = (float) (monto*0.1 + monto*0.05);
+		System.out.println(mes);
+		if(!estado.equalsIgnoreCase("Pagada")){
+			if(mes == 1) {
+				estado="Atrasada-1";
+				recargo = (float) (0.05);
+			}else if(mes==2){
+				estado="Atrasada-2";
+				recargo = (float) (0.1);
+			}else if(mes >= 3) {
+				estado="Cancelada";
+				recargo = (float) (0.1 + 0.05);
+			}
 		}
 		return recargo;
 		
 	}
 	
-	public float Descuento(int cantPlanes) {
+	public float descuento(){
 		float descuento = 0;
-		switch(cantPlanes) {
-			case 1:
-				descuento = 0;
-				break;
-			case 2:
-				descuento = (float) (monto*0.1);
-				setEstado("Atrasada");
-				break;
-			case 3:
-				descuento = (float) (monto*0.3);
-				setEstado("Atrasada");
-				break;
-			default:
-				descuento = 0;
-				break;
+		if(miPlan.getNombre().equalsIgnoreCase("Dobleplay")) {
+			descuento=(float) 0.1;
+		}else if(miPlan.getNombre().equalsIgnoreCase("Tripleplay")){
+			descuento=(float) 0.3;
+		}else {
+			descuento=0;
 		}
 		return descuento;
 	}
 	
 	private int CalcMesDesdeCorte() {
-		int mes = 0;
-		Calendar inicio = new GregorianCalendar();
-		Calendar fin = new GregorianCalendar();
-		inicio.setTime(corte);
-		fin.setTime(new Date());
-		int difY = fin.get(Calendar.YEAR) - inicio.get(Calendar.YEAR);
-		int difM = fin.get(Calendar.MONTH) - inicio.get(Calendar.MONTH);
-		int difD = fin.get(Calendar.DAY_OF_MONTH) - inicio.get(Calendar.DAY_OF_MONTH);
-		if(difM > 0) {
-			difY--;
+		int meses = 0;
+		Calendar hoy = new GregorianCalendar();
+		Calendar aux = new GregorianCalendar();
+		aux.setTime(corte);
+		int diffyear = hoy.get(Calendar.YEAR)-aux.get(Calendar.YEAR);
+		int diffmonth = hoy.get(Calendar.MONTH)-aux.get(Calendar.MONTH);
+		meses = 12*diffyear;
+		meses+=diffmonth;
+		if(hoy.get(Calendar.DATE)<aux.get(Calendar.DATE)) {
+			meses--;
 		}
-		if(difD < 0) {
-			mes = difY*12 + difM;
-			mes--;
-		}
-		else {
-			mes = difY*12 + difM;
-		}
-		return mes;
+		return meses;
 	}
 	
 	public boolean pagarFactura(float montoCliente) {
@@ -257,6 +230,16 @@ public class Factura implements Serializable{
 
 	public void setMontoPagado(float montoPagado) {
 		this.montoPagado = montoPagado;
+	}
+
+
+	public Plan getMiPlan() {
+		return miPlan;
+	}
+
+
+	public void setMiPlan(Plan miPlan) {
+		this.miPlan = miPlan;
 	}
 	
 }

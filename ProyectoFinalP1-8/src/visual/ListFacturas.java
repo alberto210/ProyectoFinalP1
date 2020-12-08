@@ -166,11 +166,11 @@ public class ListFacturas extends JDialog {
 			modelo.setRowCount(0);
 			rows = new Object[modelo.getColumnCount()];
 			for (Factura fac : Altice.getInstance().getMisFacturas()) {
+					rows[4] = String.format("%.1f", fac.cobrarDiasConsumidosPrimeraFactura());
 					rows[0] = fac.getEstado();
 					rows[1] = fac.getCodFactura();
 					rows[2] = fac.getCliente().getNombre();
 					rows[3] = fac.getCliente().getCedula();
-					rows[4] = String.format("%.1f", fac.cobrarDiasConsumidosPrimeraFactura());
 					rows[5] = fac.getCorte().getDate() + "/" +(fac.getCorte().getMonth()+1) + "/" + (fac.getCorte().getYear()+1900);
 				modelo.addRow(rows);
 			}
