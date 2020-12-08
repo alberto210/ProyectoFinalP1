@@ -97,7 +97,7 @@ public class Principal extends JFrame {
 			Altice.getInstance();
 			setTitle("Altice - Usuario: " + Altice.getLoginEmpleado().getNombre());
 		}
-		Cliente client = new Cliente("1","Alexis","Una Casa Argentina", "1234567","test@yahoo.com");
+		/*Cliente client = new Cliente("1","Alexis","Una Casa Argentina", "1234567","test@yahoo.com");
 		Empleado emp = new Comercial("2", "Darwin", 100,100,5,5);
 		Altice.getInstance().getMisEmpleados().add(emp);
 		Altice.getInstance().getMisClientes().add(client);
@@ -114,7 +114,7 @@ public class Principal extends JFrame {
 		Altice.getInstance().getMisClientes().get(0).getMisPlanes().get(1).getFechaDeEmision().setDate(5);
 		Altice.getInstance().getMisClientes().get(0).getMisPlanes().get(2).getFechaDeEmision().setDate(20);
 		Altice.getInstance().getMisClientes().get(0).getMisPlanes().get(3).getFechaDeEmision().setDate(25);
-		Altice.getInstance().generarTodasLasFacturas();
+		Altice.getInstance().generarTodasLasFacturas();*/
 
 		Altice.getInstance().actualizarCantHoras();
 		setIconImage(Toolkit.getDefaultToolkit().getImage("Logo.jpg"));
